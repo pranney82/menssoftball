@@ -212,8 +212,9 @@
             body.chat-open .chat-overlay,
             body.chat-open .footer { display:none; }
             body.chat-open .chat-bubble { display:none; }
-            body.chat-open { background:var(--primary-dark); }
-            .chat-panel { position:static; width:100%; height:var(--vvh,100vh); border-radius:0; border:none; box-shadow:none; transform:none; opacity:1; overflow:hidden; }
+            body.chat-open { overflow:hidden; height:100%; background:var(--primary-dark); }
+            html.chat-open { overflow:hidden; height:100%; }
+            .chat-panel { position:fixed; top:0; left:0; width:100%; height:var(--vvh,100%); border-radius:0; border:none; box-shadow:none; transform:none; opacity:1; overflow:hidden; }
             .chat-panel.open { display:flex; }
             .chat-header { padding-top:env(safe-area-inset-top,0px); }
             .chat-messages { flex:1; padding:16px; min-height:0; overflow-y:auto; }
@@ -556,12 +557,14 @@ function toggleChat(){
         bubble.classList.remove('hidden');
         overlay.classList.remove('open');
         document.body.classList.remove('chat-open');
+        document.documentElement.classList.remove('chat-open');
         document.getElementById('chat-input').blur();
     }else{
         panel.classList.add('open');
         bubble.classList.add('hidden');
         overlay.classList.add('open');
         document.body.classList.add('chat-open');
+        document.documentElement.classList.add('chat-open');
         if(isMobile()) window.scrollTo(0,0);
         if(!isMobile()) document.getElementById('chat-input').focus();
         scrollChat();
