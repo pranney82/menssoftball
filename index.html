@@ -208,19 +208,19 @@
         .chat-send:active { background:var(--blue-bright); transform:scale(0.92); }
         body.chat-open { overflow:hidden; }
         @media (max-width:768px) {
-            /* Mobile: chat panel is a separate screen, NOT position:fixed */
-            .chat-panel { position:static; width:100%; height:100vh; height:100dvh; border-radius:0; border:none; box-shadow:none; transform:none; opacity:1; }
-            .chat-panel.open { display:flex; }
-            body.chat-open #site-content { display:none; }
-            body.chat-open .chat-overlay { display:none; }
+            body.chat-open #site-content,
+            body.chat-open .chat-overlay,
+            body.chat-open .footer { display:none; }
             body.chat-open .chat-bubble { display:none; }
             body.chat-open { background:var(--primary-dark); }
+            .chat-panel { position:static; width:100%; height:var(--vvh,100vh); border-radius:0; border:none; box-shadow:none; transform:none; opacity:1; overflow:hidden; }
+            .chat-panel.open { display:flex; }
             .chat-header { padding-top:env(safe-area-inset-top,0px); }
-            .chat-messages { flex:1; padding:16px; min-height:0; }
+            .chat-messages { flex:1; padding:16px; min-height:0; overflow-y:auto; }
             .chat-msg { font-size:15px; }
             .chat-bubble { bottom:16px; right:16px; width:56px; height:56px; }
             .chat-bubble svg { width:28px; height:28px; }
-            .chat-input-wrap { margin:0 10px; margin-bottom:calc(10px + env(safe-area-inset-bottom,0px)); border-radius:14px; }
+            .chat-input-wrap { margin:0 10px; margin-bottom:var(--vvs,env(safe-area-inset-bottom,0px)); border-radius:14px; }
             .chat-input { font-size:16px; padding:14px 16px; }
             .chat-send { width:42px; height:42px; }
             .chat-chip { font-size:12px; padding:9px 16px; }
@@ -335,6 +335,21 @@
 </div>
 
 <script>
+// iOS keyboard handling — set CSS variable for visual viewport height
+(function(){
+    const vv=window.visualViewport;
+    if(!vv)return;
+    function setVVH(){
+        document.body.style.setProperty('--vvh',vv.height+'px');
+        document.body.style.setProperty('--vvs',vv.height<600?'0px':'env(safe-area-inset-bottom)');
+        // Scroll messages to bottom when keyboard resizes
+        const msgs=document.getElementById('chat-messages');
+        if(msgs)msgs.scrollTop=msgs.scrollHeight;
+    }
+    vv.addEventListener('resize',setVVH);
+    setVVH();
+})();
+
 const TEAM='Drive';
 let DATA={};
 
@@ -547,6 +562,7 @@ function toggleChat(){
         bubble.classList.add('hidden');
         overlay.classList.add('open');
         document.body.classList.add('chat-open');
+        if(isMobile()) window.scrollTo(0,0);
         if(!isMobile()) document.getElementById('chat-input').focus();
         scrollChat();
     }
