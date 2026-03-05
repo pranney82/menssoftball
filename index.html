@@ -158,6 +158,17 @@
         .roast-text { font-size:16px; line-height:1.7; color:var(--gray); position:relative; z-index:1; }
         .roast-text p { margin-bottom:10px; }
         .roast-text .zinger { color:var(--blue-glow); font-weight:700; }
+        #roast-feed { display:flex; flex-direction:column; gap:16px; }
+        #roast-feed .roast-card:not(:first-child) .roast-text { max-height:0; overflow:hidden; transition:max-height 0.4s ease-out; }
+        #roast-feed .roast-card:not(:first-child).expanded .roast-text { max-height:2000px; }
+        #roast-feed .roast-card:not(:first-child) { opacity:0.7; cursor:pointer; }
+        #roast-feed .roast-card:not(:first-child):hover { opacity:0.9; }
+        #roast-feed .roast-card:not(:first-child).expanded { opacity:1; cursor:default; }
+        #roast-feed .roast-card:not(:first-child) .share-btn { display:none; }
+        #roast-feed .roast-card:not(:first-child).expanded .share-btn { display:inline-flex; }
+        .roast-expand-hint { font-family:'Oswald',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--gray-dark); margin-top:8px; }
+        .roast-expand-hint::after { content:' ▸ tap to expand'; }
+        .expanded .roast-expand-hint { display:none; }
 
         /* SHARE BUTTON */
         .share-btn { display:inline-flex; align-items:center; gap:6px; background:rgba(37,99,235,0.12); color:var(--blue-bright); border:1px solid rgba(37,99,235,0.25); padding:8px 18px; border-radius:8px; font-family:'Oswald',sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:2px; cursor:pointer; transition:all 0.2s; margin-top:16px; }
@@ -359,17 +370,22 @@
 
     <div class="section" id="roast">
         <div class="section-header"><div class="accent-bar"></div><h2>AI Weekly Roast</h2></div>
-        <div class="roast-card" id="roast-card">
-            <div class="roast-badge"><span class="dot"></span> Week 1 Report</div>
-            <div class="roast-text" id="roast-text">
-                <p>Congratulations to Drive Auto Repair for beating Motiv8 16-5. <span class="zinger">Real impressive, boys. You beat a team whose name is literally a motivational poster at a dentist's office.</span> Pop the champagne. Call ESPN. Alert the media. A bunch of grown men with knee braces scored 16 runs against what appeared to be a team that carpooled from a fantasy football draft.</p>
-                <p><span class="zinger">Coach Ranney drew up the game plan on a napkin at Waffle House</span> and somehow it worked. The offense came out swinging like they all had outstanding warrants. The defense? Let's just say the errors weren't tracked because nobody wanted to do that much math.</p>
-                <p>Meanwhile, <span class="zinger">half the lineup can't touch their toes but swears they're "warming up"</span> every Monday at 7:55 PM. The dugout smells like Bengay and bad decisions. One of you brought a lawn chair. You know who you are.</p>
-                <p><span class="zinger">Rocket Power dropped 34 on the Dirt Dawgs, so let's not get too comfortable.</span> Drive's 16 runs look cute next to that. That's like bragging about your Honda Civic at a Ferrari dealership — which, given the team name, is painfully on brand.</p>
-                <p>Next week: Flamingos. If you lose to a team called the Flamingos, every single one of you owes the group chat a pink jersey selfie. No exceptions. See you Monday. ⚾</p>
+        <div id="roast-feed">
+
+            <!-- WEEK 1 ROAST (most recent on top — new weeks get added above this) -->
+            <div class="roast-card" data-roast-week="1">
+                <div class="roast-badge"><span class="dot"></span> Week 1 Report</div>
+                <div class="roast-text">
+                    <p>Congratulations to Drive Auto Repair for beating Motiv8 16-5. <span class="zinger">Real impressive, boys. You beat a team whose name is literally a motivational poster at a dentist's office.</span> Pop the champagne. Call ESPN. Alert the media. A bunch of grown men with knee braces scored 16 runs against what appeared to be a team that carpooled from a fantasy football draft.</p>
+                    <p><span class="zinger">Coach Ranney drew up the game plan on a napkin at Waffle House</span> and somehow it worked. The offense came out swinging like they all had outstanding warrants. The defense? Let's just say the errors weren't tracked because nobody wanted to do that much math.</p>
+                    <p>Meanwhile, <span class="zinger">half the lineup can't touch their toes but swears they're "warming up"</span> every Monday at 7:55 PM. The dugout smells like Bengay and bad decisions. One of you brought a lawn chair. You know who you are.</p>
+                    <p><span class="zinger">Rocket Power dropped 34 on the Dirt Dawgs, so let's not get too comfortable.</span> Drive's 16 runs look cute next to that. That's like bragging about your Honda Civic at a Ferrari dealership — which, given the team name, is painfully on brand.</p>
+                    <p>Next week: Flamingos. If you lose to a team called the Flamingos, every single one of you owes the group chat a pink jersey selfie. No exceptions. See you Monday. ⚾</p>
+                </div>
+                <button class="share-btn" onclick="shareRoast(this)">📋 Copy to Clipboard</button>
             </div>
+
         </div>
-        <button class="share-btn" id="share-roast" onclick="shareRoast()">📋 Copy Roast to Clipboard</button>
     </div>
 </div>
 
@@ -483,19 +499,27 @@ function updateRecord(data){
     const el=document.getElementById('header-record');if(el)el.textContent=(d.W||0)+' - '+(d.L||0);
 }
 
-// Share roast
-function shareRoast(){
-    const text=document.getElementById('roast-text').innerText;
+// Share roast (per card)
+function shareRoast(btn){
+    const card=btn.closest('.roast-card');
+    const text=card.querySelector('.roast-text').innerText;
     navigator.clipboard.writeText(text).then(()=>{
-        const btn=document.getElementById('share-roast');
         btn.classList.add('copied');btn.innerHTML='✅ Copied!';
-        setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📋 Copy Roast to Clipboard';},2000);
+        setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📋 Copy to Clipboard';},2000);
     }).catch(()=>{
-        // Fallback for older browsers
         const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-        const btn=document.getElementById('share-roast');
         btn.classList.add('copied');btn.innerHTML='✅ Copied!';
-        setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📋 Copy Roast to Clipboard';},2000);
+        setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📋 Copy to Clipboard';},2000);
+    });
+}
+
+// Expand older roasts on click
+function initRoastExpand(){
+    document.querySelectorAll('#roast-feed .roast-card:not(:first-child)').forEach(card=>{
+        card.addEventListener('click',(e)=>{
+            if(e.target.closest('.share-btn'))return;
+            card.classList.toggle('expanded');
+        });
     });
 }
 
@@ -539,7 +563,7 @@ function checkGameDay(){
 }
 
 async function init(){
-    initCountdown();highlightWeek();collapsePastWeeks();checkGameDay();
+    initCountdown();highlightWeek();collapsePastWeeks();checkGameDay();initRoastExpand();
     if(SHEET_ID){try{
         const[st,ro,ss]=await Promise.all([fetchSheet('standings'),fetchSheet('roast'),fetchSheet('stats')]);
         if(st){renderStandings(st);updateRecord(st);}if(ro)renderRoast(ro);if(ss)renderStats(ss);
