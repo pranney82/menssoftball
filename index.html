@@ -1,5 +1,1036 @@
 <!DOCTYPE html>
-<html>
-<head><title>Men's Softball</title></head>
-<body><h1>Coming soon...</h1></body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive Auto Repair | Hobgood Intermediate Softball</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --primary-dark: #0f0f1a;
+            --surface: #16213e;
+            --surface-light: #1c2a4a;
+            --blue: #2563eb;
+            --blue-bright: #3b82f6;
+            --blue-glow: #60a5fa;
+            --white: #f1f5f9;
+            --gray: #94a3b8;
+            --gray-dark: #64748b;
+            --accent: #38bdf8;
+            --win: #22c55e;
+            --loss: #ef4444;
+            --gold: #fbbf24;
+            --silver: #94a3b8;
+            --bronze: #d97706;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--primary-dark);
+            color: var(--white);
+            font-family: 'Roboto Condensed', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* === TICKER BAR === */
+        .ticker-bar {
+            background: var(--blue);
+            padding: 8px 0;
+            overflow: hidden;
+            position: relative;
+            border-bottom: 2px solid var(--blue-bright);
+        }
+        .ticker-content {
+            display: flex;
+            animation: ticker 30s linear infinite;
+            white-space: nowrap;
+            gap: 60px;
+        }
+        .ticker-item {
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ticker-item .score { color: var(--gold); }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* === HEADER === */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--surface) 50%, var(--primary) 100%);
+            border-bottom: 4px solid var(--blue);
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 40px,
+                rgba(37, 99, 235, 0.03) 40px,
+                rgba(37, 99, 235, 0.03) 41px
+            );
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        .team-logo {
+            width: 90px;
+            height: 90px;
+            background: var(--blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px;
+            color: white;
+            border: 3px solid var(--blue-bright);
+            box-shadow: 0 0 30px rgba(37, 99, 235, 0.4);
+            flex-shrink: 0;
+        }
+        .header-text h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            letter-spacing: 3px;
+            line-height: 1;
+            background: linear-gradient(180deg, var(--white) 0%, var(--blue-glow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header-text .league-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            color: var(--blue-bright);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 4px;
+        }
+        .header-text .season {
+            font-size: 13px;
+            color: var(--gray-dark);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+        .header-record {
+            margin-left: auto;
+            text-align: center;
+        }
+        .header-record .record {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            letter-spacing: 2px;
+        }
+        .header-record .record-label {
+            font-size: 11px;
+            color: var(--gray-dark);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* === NAV TABS === */
+        .nav-tabs {
+            background: var(--primary);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2);
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+        .nav-tab {
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 14px 28px;
+            cursor: pointer;
+            color: var(--gray-dark);
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+        .nav-tab:hover { color: var(--white); }
+        .nav-tab.active {
+            color: var(--blue-bright);
+            border-bottom-color: var(--blue);
+        }
+
+        /* === MAIN CONTENT === */
+        .main { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+        .section { display: none; }
+        .section.active { display: block; }
+
+        /* === SECTION HEADERS === */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--blue);
+        }
+        .section-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .section-header .accent-bar {
+            width: 4px;
+            height: 28px;
+            background: var(--blue);
+            border-radius: 2px;
+        }
+
+        /* === STANDINGS TABLE === */
+        .standings-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .standings-table thead th {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--gray-dark);
+            padding: 10px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .standings-table thead th:not(:first-child) { text-align: center; }
+        .standings-table tbody tr {
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.15s;
+        }
+        .standings-table tbody tr:hover { background: rgba(37, 99, 235, 0.08); }
+        .standings-table tbody tr.highlight {
+            background: rgba(37, 99, 235, 0.12);
+            border-left: 3px solid var(--blue);
+        }
+        .standings-table td {
+            padding: 12px 16px;
+            font-weight: 400;
+        }
+        .standings-table td:not(:first-child) { text-align: center; }
+        .standings-table .rank {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            color: var(--gray-dark);
+            width: 30px;
+        }
+        .standings-table .team-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .standings-table .win-pct {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            color: var(--blue-bright);
+        }
+        .gb { color: var(--gray-dark); }
+
+        /* === GAME CARDS === */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 16px;
+        }
+        .game-card {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .game-card:hover { border-color: var(--blue); }
+        .game-card-header {
+            background: rgba(37, 99, 235, 0.1);
+            padding: 8px 16px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gray-dark);
+            font-family: 'Oswald', sans-serif;
+            display: flex;
+            justify-content: space-between;
+        }
+        .game-card-body { padding: 16px; }
+        .game-matchup {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .game-team {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        .game-team-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--surface-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .game-team-logo.drive {
+            background: var(--blue);
+            border-color: var(--blue-bright);
+        }
+        .game-team-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+        }
+        .game-score {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .game-score .dash { color: var(--gray-dark); font-size: 20px; }
+        .game-result {
+            display: inline-block;
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+        .game-result.win { background: rgba(34, 197, 94, 0.2); color: var(--win); }
+        .game-result.loss { background: rgba(239, 68, 68, 0.2); color: var(--loss); }
+
+        /* === STATS TABLE === */
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .stats-table thead th {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: var(--gray-dark);
+            padding: 10px 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            position: sticky;
+            top: 0;
+            background: var(--primary-dark);
+        }
+        .stats-table thead th:first-child { text-align: left; }
+        .stats-table thead th:nth-child(2) { text-align: left; }
+        .stats-table tbody tr {
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.15s;
+        }
+        .stats-table tbody tr:hover { background: rgba(37, 99, 235, 0.08); }
+        .stats-table td {
+            padding: 10px 12px;
+            text-align: center;
+        }
+        .stats-table td:first-child {
+            text-align: left;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            color: var(--gray-dark);
+            width: 30px;
+        }
+        .stats-table td:nth-child(2) {
+            text-align: left;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 500;
+        }
+        .stats-table .stat-highlight {
+            color: var(--blue-bright);
+            font-weight: 700;
+        }
+        .stats-leader {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* === ROSTER === */
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        .roster-card {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.2s;
+        }
+        .roster-card:hover {
+            border-color: var(--blue);
+            background: var(--surface-light);
+        }
+        .roster-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            color: var(--blue-bright);
+            min-width: 44px;
+            text-align: center;
+        }
+        .roster-info .roster-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .roster-info .roster-pos {
+            font-size: 12px;
+            color: var(--gray-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* === AI ROAST === */
+        .roast-card {
+            background: linear-gradient(135deg, var(--surface) 0%, rgba(37, 99, 235, 0.08) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 12px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        .roast-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 160px;
+            color: rgba(37, 99, 235, 0.08);
+            line-height: 1;
+        }
+        .roast-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(37, 99, 235, 0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--blue-bright);
+            margin-bottom: 16px;
+        }
+        .roast-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--blue-bright);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .roast-text {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--gray);
+            position: relative;
+            z-index: 1;
+        }
+        .roast-text p { margin-bottom: 12px; }
+        .roast-text .zinger {
+            color: var(--blue-glow);
+            font-weight: 700;
+        }
+
+        /* === FOOTER === */
+        .footer {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray-dark);
+            letter-spacing: 1px;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .header-inner { flex-direction: column; text-align: center; }
+            .header-text h1 { font-size: 36px; }
+            .header-record { margin-left: 0; margin-top: 8px; }
+            .games-grid { grid-template-columns: 1fr; }
+            .roster-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+            .nav-tab { padding: 12px 16px; font-size: 12px; }
+            .stats-table { font-size: 12px; }
+            .stats-table td, .stats-table th { padding: 8px 6px; }
+        }
+
+        /* === SCROLL BAR === */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--primary-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--surface-light); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--blue); }
+    </style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+    <div class="ticker-content">
+        <span class="ticker-item">⚾ Week 3 Results: Drive Auto Repair <span class="score">12</span> - Sluggers <span class="score">8</span></span>
+        <span class="ticker-item">⚾ Bombers <span class="score">15</span> - Hit Squad <span class="score">6</span></span>
+        <span class="ticker-item">⚾ Thunder <span class="score">9</span> - Fireballs <span class="score">7</span></span>
+        <span class="ticker-item">⚾ Next Game: Drive vs Thunder — Mar 11 @ 7:30 PM</span>
+        <span class="ticker-item">⚾ Week 3 Results: Drive Auto Repair <span class="score">12</span> - Sluggers <span class="score">8</span></span>
+        <span class="ticker-item">⚾ Bombers <span class="score">15</span> - Hit Squad <span class="score">6</span></span>
+        <span class="ticker-item">⚾ Thunder <span class="score">9</span> - Fireballs <span class="score">7</span></span>
+        <span class="ticker-item">⚾ Next Game: Drive vs Thunder — Mar 11 @ 7:30 PM</span>
+    </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-inner">
+        <div class="team-logo">D</div>
+        <div class="header-text">
+            <h1>Drive Auto Repair</h1>
+            <div class="league-name">Hobgood Intermediate League</div>
+            <div class="season">Spring 2026 Season</div>
+        </div>
+        <div class="header-record">
+            <div class="record">2 - 1</div>
+            <div class="record-label">Season Record</div>
+        </div>
+    </div>
+</div>
+
+<!-- NAV -->
+<div style="background: var(--primary);">
+    <div class="nav-tabs">
+        <button class="nav-tab active" data-tab="standings">Standings</button>
+        <button class="nav-tab" data-tab="scores">Scores</button>
+        <button class="nav-tab" data-tab="stats">Player Stats</button>
+        <button class="nav-tab" data-tab="roster">Roster</button>
+        <button class="nav-tab" data-tab="roast">AI Roast</button>
+    </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- STANDINGS -->
+    <div class="section active" id="standings">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <h2>League Standings</h2>
+        </div>
+        <table class="standings-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Team</th>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>PCT</th>
+                    <th>GB</th>
+                    <th>RS</th>
+                    <th>RA</th>
+                    <th>STRK</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="rank">1</td>
+                    <td class="team-name">Bombers</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td class="win-pct">1.000</td>
+                    <td class="gb">—</td>
+                    <td>42</td>
+                    <td>18</td>
+                    <td style="color: var(--win);">W3</td>
+                </tr>
+                <tr class="highlight">
+                    <td class="rank">2</td>
+                    <td class="team-name" style="color: var(--blue-bright);">⚾ Drive Auto Repair</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td class="win-pct">.667</td>
+                    <td class="gb">1</td>
+                    <td>35</td>
+                    <td>22</td>
+                    <td style="color: var(--win);">W1</td>
+                </tr>
+                <tr>
+                    <td class="rank">3</td>
+                    <td class="team-name">Thunder</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td class="win-pct">.667</td>
+                    <td class="gb">1</td>
+                    <td>30</td>
+                    <td>25</td>
+                    <td style="color: var(--win);">W2</td>
+                </tr>
+                <tr>
+                    <td class="rank">4</td>
+                    <td class="team-name">Sluggers</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td class="win-pct">.333</td>
+                    <td class="gb">2</td>
+                    <td>24</td>
+                    <td>30</td>
+                    <td style="color: var(--loss);">L1</td>
+                </tr>
+                <tr>
+                    <td class="rank">5</td>
+                    <td class="team-name">Fireballs</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td class="win-pct">.333</td>
+                    <td class="gb">2</td>
+                    <td>22</td>
+                    <td>29</td>
+                    <td style="color: var(--loss);">L2</td>
+                </tr>
+                <tr>
+                    <td class="rank">6</td>
+                    <td class="team-name">Hit Squad</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td class="win-pct">.000</td>
+                    <td class="gb">3</td>
+                    <td>14</td>
+                    <td>43</td>
+                    <td style="color: var(--loss);">L3</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SCORES -->
+    <div class="section" id="scores">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <h2>Game Scores</h2>
+        </div>
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-card-header">
+                    <span>Week 1 — Feb 18, 2026</span>
+                    <span>Final</span>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-matchup">
+                        <div class="game-team">
+                            <div class="game-team-logo drive">D</div>
+                            <span class="game-team-name">Drive</span>
+                        </div>
+                        <div class="game-score">
+                            <span style="color: var(--win);">14</span>
+                            <span class="dash">-</span>
+                            <span>8</span>
+                        </div>
+                        <div class="game-team" style="justify-content: flex-end;">
+                            <span class="game-team-name">Hit Squad</span>
+                            <div class="game-team-logo">HS</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;"><span class="game-result win">Win</span></div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-header">
+                    <span>Week 2 — Feb 25, 2026</span>
+                    <span>Final</span>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-matchup">
+                        <div class="game-team">
+                            <div class="game-team-logo drive">D</div>
+                            <span class="game-team-name">Drive</span>
+                        </div>
+                        <div class="game-score">
+                            <span>9</span>
+                            <span class="dash">-</span>
+                            <span style="color: var(--win);">14</span>
+                        </div>
+                        <div class="game-team" style="justify-content: flex-end;">
+                            <span class="game-team-name">Bombers</span>
+                            <div class="game-team-logo">B</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;"><span class="game-result loss">Loss</span></div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-header">
+                    <span>Week 3 — Mar 4, 2026</span>
+                    <span>Final</span>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-matchup">
+                        <div class="game-team">
+                            <div class="game-team-logo drive">D</div>
+                            <span class="game-team-name">Drive</span>
+                        </div>
+                        <div class="game-score">
+                            <span style="color: var(--win);">12</span>
+                            <span class="dash">-</span>
+                            <span>8</span>
+                        </div>
+                        <div class="game-team" style="justify-content: flex-end;">
+                            <span class="game-team-name">Sluggers</span>
+                            <div class="game-team-logo">S</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;"><span class="game-result win">Win</span></div>
+                </div>
+            </div>
+            <div class="game-card" style="border: 1px dashed rgba(37, 99, 235, 0.3);">
+                <div class="game-card-header">
+                    <span>Week 4 — Mar 11, 2026</span>
+                    <span style="color: var(--blue-bright);">Upcoming</span>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-matchup">
+                        <div class="game-team">
+                            <div class="game-team-logo drive">D</div>
+                            <span class="game-team-name">Drive</span>
+                        </div>
+                        <div class="game-score" style="font-size: 16px; color: var(--gray-dark);">
+                            7:30 PM
+                        </div>
+                        <div class="game-team" style="justify-content: flex-end;">
+                            <span class="game-team-name">Thunder</span>
+                            <div class="game-team-logo">T</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PLAYER STATS -->
+    <div class="section" id="stats">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <h2>Player Stats</h2>
+        </div>
+        <div style="overflow-x: auto;">
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Player</th>
+                        <th>GP</th>
+                        <th>AB</th>
+                        <th>H</th>
+                        <th>2B</th>
+                        <th>3B</th>
+                        <th>HR</th>
+                        <th>RBI</th>
+                        <th>R</th>
+                        <th>AVG</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Mike "Hammer" Johnson</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>6</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td class="stats-leader">3</td>
+                        <td class="stats-leader">9</td>
+                        <td>5</td>
+                        <td class="stats-leader">.600</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ryan Peters</td>
+                        <td>3</td>
+                        <td>11</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>7</td>
+                        <td class="stats-leader">6</td>
+                        <td class="stat-highlight">.545</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Jake Torres</td>
+                        <td>3</td>
+                        <td>9</td>
+                        <td>4</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>5</td>
+                        <td>4</td>
+                        <td class="stat-highlight">.444</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Dave "Big Stick" Williams</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>4</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>2</td>
+                        <td>6</td>
+                        <td>3</td>
+                        <td>.400</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Chris Nguyen</td>
+                        <td>3</td>
+                        <td>9</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>.333</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Sam Mitchell</td>
+                        <td>3</td>
+                        <td>10</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>.300</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Brandon Lee</td>
+                        <td>3</td>
+                        <td>9</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>.222</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Eric "Wheels" Ramirez</td>
+                        <td>3</td>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>4</td>
+                        <td>.250</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Tony Russo</td>
+                        <td>2</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>2</td>
+                        <td>.167</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Greg "Benchwarmer" Phillips</td>
+                        <td>2</td>
+                        <td>5</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>.000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ROSTER -->
+    <div class="section" id="roster">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <h2>Team Roster</h2>
+        </div>
+        <div class="roster-grid">
+            <div class="roster-card">
+                <div class="roster-number">7</div>
+                <div class="roster-info">
+                    <div class="roster-name">Mike Johnson</div>
+                    <div class="roster-pos">Shortstop</div>
+                </div>
+            </div>
+            <div class="roster-card">
+                <div class="roster-number">33</div>
+                <div class="roster-info">
+                    <div class="roster-name">Ryan Peters</div>
+                    <div class="roster-pos">Third Base</div>
+                </div>
+            </div>
+            <div class="roster-card">
+                <div class="roster-number">12</div>
+                <div class="roster-info">
+                    <div class="roster-name">Jake Torres</div>
+                    <div class="roster-pos">Center Field</div>
+                </div>
+            </div>
+            <div class="roster-card">
+                <div class="roster-number">44</div>
+                <div class="roster-info">
+                    <div class="roster-name">Dave Williams</div>
+                    <div class="roster-pos">First Base</div>
+                </div>
+            </div>
+            <div class="roster-card">
+                <div class="roster-number">21</div>
+                <div class="roster-info">
+                    <div class="roster-name">Chris Nguyen</div>
+                    <div class="roster-pos">Second Base</div>
+                </div>
+            </div>
+            <div class="roster-card">
+                <div class="roster-number">9</div>
+                <div class="roster-info">
+                    <div class="roster-name">Sam Mitchell</div>
+                    <div class="roster-pos">Left Field</div>
+                </div>
+            </div>
+            <div class="roster-card">
+                <div class="roster-number">15</div>
+                <div class="roster-info">
+                    <div class="roster-name">Brandon Lee</div>
+                    <div class="roster-pos">Right Field</div>
+                </div>
+            </div>
+            <div class="roster-card">
+                <div class="roster-number">3</div>
+                <div class="roster-info">
+                    <div class="roster-name">Eric Ramirez</div>
+                    <div class="roster-pos">Catcher</div>
+                </div>
+            </div>
+            <div class="roster-card">
+                <div class="roster-number">18</div>
+                <div class="roster-info">
+                    <div class="roster-name">Tony Russo</div>
+                    <div class="roster-pos">Pitcher</div>
+                </div>
+            </div>
+            <div class="roster-card">
+                <div class="roster-number">25</div>
+                <div class="roster-info">
+                    <div class="roster-name">Greg Phillips</div>
+                    <div class="roster-pos">Designated Hitter</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI ROAST -->
+    <div class="section" id="roast">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <h2>AI Weekly Roast</h2>
+        </div>
+        <div class="roast-card">
+            <div class="roast-badge"><span class="dot"></span> Week 3 Report</div>
+            <div class="roast-text">
+                <p>Well, well, well. <span class="zinger">Drive Auto Repair limped to a 12-8 win over the Sluggers</span> and somehow the boys are celebrating like they just won the World Series. Twelve runs sounds great until you realize the Sluggers' pitcher was throwing with his non-dominant hand... because he was holding a beer in the other.</p>
+                <p>Shoutout to <span class="zinger">Mike "Hammer" Johnson for going 3-for-3 with 2 dingers</span> — finally living up to a nickname he definitely gave himself. Meanwhile, <span class="zinger">Greg "Benchwarmer" Phillips continues his historic 0-for-the-season streak.</span> At this point he's not even a designated hitter, he's a designated spectator. His batting average is lower than the team's collective credit score.</p>
+                <p>The defense committed 4 errors, which is actually an improvement — last week they had 6. Progress? Sure. In the same way that stepping in a puddle is better than falling in a lake. <span class="zinger">The Bombers remain undefeated and probably aren't losing sleep over this squad.</span></p>
+                <p>Next week: Drive vs Thunder. Given how this team plays under pressure, maybe "Drive" should consider renaming to "Park." See you Tuesday. ⚾</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    DRIVE AUTO REPAIR — HOBGOOD INTERMEDIATE LEAGUE — SPRING 2026
+    <br>
+    <span style="color: var(--blue);">POWERED BY AI</span> · UPDATED WEEKLY
+</div>
+
+<script>
+    // Tab navigation
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById(tab.dataset.tab).classList.add('active');
+        });
+    });
+</script>
+
+</body>
 </html>
