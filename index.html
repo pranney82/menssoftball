@@ -156,16 +156,16 @@
             .header-right .record{font-size:26px} .header-right .record-label{font-size:8px} .header-right .last-result{font-size:9px}
             .nav-tab{padding:12px 8px;font-size:12px;letter-spacing:1px} .main{padding:16px 12px}
             .countdown-inner{flex-direction:column;gap:4px} .countdown-matchup{font-size:13px} .countdown-timer{font-size:17px}
-            .standings-table{font-size:13px} .standings-table thead th{padding:8px 6px;font-size:10px} .standings-table td{padding:10px 6px}
-            .standings-table .col-t,.standings-table .col-gp,.standings-table .col-coach{display:none}
+            .standings-table{font-size:12px} .standings-table thead th{padding:8px 5px;font-size:9px;letter-spacing:1px} .standings-table td{padding:8px 5px}
             .sub-tab{padding:8px 14px;font-size:12px}
-            .schedule-table{font-size:13px} .schedule-table thead th{padding:8px 6px;font-size:10px} .schedule-table td{padding:8px 6px}
-            .schedule-table .col-date,.schedule-table .col-loc{display:none}
+            .schedule-table{font-size:12px} .schedule-table thead th{padding:8px 5px;font-size:9px} .schedule-table td{padding:8px 5px}
             .games-grid{grid-template-columns:1fr} .game-team-name{font-size:13px} .game-score{font-size:22px}
-            .stats-table{font-size:12px} .stats-table td,.stats-table th{padding:8px 5px} .stats-table thead th{font-size:10px}
+            .stats-table{font-size:11px} .stats-table td,.stats-table th{padding:6px 4px} .stats-table thead th{font-size:9px;letter-spacing:0.5px}
+            .stats-table td:nth-child(2){white-space:nowrap}
+            .box-score-table{font-size:11px} .box-score-table td,.box-score-table th{padding:4px 3px} .box-score-table thead th{font-size:8px}
             .roast-card{padding:20px 16px} .roast-text{font-size:15px}
         }
-        @media (max-width:420px) { .header-text h1{font-size:20px} .header-right .record{font-size:22px} .nav-tab{padding:10px 6px;font-size:11px;letter-spacing:0.5px} .standings-table{font-size:12px} .schedule-table{font-size:12px} .schedule-table td{padding:6px 4px} }
+        @media (max-width:420px) { .header-text h1{font-size:20px} .header-right .record{font-size:22px} .nav-tab{padding:10px 6px;font-size:11px;letter-spacing:0.5px} .stats-table{font-size:10px} .stats-table td,.stats-table th{padding:5px 3px} .stats-table thead th{font-size:8px} }
         ::-webkit-scrollbar{width:8px;height:8px} ::-webkit-scrollbar-track{background:var(--primary-dark)} ::-webkit-scrollbar-thumb{background:var(--surface-light);border-radius:4px} ::-webkit-scrollbar-thumb:hover{background:var(--blue)}
     </style>
 </head>
@@ -193,19 +193,19 @@
 <div class="main">
     <div class="section active" id="standings">
         <div class="section-header"><div class="accent-bar"></div><h2>League Standings</h2></div>
-        <table class="standings-table"><thead><tr><th></th><th>Team</th><th>W</th><th>L</th><th class="col-t">T</th><th>GB</th><th class="col-gp">GP</th><th>PCT</th><th>STRK</th><th class="col-coach">Coach</th></tr></thead><tbody id="standings-body"></tbody></table>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="standings-table"><thead><tr><th></th><th>Team</th><th>W</th><th>L</th><th>T</th><th>GB</th><th>GP</th><th>PCT</th><th>STRK</th><th>Coach</th></tr></thead><tbody id="standings-body"></tbody></table></div>
     </div>
 
     <div class="section" id="games">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="scores-view">Scores</button><button class="sub-tab" data-sub="schedule-view">Schedule</button></div>
         <div class="sub-content active" id="scores-view"><div class="games-grid" id="scores-grid"></div></div>
-        <div class="sub-content" id="schedule-view"><table class="schedule-table"><thead><tr><th class="col-date">Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th class="col-loc">Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div>
+        <div class="sub-content" id="schedule-view"><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="schedule-table"><thead><tr><th>Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th>Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div></div>
     </div>
 
     <div class="section" id="players">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="stats-view">Season</button><button class="sub-tab" data-sub="career-view">Career</button><button class="sub-tab" data-sub="roster-view">Roster</button></div>
-        <div class="sub-content active" id="stats-view"><div style="overflow-x:auto;"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>GP</th><th>AB</th><th>H</th><th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>R</th><th>AVG</th></tr></thead><tbody id="stats-body"></tbody></table></div></div>
-        <div class="sub-content" id="career-view"><div style="overflow-x:auto;"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>Seasons</th><th>GP</th><th>AB</th><th>H</th><th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>R</th><th>AVG</th></tr></thead><tbody id="career-body"></tbody></table></div></div>
+        <div class="sub-content active" id="stats-view"><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="stats-body"></tbody></table></div></div>
+        <div class="sub-content" id="career-view"><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>SZN</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="career-body"></tbody></table></div></div>
         <div class="sub-content" id="roster-view"><div class="roster-grid"><div class="empty-state">Roster coming soon</div></div></div>
     </div>
 
@@ -253,7 +253,7 @@ function renderStandings(data){
         document.getElementById('header-record').textContent=drive.w+' - '+drive.l;
     }
     tb.innerHTML=data.map((r,i)=>{const dr=r.team.toLowerCase().includes('drive');const w=r.streak.startsWith('W');
-    return`<tr class="${dr?'highlight':''}" style="animation-delay:${i*0.05}s"><td class="rank">${r.rank}</td><td class="team-name"${dr?' style="color:var(--blue-bright);"':''}>${dr?'⚾ ':''}${r.team}</td><td>${r.w}</td><td>${r.l}</td><td class="col-t">${r.t}</td><td class="gb">${r.gb==='--'?'—':r.gb}</td><td class="col-gp">${r.gp}</td><td class="win-pct">${r.pct}</td><td style="color:var(${w?'--win':'--loss'});">${r.streak}</td><td class="col-coach">${r.coach}</td></tr>`;}).join('');
+    return`<tr class="${dr?'highlight':''}" style="animation-delay:${i*0.05}s"><td class="rank">${r.rank}</td><td class="team-name"${dr?' style="color:var(--blue-bright);"':''}>${dr?'⚾ ':''}${r.team}</td><td>${r.w}</td><td>${r.l}</td><td>${r.t}</td><td class="gb">${r.gb==='--'?'—':r.gb}</td><td>${r.gp}</td><td class="win-pct">${r.pct}</td><td style="color:var(${w?'--win':'--loss'});">${r.streak}</td><td>${r.coach}</td></tr>`;}).join('');
 }
 
 // RENDER SCORES
@@ -322,7 +322,7 @@ function renderSchedule(schedule){
         const hw=hasScore&&g.homeScore>g.awayScore;
         const hName=isDrive&&g.home.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(hw&&hasScore?'<strong>'+g.home+'</strong>':g.home);
         const aName=isDrive&&g.away.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(!hw&&hasScore?'<strong>'+g.away+'</strong>':g.away);
-        html+=`<tr class="${isDrive?'drive-game':''}"><td class="col-date">${g.date}</td><td>${g.time}</td><td>${hName}</td><td>${hasScore?'<span class="score-val '+(hw?'score-win':'score-loss')+'">'+g.homeScore+'</span>':''}</td><td>${aName}</td><td>${hasScore?'<span class="score-val '+(!hw?'score-win':'score-loss')+'">'+g.awayScore+'</span>':''}</td><td class="col-loc">${g.location}</td></tr>`;
+        html+=`<tr class="${isDrive?'drive-game':''}"><td>${g.date}</td><td>${g.time}</td><td>${hName}</td><td>${hasScore?'<span class="score-val '+(hw?'score-win':'score-loss')+'">'+g.homeScore+'</span>':''}</td><td>${aName}</td><td>${hasScore?'<span class="score-val '+(!hw?'score-win':'score-loss')+'">'+g.awayScore+'</span>':''}</td><td>${g.location}</td></tr>`;
     });
     tb.innerHTML=html;
     highlightWeek();collapsePastWeeks();
@@ -331,15 +331,15 @@ function renderSchedule(schedule){
 // RENDER STATS (season)
 function renderStats(data){
     const tb=document.getElementById('stats-body');
-    if(!data||!data.length){tb.innerHTML='<tr><td colspan="11" class="empty-state">Player stats coming soon</td></tr>';return;}
-    tb.innerHTML=data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td>${p.gp}</td><td>${p.ab}</td><td>${p.h}</td><td>${p['2b']}</td><td>${p['3b']}</td><td>${p.hr}</td><td>${p.rbi}</td><td>${p.r}</td><td class="${i===0?'stats-leader':'stat-highlight'}">${p.avg}</td></tr>`).join('');
+    if(!data||!data.length){tb.innerHTML='<tr><td colspan="18" class="empty-state">Player stats coming soon</td></tr>';return;}
+    tb.innerHTML=data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td>${p.gp}</td><td>${p.pa}</td><td>${p.ab}</td><td>${p.h}</td><td>${p['1b']}</td><td>${p['2b']}</td><td>${p['3b']}</td><td>${p.hr}</td><td>${p.bb}</td><td>${p.rbi}</td><td>${p.r}</td><td>${p.tb}</td><td class="stat-highlight">${p.avg}</td><td class="stat-highlight">${p.obp}</td><td class="stat-highlight">${p.slg}</td><td class="${i===0?'stats-leader':'stat-highlight'}">${p.ops}</td></tr>`).join('');
 }
 
 // RENDER CAREER STATS
 function renderCareerStats(data){
     const tb=document.getElementById('career-body');
-    if(!data||!data.length){tb.innerHTML='<tr><td colspan="12" class="empty-state">Career stats will populate after the first season</td></tr>';return;}
-    tb.innerHTML=data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td>${p.seasons||1}</td><td>${p.gp}</td><td>${p.ab}</td><td>${p.h}</td><td>${p['2b']}</td><td>${p['3b']}</td><td>${p.hr}</td><td>${p.rbi}</td><td>${p.r}</td><td class="${i===0?'stats-leader':'stat-highlight'}">${p.avg}</td></tr>`).join('');
+    if(!data||!data.length){tb.innerHTML='<tr><td colspan="19" class="empty-state">Career stats will populate after the first season</td></tr>';return;}
+    tb.innerHTML=data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td>${p.seasons||1}</td><td>${p.gp}</td><td>${p.pa}</td><td>${p.ab}</td><td>${p.h}</td><td>${p['1b']}</td><td>${p['2b']}</td><td>${p['3b']}</td><td>${p.hr}</td><td>${p.bb}</td><td>${p.rbi}</td><td>${p.r}</td><td>${p.tb}</td><td class="stat-highlight">${p.avg}</td><td class="stat-highlight">${p.obp}</td><td class="stat-highlight">${p.slg}</td><td class="${i===0?'stats-leader':'stat-highlight'}">${p.ops}</td></tr>`).join('');
 }
 
 // RENDER ROASTS
