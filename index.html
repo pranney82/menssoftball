@@ -159,6 +159,21 @@
         .roast-text p { margin-bottom:10px; }
         .roast-text .zinger { color:var(--blue-glow); font-weight:700; }
 
+        /* SHARE BUTTON */
+        .share-btn { display:inline-flex; align-items:center; gap:6px; background:rgba(37,99,235,0.12); color:var(--blue-bright); border:1px solid rgba(37,99,235,0.25); padding:8px 18px; border-radius:8px; font-family:'Oswald',sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:2px; cursor:pointer; transition:all 0.2s; margin-top:16px; }
+        .share-btn:hover { background:rgba(37,99,235,0.25); transform:translateY(-1px); }
+        .share-btn.copied { background:rgba(34,197,94,0.15); color:var(--win); border-color:rgba(34,197,94,0.3); }
+
+        /* COLLAPSIBLE WEEKS */
+        .week-toggle { cursor:pointer; user-select:none; }
+        .week-toggle::after { content:' ▾'; font-size:10px; opacity:0.5; }
+        .week-toggle.collapsed::after { content:' ▸'; }
+        .week-games-hidden { display:none; }
+
+        /* LIVE DOT */
+        @keyframes livePulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.6);} 50%{box-shadow:0 0 0 6px rgba(34,197,94,0);} }
+        .nav-tab .live-dot { display:inline-block; width:7px; height:7px; background:var(--win); border-radius:50%; margin-left:6px; animation:livePulse 1.5s infinite; vertical-align:middle; }
+
         /* FOOTER */
         .footer { max-width:1200px; margin:30px auto 0; padding:16px 20px; border-top:1px solid rgba(255,255,255,0.06); text-align:center; font-size:11px; color:var(--gray-dark); letter-spacing:1px; }
 
@@ -354,6 +369,7 @@
                 <p>Next week: Flamingos. If you lose to a team called the Flamingos, every single one of you owes the group chat a pink jersey selfie. No exceptions. See you Monday. ⚾</p>
             </div>
         </div>
+        <button class="share-btn" id="share-roast" onclick="shareRoast()">📋 Copy Roast to Clipboard</button>
     </div>
 </div>
 
@@ -467,8 +483,63 @@ function updateRecord(data){
     const el=document.getElementById('header-record');if(el)el.textContent=(d.W||0)+' - '+(d.L||0);
 }
 
+// Share roast
+function shareRoast(){
+    const text=document.getElementById('roast-text').innerText;
+    navigator.clipboard.writeText(text).then(()=>{
+        const btn=document.getElementById('share-roast');
+        btn.classList.add('copied');btn.innerHTML='✅ Copied!';
+        setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📋 Copy Roast to Clipboard';},2000);
+    }).catch(()=>{
+        // Fallback for older browsers
+        const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+        const btn=document.getElementById('share-roast');
+        btn.classList.add('copied');btn.innerHTML='✅ Copied!';
+        setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📋 Copy Roast to Clipboard';},2000);
+    });
+}
+
+// Collapse past weeks
+function collapsePastWeeks(){
+    const now=new Date();
+    document.querySelectorAll('.week-header[data-week]').forEach(wh=>{
+        const wd=new Date(wh.dataset.week+'T00:00:00');
+        const we=new Date(wd);we.setDate(we.getDate()+7);
+        const isPast=we<now;
+        // Check if this week has scores (has .score-val in its rows)
+        let hasScores=false;
+        let row=wh.closest('tr').nextElementSibling;
+        const rows=[];
+        while(row&&!row.querySelector('.week-header')&&!row.querySelector('.playoff-header')){
+            rows.push(row);
+            if(row.querySelector('.score-val'))hasScores=true;
+            row=row.nextElementSibling;
+        }
+        if(isPast&&hasScores){
+            wh.classList.add('week-toggle','collapsed');
+            rows.forEach(r=>r.classList.add('week-games-hidden'));
+            wh.addEventListener('click',()=>{
+                const isCollapsed=wh.classList.toggle('collapsed');
+                rows.forEach(r=>r.classList.toggle('week-games-hidden',isCollapsed));
+            });
+        }
+    });
+}
+
+// Live dot on game day
+function checkGameDay(){
+    const now=new Date();
+    const day=now.getDay(); // 0=Sun,1=Mon
+    if(day===1){ // Monday
+        const gamesTab=document.querySelector('[data-tab="games"]');
+        if(gamesTab&&!gamesTab.querySelector('.live-dot')){
+            gamesTab.innerHTML+='<span class="live-dot"></span>';
+        }
+    }
+}
+
 async function init(){
-    initCountdown();highlightWeek();
+    initCountdown();highlightWeek();collapsePastWeeks();checkGameDay();
     if(SHEET_ID){try{
         const[st,ro,ss]=await Promise.all([fetchSheet('standings'),fetchSheet('roast'),fetchSheet('stats')]);
         if(st){renderStandings(st);updateRecord(st);}if(ro)renderRoast(ro);if(ss)renderStats(ss);
