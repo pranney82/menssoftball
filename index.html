@@ -21,6 +21,9 @@
     <meta name="twitter:image" content="https://pranney82.github.io/menssoftball/og-image.png">
 
     <meta name="description" content="Drive Auto Repair - Hobgood Intermediate Softball League. Spring 2026 standings, scores, schedule, and weekly AI roasts.">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -559,6 +562,154 @@
             border-left: 3px solid var(--gold);
         }
 
+        /* === COUNTDOWN BAR === */
+        .countdown-bar {
+            background: linear-gradient(90deg, var(--surface) 0%, rgba(37, 99, 235, 0.15) 50%, var(--surface) 100%);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2);
+            padding: 12px 20px;
+        }
+        .countdown-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .countdown-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gray-dark);
+        }
+        .countdown-matchup {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            color: var(--blue-bright);
+        }
+        .countdown-timer {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            color: var(--white);
+            background: rgba(37, 99, 235, 0.15);
+            padding: 4px 14px;
+            border-radius: 6px;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            letter-spacing: 2px;
+        }
+
+        /* === GENERATE ROAST BUTTON === */
+        .generate-roast-btn {
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--blue) 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .generate-roast-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+        }
+        .generate-roast-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* === PHOTOS GRID === */
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        .photo-card {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.2s;
+            background: var(--surface);
+        }
+        .photo-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+        .photo-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+        .photo-card .photo-caption {
+            padding: 10px 14px;
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* === API KEY MODAL === */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: var(--surface);
+            border: 1px solid var(--blue);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 480px;
+            width: 90%;
+        }
+        .modal-box h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            color: var(--blue-bright);
+        }
+        .modal-box p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .modal-box input {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--primary-dark);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: var(--white);
+            font-size: 14px;
+            font-family: monospace;
+            margin-bottom: 16px;
+        }
+        .modal-box input:focus { outline: none; border-color: var(--blue); }
+        .modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
+        .modal-btns button {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            border: none;
+        }
+        .modal-btn-cancel { background: var(--surface-light); color: var(--gray); }
+        .modal-btn-go { background: var(--blue); color: white; }
+
         /* === FOOTER === */
         .footer {
             max-width: 1200px;
@@ -613,6 +764,18 @@
             /* === GAME CARDS MOBILE === */
             .game-team-name { font-size: 13px; }
             .game-score { font-size: 24px; }
+
+            /* === COUNTDOWN MOBILE === */
+            .countdown-inner { flex-direction: column; gap: 6px; }
+            .countdown-matchup { font-size: 14px; }
+            .countdown-timer { font-size: 18px; }
+
+            /* === PHOTOS MOBILE === */
+            .photos-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+            .photo-card img { height: 160px; }
+
+            /* === MODAL MOBILE === */
+            .modal-box { padding: 20px; }
         }
 
         @media (max-width: 420px) {
@@ -665,6 +828,15 @@
     </div>
 </div>
 
+<!-- NEXT GAME COUNTDOWN -->
+<div id="countdown-bar" class="countdown-bar" style="display:none;">
+    <div class="countdown-inner">
+        <span class="countdown-label">NEXT GAME</span>
+        <span class="countdown-matchup" id="countdown-matchup"></span>
+        <span class="countdown-timer" id="countdown-timer"></span>
+    </div>
+</div>
+
 <!-- NAV -->
 <div style="background: var(--primary);">
     <div class="nav-tabs">
@@ -674,6 +846,7 @@
         <button class="nav-tab" data-tab="stats">Player Stats</button>
         <button class="nav-tab" data-tab="roster">Roster</button>
         <button class="nav-tab" data-tab="roast">AI Roast</button>
+        <button class="nav-tab" data-tab="photos">Photos</button>
     </div>
 </div>
 
@@ -1232,14 +1405,36 @@
             <div class="accent-bar"></div>
             <h2>AI Weekly Roast</h2>
         </div>
-        <div class="roast-card">
+        <div class="roast-card" id="roast-card">
             <div class="roast-badge"><span class="dot"></span> Week 1 Report</div>
-            <div class="roast-text">
+            <div class="roast-text" id="roast-text">
                 <p>Congratulations to Drive Auto Repair for beating Motiv8 16-5. <span class="zinger">Real impressive, boys. You beat a team whose name is literally a motivational poster at a dentist's office.</span> Pop the champagne. Call ESPN. Alert the media. A bunch of grown men with knee braces scored 16 runs against what appeared to be a team that carpooled from a fantasy football draft.</p>
                 <p><span class="zinger">Coach Ranney drew up the game plan on a napkin at Waffle House</span> and somehow it worked. The offense came out swinging like they all had outstanding warrants. The defense? Let's just say the errors weren't tracked because nobody wanted to do that much math.</p>
                 <p>Meanwhile, <span class="zinger">half the lineup can't touch their toes but swears they're "warming up"</span> every Monday at 7:55 PM. The dugout smells like Bengay and bad decisions. One of you brought a lawn chair. You know who you are.</p>
                 <p><span class="zinger">Rocket Power dropped 34 on the Dirt Dawgs, so let's not get too comfortable.</span> Drive's 16 runs look cute next to that. That's like bragging about your Honda Civic at a Ferrari dealership — which, given the team name, is painfully on brand.</p>
                 <p>Next week: Flamingos. If you lose to a team called the Flamingos, every single one of you owes the group chat a pink jersey selfie. No exceptions. See you Monday. ⚾</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="generate-roast-btn" id="generate-roast-btn" onclick="generateRoast()">
+                🔥 Generate Fresh Roast
+            </button>
+            <div id="roast-loading" style="display:none; margin-top: 12px; color: var(--blue-bright); font-family: 'Oswald', sans-serif; letter-spacing: 2px; text-transform: uppercase; font-size: 13px;">
+                <span class="dot" style="display:inline-block; width:6px; height:6px; background:var(--blue-bright); border-radius:50%; animation: pulse 1s infinite;"></span>
+                AI is cooking up something ruthless...
+            </div>
+        </div>
+    </div>
+
+    <!-- PHOTOS -->
+    <div class="section" id="photos">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <h2>Photos</h2>
+        </div>
+        <div class="photos-grid" id="photos-grid">
+            <div style="text-align: center; padding: 60px 16px; color: var(--gray-dark); font-family: 'Oswald', sans-serif; font-size: 16px; letter-spacing: 2px; text-transform: uppercase;">
+                Photos coming soon — add image URLs to your Google Sheet "photos" tab
             </div>
         </div>
     </div>
@@ -1253,8 +1448,61 @@
     <span style="color: var(--blue);">POWERED BY YOUR MOM</span> · UPDATED WEEKLY
 </div>
 
+<!-- API KEY MODAL -->
+<div class="modal-overlay" id="api-modal">
+    <div class="modal-box">
+        <h3>🔥 AI Roast Generator</h3>
+        <p>Enter your Anthropic API key to generate a fresh roast. Your key is only stored in memory for this session — never saved anywhere.</p>
+        <input type="password" id="api-key-input" placeholder="sk-ant-api03-...">
+        <div class="modal-btns">
+            <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+            <button class="modal-btn-go" onclick="submitApiKey()">Let It Rip 🔥</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script>
-    // Tab navigation
+    // ========================================
+    // CONFIG — UPDATE THESE
+    // ========================================
+    const SHEET_ID = '';  // Your Google Sheet ID goes here
+    const TEAM_NAME = 'Drive';
+
+    // ========================================
+    // SCHEDULE DATA (used for countdown + scores)
+    // This is the fallback when no Google Sheet is connected
+    // ========================================
+    const SCHEDULE = [
+        { week: 1, date: '2026-03-02', time: '7:00 PM', home: 'HS Legends/MOST', homeScore: 19, away: 'Flamingos', awayScore: 11, location: 'HP2' },
+        { week: 1, date: '2026-03-02', time: '8:00 PM', home: 'Drive', homeScore: 16, away: 'Motiv8', awayScore: 5, location: 'HP2' },
+        { week: 1, date: '2026-03-02', time: '9:00 PM', home: 'Dirt Dawgs', homeScore: 13, away: 'Rocket Power', awayScore: 34, location: 'HP2' },
+        { week: 2, date: '2026-03-09', time: '7:00 PM', home: 'Motiv8', away: 'Dirt Dawgs', location: 'HP2' },
+        { week: 2, date: '2026-03-09', time: '8:00 PM', home: 'Rocket Power', away: 'HS Legends/MOST', location: 'HP2' },
+        { week: 2, date: '2026-03-09', time: '9:00 PM', home: 'Flamingos', away: 'Drive', location: 'HP2' },
+        { week: 3, date: '2026-03-16', time: '7:00 PM', home: 'Rocket Power', away: 'Flamingos', location: 'HP2' },
+        { week: 3, date: '2026-03-16', time: '8:00 PM', home: 'Dirt Dawgs', away: 'Drive', location: 'HP2' },
+        { week: 3, date: '2026-03-16', time: '9:00 PM', home: 'HS Legends/MOST', away: 'Motiv8', location: 'HP2' },
+        { week: 4, date: '2026-03-23', time: '7:00 PM', home: 'Drive', away: 'HS Legends/MOST', location: 'HP2' },
+        { week: 4, date: '2026-03-23', time: '8:00 PM', home: 'Dirt Dawgs', away: 'Flamingos', location: 'HP2' },
+        { week: 4, date: '2026-03-23', time: '9:00 PM', home: 'Motiv8', away: 'Rocket Power', location: 'HP2' },
+        { week: 5, date: '2026-03-30', time: '7:00 PM', home: 'Rocket Power', away: 'Drive', location: 'HP2' },
+        { week: 5, date: '2026-03-30', time: '8:00 PM', home: 'Flamingos', away: 'Motiv8', location: 'HP2' },
+        { week: 5, date: '2026-03-30', time: '9:00 PM', home: 'HS Legends/MOST', away: 'Dirt Dawgs', location: 'HP2' },
+        { week: 7, date: '2026-04-13', time: '7:00 PM', home: 'Motiv8', away: 'Drive', location: 'HP2' },
+        { week: 7, date: '2026-04-13', time: '8:00 PM', home: 'Flamingos', away: 'HS Legends/MOST', location: 'HP2' },
+        { week: 7, date: '2026-04-13', time: '9:00 PM', home: 'Rocket Power', away: 'Dirt Dawgs', location: 'HP2' },
+        { week: 8, date: '2026-04-20', time: '7:00 PM', home: 'Dirt Dawgs', away: 'Motiv8', location: 'HP2' },
+        { week: 8, date: '2026-04-20', time: '8:00 PM', home: 'HS Legends/MOST', away: 'Rocket Power', location: 'HP2' },
+        { week: 8, date: '2026-04-20', time: '9:00 PM', home: 'Drive', away: 'Flamingos', location: 'HP2' },
+        { week: 9, date: '2026-04-27', time: '7:00 PM', home: 'Flamingos', away: 'Rocket Power', location: 'HP2' },
+        { week: 9, date: '2026-04-27', time: '8:00 PM', home: 'Drive', away: 'Dirt Dawgs', location: 'HP2' },
+        { week: 9, date: '2026-04-27', time: '9:00 PM', home: 'Motiv8', away: 'HS Legends/MOST', location: 'HP2' },
+    ];
+
+    // ========================================
+    // TAB NAVIGATION
+    // ========================================
     document.querySelectorAll('.nav-tab').forEach(tab => {
         tab.addEventListener('click', () => {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -1263,6 +1511,341 @@
             document.getElementById(tab.dataset.tab).classList.add('active');
         });
     });
+
+    // ========================================
+    // NEXT GAME COUNTDOWN
+    // ========================================
+    function getNextDriveGame() {
+        const now = new Date();
+        for (const game of SCHEDULE) {
+            if (game.home !== TEAM_NAME && game.away !== TEAM_NAME) continue;
+            if (game.homeScore !== undefined || game.awayScore !== undefined) continue;
+            const [h, m] = game.time.replace(' PM', '').replace(' AM', '').split(':');
+            let hour = parseInt(h);
+            if (game.time.includes('PM') && hour !== 12) hour += 12;
+            const gameDate = new Date(game.date + 'T00:00:00');
+            gameDate.setHours(hour, parseInt(m), 0);
+            if (gameDate > now) {
+                const opponent = game.home === TEAM_NAME ? game.away : game.home;
+                const homeAway = game.home === TEAM_NAME ? 'vs' : '@';
+                return { date: gameDate, opponent, homeAway, time: game.time, week: game.week };
+            }
+        }
+        return null;
+    }
+
+    function updateCountdown() {
+        const next = getNextDriveGame();
+        if (!next) return;
+
+        const bar = document.getElementById('countdown-bar');
+        const matchup = document.getElementById('countdown-matchup');
+        const timer = document.getElementById('countdown-timer');
+        bar.style.display = 'block';
+        matchup.textContent = `${TEAM_NAME} ${next.homeAway} ${next.opponent} · ${next.time}`;
+
+        function tick() {
+            const now = new Date();
+            const diff = next.date - now;
+            if (diff <= 0) {
+                timer.textContent = 'GAME TIME!';
+                timer.style.color = 'var(--win)';
+                return;
+            }
+            const days = Math.floor(diff / 86400000);
+            const hrs = Math.floor((diff % 86400000) / 3600000);
+            const mins = Math.floor((diff % 3600000) / 60000);
+            const secs = Math.floor((diff % 60000) / 1000);
+            if (days > 0) {
+                timer.textContent = `${days}d ${hrs}h ${mins}m ${secs}s`;
+            } else {
+                timer.textContent = `${hrs}h ${mins}m ${secs}s`;
+            }
+        }
+        tick();
+        setInterval(tick, 1000);
+    }
+
+    // ========================================
+    // GOOGLE SHEETS INTEGRATION
+    // ========================================
+    async function fetchSheet(tabName) {
+        if (!SHEET_ID) return null;
+        try {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
+            const res = await fetch(url);
+            if (!res.ok) return null;
+            const csv = await res.text();
+            const parsed = Papa.parse(csv, { header: true, skipEmptyLines: true });
+            return parsed.data;
+        } catch (e) {
+            console.warn(`Failed to fetch sheet "${tabName}":`, e);
+            return null;
+        }
+    }
+
+    function renderStandings(data) {
+        if (!data || !data.length) return;
+        const tbody = document.querySelector('#standings .standings-table tbody');
+        if (!tbody) return;
+        tbody.innerHTML = data.map((row, i) => {
+            const isDrive = row.Team && row.Team.toLowerCase().includes('drive');
+            const isWin = row.Streak && row.Streak.startsWith('W');
+            return `<tr class="${isDrive ? 'highlight' : ''}">
+                <td class="rank">${i + 1}</td>
+                <td class="team-name" ${isDrive ? 'style="color: var(--blue-bright);"' : ''}>${isDrive ? '⚾ ' : ''}${row.Team || ''}</td>
+                <td>${row.W || 0}</td>
+                <td>${row.L || 0}</td>
+                <td class="col-t">${row.T || 0}</td>
+                <td class="gb">${row.GB || '—'}</td>
+                <td class="col-gp">${row.GP || 0}</td>
+                <td class="win-pct">${row.PCT || '.000'}</td>
+                <td style="color: var(${isWin ? '--win' : '--loss'});">${row.Streak || ''}</td>
+                <td class="col-coach">${row.Coach || ''}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    function renderSchedule(data) {
+        if (!data || !data.length) return;
+        const tbody = document.querySelector('#schedule .schedule-table tbody');
+        if (!tbody) return;
+
+        let html = '';
+        let currentWeek = '';
+        data.forEach(row => {
+            const week = row.Week || '';
+            if (week !== currentWeek) {
+                currentWeek = week;
+                const isPlayoff = week.toLowerCase().includes('playoff') || week.toLowerCase().includes('champ');
+                html += `<tr><td colspan="7" class="${isPlayoff ? 'playoff-header' : 'week-header'}">${isPlayoff ? '🏆 ' : ''}${week}</td></tr>`;
+            }
+            if (row.Date === 'Spring Break' || row.Date === 'BYE') {
+                html += `<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--gray-dark);font-style:italic;">${row.Date}</td></tr>`;
+                return;
+            }
+            const isDrive = (row.Home && row.Home.toLowerCase().includes('drive')) || (row.Away && row.Away.toLowerCase().includes('drive'));
+            const hasScore = row.HomeScore && row.AwayScore;
+            const homeWon = hasScore && parseInt(row.HomeScore) > parseInt(row.AwayScore);
+            html += `<tr class="${isDrive ? 'drive-game' : ''}">
+                <td class="col-date">${row.Date || ''}</td>
+                <td>${row.Time || ''}</td>
+                <td>${isDrive && row.Home && row.Home.toLowerCase().includes('drive') ? '<strong style="color:var(--blue-bright);">Drive</strong>' : (homeWon && hasScore ? '<strong>' + (row.Home||'') + '</strong>' : (row.Home||''))}</td>
+                <td>${hasScore ? '<span class="score-val ' + (homeWon ? 'score-win' : 'score-loss') + '">' + row.HomeScore + '</span>' : ''}</td>
+                <td>${isDrive && row.Away && row.Away.toLowerCase().includes('drive') ? '<strong style="color:var(--blue-bright);">Drive</strong>' : (!homeWon && hasScore ? '<strong>' + (row.Away||'') + '</strong>' : (row.Away||''))}</td>
+                <td>${hasScore ? '<span class="score-val ' + (!homeWon ? 'score-win' : 'score-loss') + '">' + row.AwayScore + '</span>' : ''}</td>
+                <td class="col-loc">${row.Location || ''}</td>
+            </tr>`;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function renderScores(data) {
+        if (!data || !data.length) return;
+        const grid = document.querySelector('#scores .games-grid');
+        if (!grid) return;
+
+        // Filter to games with scores, show Drive games first then others
+        const played = data.filter(r => r.HomeScore && r.AwayScore && r.Date);
+        if (!played.length) return;
+
+        // Group by week
+        const weeks = {};
+        played.forEach(g => {
+            const w = g.Week || 'Unknown';
+            if (!weeks[w]) weeks[w] = [];
+            weeks[w].push(g);
+        });
+
+        let html = '';
+        Object.entries(weeks).forEach(([week, games]) => {
+            games.forEach(g => {
+                const isDrive = (g.Home||'').toLowerCase().includes('drive') || (g.Away||'').toLowerCase().includes('drive');
+                const homeWon = parseInt(g.HomeScore) > parseInt(g.AwayScore);
+                const driveWon = isDrive && ((g.Home||'').toLowerCase().includes('drive') ? homeWon : !homeWon);
+                const homeLogo = (g.Home||'').toLowerCase().includes('drive') ? `<div class="game-team-logo drive" style="overflow:hidden;padding:0;"><img src="logo.png" alt="D" style="width:100%;height:100%;object-fit:cover;"></div>` : `<div class="game-team-logo">${(g.Home||'').substring(0,2).toUpperCase()}</div>`;
+                const awayLogo = (g.Away||'').toLowerCase().includes('drive') ? `<div class="game-team-logo drive" style="overflow:hidden;padding:0;"><img src="logo.png" alt="D" style="width:100%;height:100%;object-fit:cover;"></div>` : `<div class="game-team-logo">${(g.Away||'').substring(0,2).toUpperCase()}</div>`;
+
+                html += `<div class="game-card">
+                    <div class="game-card-header">
+                        <span>${week} — ${g.Date || ''}</span>
+                        <span>Final</span>
+                    </div>
+                    <div class="game-card-body">
+                        <div class="game-matchup">
+                            <div class="game-team">${homeLogo}<span class="game-team-name">${g.Home||''}</span></div>
+                            <div class="game-score">
+                                <span style="color:var(${homeWon ? '--win' : '--loss'});">${g.HomeScore}</span>
+                                <span class="dash">-</span>
+                                <span style="color:var(${!homeWon ? '--win' : '--loss'});">${g.AwayScore}</span>
+                            </div>
+                            <div class="game-team" style="justify-content:flex-end;"><span class="game-team-name">${g.Away||''}</span>${awayLogo}</div>
+                        </div>
+                        ${isDrive ? `<div style="text-align:center;"><span class="game-result ${driveWon ? 'win' : 'loss'}">${driveWon ? 'Win' : 'Loss'}</span></div>` : ''}
+                    </div>
+                </div>`;
+            });
+        });
+        grid.innerHTML = html;
+    }
+
+    function renderPhotos(data) {
+        if (!data || !data.length) return;
+        const grid = document.getElementById('photos-grid');
+        if (!grid) return;
+        const validPhotos = data.filter(r => r.URL && r.URL.trim());
+        if (!validPhotos.length) return;
+        grid.innerHTML = validPhotos.map(p => `
+            <div class="photo-card">
+                <img src="${p.URL}" alt="${p.Caption || ''}" loading="lazy" onerror="this.parentElement.style.display='none'">
+                ${p.Caption ? `<div class="photo-caption">${p.Caption}</div>` : ''}
+            </div>
+        `).join('');
+    }
+
+    function renderRoast(data) {
+        if (!data || !data.length) return;
+        // Use the most recent roast entry
+        const latest = data[data.length - 1];
+        if (!latest || !latest.Content) return;
+        const badge = document.querySelector('#roast-card .roast-badge');
+        const text = document.getElementById('roast-text');
+        if (badge && latest.Week) badge.innerHTML = `<span class="dot"></span> ${latest.Week} Report`;
+        if (text && latest.Content) {
+            text.innerHTML = latest.Content.split('\n').filter(p => p.trim()).map(p => `<p>${p}</p>`).join('');
+        }
+    }
+
+    function updateRecord(data) {
+        if (!data || !data.length) return;
+        const drive = data.find(r => r.Team && r.Team.toLowerCase().includes('drive'));
+        if (!drive) return;
+        const record = document.querySelector('.header-record .record');
+        if (record) record.textContent = `${drive.W || 0} - ${drive.L || 0}`;
+    }
+
+    // ========================================
+    // AI ROAST GENERATOR
+    // ========================================
+    let apiKey = '';
+
+    function generateRoast() {
+        if (!apiKey) {
+            document.getElementById('api-modal').classList.add('active');
+            return;
+        }
+        doGenerateRoast();
+    }
+
+    function closeModal() {
+        document.getElementById('api-modal').classList.remove('active');
+    }
+
+    function submitApiKey() {
+        apiKey = document.getElementById('api-key-input').value.trim();
+        if (!apiKey) return;
+        closeModal();
+        doGenerateRoast();
+    }
+
+    async function doGenerateRoast() {
+        const btn = document.getElementById('generate-roast-btn');
+        const loading = document.getElementById('roast-loading');
+        const text = document.getElementById('roast-text');
+        btn.disabled = true;
+        loading.style.display = 'block';
+
+        // Gather current data for context
+        const standingsRows = document.querySelectorAll('#standings .standings-table tbody tr');
+        let standingsText = '';
+        standingsRows.forEach(r => {
+            const cells = r.querySelectorAll('td');
+            if (cells.length > 3) standingsText += Array.from(cells).map(c => c.textContent.trim()).join(' | ') + '\n';
+        });
+
+        const scoresCards = document.querySelectorAll('#scores .game-card');
+        let scoresText = '';
+        scoresCards.forEach(c => { scoresText += c.textContent.replace(/\s+/g, ' ').trim() + '\n'; });
+
+        const prompt = `You are a ruthless, hilarious AI sports roast writer for a men's recreational softball team called "Drive Auto Repair" (aka "Drive") coached by Ranney in the Hobgood Intermediate Softball League, Spring 2026.
+
+Write a BRUTAL locker room roast — the kind of trash talk you'd hear from the guys who peaked in high school. Target ONLY Drive and its players/coach. Be savage, personal, and funny. Use real data from the standings and scores below. Reference specific scores, opponents, and situations. Include creative insults, backhanded compliments, and devastating one-liners.
+
+CURRENT STANDINGS:
+${standingsText || 'No standings data available'}
+
+RECENT SCORES:
+${scoresText || 'No score data available'}
+
+Rules:
+- Target ONLY Drive. Roast their wins as ugly, their losses as embarrassing
+- Make fun of the coach, the dugout, the players' athleticism (or lack thereof)
+- Reference other teams only to compare unfavorably to Drive
+- 4-5 paragraphs, raw and unfiltered locker room humor
+- Use <span class="zinger"> tags around the best burns
+- Wrap each paragraph in <p> tags
+- End with a line about the next game
+- No apologies, no holding back`;
+
+        try {
+            const response = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey,
+                    'anthropic-version': '2023-06-01',
+                    'anthropic-dangerous-direct-browser-access': 'true'
+                },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-20250514',
+                    max_tokens: 1000,
+                    messages: [{ role: 'user', content: prompt }]
+                })
+            });
+
+            const data = await response.json();
+            if (data.content && data.content[0]) {
+                text.innerHTML = data.content[0].text;
+                const badge = document.querySelector('#roast-card .roast-badge');
+                if (badge) badge.innerHTML = '<span class="dot"></span> 🔥 Fresh AI Roast';
+            } else if (data.error) {
+                text.innerHTML = `<p style="color:var(--loss);">Error: ${data.error.message}. Check your API key and try again.</p>`;
+            }
+        } catch (e) {
+            text.innerHTML = `<p style="color:var(--loss);">Failed to generate roast. Check your connection and API key.</p>`;
+        }
+
+        btn.disabled = false;
+        loading.style.display = 'none';
+    }
+
+    // ========================================
+    // INIT
+    // ========================================
+    async function init() {
+        // Start countdown
+        updateCountdown();
+
+        // If Google Sheet is configured, load data
+        if (SHEET_ID) {
+            try {
+                const [standings, schedule, photos, roast] = await Promise.all([
+                    fetchSheet('standings'),
+                    fetchSheet('schedule'),
+                    fetchSheet('photos'),
+                    fetchSheet('roast')
+                ]);
+                if (standings) { renderStandings(standings); updateRecord(standings); }
+                if (schedule) { renderSchedule(schedule); renderScores(schedule); }
+                if (photos) renderPhotos(photos);
+                if (roast) renderRoast(roast);
+            } catch (e) {
+                console.warn('Google Sheets load failed, using static data:', e);
+            }
+        }
+    }
+
+    init();
 </script>
 
 </body>
