@@ -1645,6 +1645,30 @@
         grid.innerHTML = html;
     }
 
+    function renderStats(data) {
+        if (!data || !data.length) return;
+        const tbody = document.querySelector('#stats .stats-table tbody');
+        if (!tbody) return;
+        const players = data.filter(r => r.Player && r.Player.trim());
+        if (!players.length) return;
+        tbody.innerHTML = players.map((p, i) => {
+            const isLeader = i === 0;
+            return `<tr>
+                <td>${i + 1}</td>
+                <td>${p.Player || ''}</td>
+                <td>${p.GP || 0}</td>
+                <td>${p.AB || 0}</td>
+                <td>${p.H || 0}</td>
+                <td>${p['2B'] || 0}</td>
+                <td>${p['3B'] || 0}</td>
+                <td>${p.HR || 0}</td>
+                <td>${p.RBI || 0}</td>
+                <td>${p.R || 0}</td>
+                <td class="${isLeader ? 'stats-leader' : 'stat-highlight'}">${p.AVG || '.000'}</td>
+            </tr>`;
+        }).join('');
+    }
+
     function renderRoast(data) {
         if (!data || !data.length) return;
         // Use the most recent roast entry
@@ -1771,14 +1795,16 @@ Rules:
         // If Google Sheet is configured, load data
         if (SHEET_ID) {
             try {
-                const [standings, schedule, roast] = await Promise.all([
+                const [standings, schedule, roast, stats] = await Promise.all([
                     fetchSheet('standings'),
                     fetchSheet('schedule'),
-                    fetchSheet('roast')
+                    fetchSheet('roast'),
+                    fetchSheet('stats')
                 ]);
                 if (standings) { renderStandings(standings); updateRecord(standings); }
                 if (schedule) { renderSchedule(schedule); renderScores(schedule); }
                 if (roast) renderRoast(roast);
+                if (stats) renderStats(stats);
             } catch (e) {
                 console.warn('Google Sheets load failed, using static data:', e);
             }
