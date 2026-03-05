@@ -484,6 +484,64 @@
             font-weight: 700;
         }
 
+        /* === SCHEDULE TABLE === */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .schedule-table thead th {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--gray-dark);
+            padding: 10px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .schedule-table tbody tr {
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background 0.15s;
+        }
+        .schedule-table tbody tr:hover { background: rgba(37, 99, 235, 0.08); }
+        .schedule-table tbody tr.drive-game {
+            background: rgba(37, 99, 235, 0.1);
+            border-left: 3px solid var(--blue);
+        }
+        .schedule-table tbody tr.drive-game:hover { background: rgba(37, 99, 235, 0.16); }
+        .schedule-table td {
+            padding: 10px 16px;
+        }
+        .schedule-table .week-header {
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--blue-bright);
+            background: rgba(37, 99, 235, 0.06);
+            padding: 10px 16px;
+        }
+        .schedule-table .score-val {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            min-width: 28px;
+            display: inline-block;
+            text-align: center;
+        }
+        .schedule-table .score-win { color: var(--win); font-weight: 700; }
+        .schedule-table .score-loss { color: var(--loss); }
+        .schedule-table .playoff-header {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            background: rgba(251, 191, 36, 0.08);
+            padding: 12px 16px;
+            border-left: 3px solid var(--gold);
+        }
+
         /* === FOOTER === */
         .footer {
             max-width: 1200px;
@@ -552,6 +610,7 @@
     <div class="nav-tabs">
         <button class="nav-tab active" data-tab="standings">Standings</button>
         <button class="nav-tab" data-tab="scores">Scores</button>
+        <button class="nav-tab" data-tab="schedule">Schedule</button>
         <button class="nav-tab" data-tab="stats">Player Stats</button>
         <button class="nav-tab" data-tab="roster">Roster</button>
         <button class="nav-tab" data-tab="roast">AI Roast</button>
@@ -739,6 +798,328 @@
                     <div style="text-align: center; font-size: 11px; color: var(--gray-dark); margin-top: 6px;">HP2</div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div class="section" id="schedule">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <h2>Season Schedule</h2>
+        </div>
+        <div style="overflow-x: auto;">
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Home</th>
+                        <th></th>
+                        <th>Away</th>
+                        <th></th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- WEEK 1 -->
+                    <tr><td colspan="7" class="week-header">Week 1</td></tr>
+                    <tr>
+                        <td>Mon 3/2</td>
+                        <td>7:00 PM</td>
+                        <td><strong>HS Legends/MOST</strong></td>
+                        <td><span class="score-val score-win">19</span></td>
+                        <td>Flamingos</td>
+                        <td><span class="score-val score-loss">11</span></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr class="drive-game">
+                        <td>Mon 3/2</td>
+                        <td>8:00 PM</td>
+                        <td><strong style="color: var(--blue-bright);">Drive</strong></td>
+                        <td><span class="score-val score-win">16</span></td>
+                        <td>Motiv8</td>
+                        <td><span class="score-val score-loss">5</span></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 3/2</td>
+                        <td>9:00 PM</td>
+                        <td>Dirt Dawgs</td>
+                        <td><span class="score-val score-loss">13</span></td>
+                        <td><strong>Rocket Power</strong></td>
+                        <td><span class="score-val score-win">34</span></td>
+                        <td>HP2</td>
+                    </tr>
+
+                    <!-- WEEK 2 -->
+                    <tr><td colspan="7" class="week-header">Week 2</td></tr>
+                    <tr>
+                        <td>Mon 3/9</td>
+                        <td>7:00 PM</td>
+                        <td>Motiv8</td>
+                        <td></td>
+                        <td>Dirt Dawgs</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 3/9</td>
+                        <td>8:00 PM</td>
+                        <td>Rocket Power</td>
+                        <td></td>
+                        <td>HS Legends/MOST</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr class="drive-game">
+                        <td>Mon 3/9</td>
+                        <td>9:00 PM</td>
+                        <td>Flamingos</td>
+                        <td></td>
+                        <td style="color: var(--blue-bright);"><strong>Drive</strong></td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+
+                    <!-- WEEK 3 -->
+                    <tr><td colspan="7" class="week-header">Week 3</td></tr>
+                    <tr>
+                        <td>Mon 3/16</td>
+                        <td>7:00 PM</td>
+                        <td>Rocket Power</td>
+                        <td></td>
+                        <td>Flamingos</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr class="drive-game">
+                        <td>Mon 3/16</td>
+                        <td>8:00 PM</td>
+                        <td>Dirt Dawgs</td>
+                        <td></td>
+                        <td style="color: var(--blue-bright);"><strong>Drive</strong></td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 3/16</td>
+                        <td>9:00 PM</td>
+                        <td>HS Legends/MOST</td>
+                        <td></td>
+                        <td>Motiv8</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+
+                    <!-- WEEK 4 -->
+                    <tr><td colspan="7" class="week-header">Week 4</td></tr>
+                    <tr class="drive-game">
+                        <td>Mon 3/23</td>
+                        <td>7:00 PM</td>
+                        <td><strong style="color: var(--blue-bright);">Drive</strong></td>
+                        <td></td>
+                        <td>HS Legends/MOST</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 3/23</td>
+                        <td>8:00 PM</td>
+                        <td>Dirt Dawgs</td>
+                        <td></td>
+                        <td>Flamingos</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 3/23</td>
+                        <td>9:00 PM</td>
+                        <td>Motiv8</td>
+                        <td></td>
+                        <td>Rocket Power</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+
+                    <!-- WEEK 5 -->
+                    <tr><td colspan="7" class="week-header">Week 5</td></tr>
+                    <tr class="drive-game">
+                        <td>Mon 3/30</td>
+                        <td>7:00 PM</td>
+                        <td>Rocket Power</td>
+                        <td></td>
+                        <td style="color: var(--blue-bright);"><strong>Drive</strong></td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 3/30</td>
+                        <td>8:00 PM</td>
+                        <td>Flamingos</td>
+                        <td></td>
+                        <td>Motiv8</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 3/30</td>
+                        <td>9:00 PM</td>
+                        <td>HS Legends/MOST</td>
+                        <td></td>
+                        <td>Dirt Dawgs</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+
+                    <!-- WEEK 6 -->
+                    <tr><td colspan="7" class="week-header">Week 6 — Spring Break</td></tr>
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 20px; color: var(--gray-dark); font-style: italic;">No games scheduled</td>
+                    </tr>
+
+                    <!-- WEEK 7 -->
+                    <tr><td colspan="7" class="week-header">Week 7</td></tr>
+                    <tr class="drive-game">
+                        <td>Mon 4/13</td>
+                        <td>7:00 PM</td>
+                        <td>Motiv8</td>
+                        <td></td>
+                        <td style="color: var(--blue-bright);"><strong>Drive</strong></td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 4/13</td>
+                        <td>8:00 PM</td>
+                        <td>Flamingos</td>
+                        <td></td>
+                        <td>HS Legends/MOST</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 4/13</td>
+                        <td>9:00 PM</td>
+                        <td>Rocket Power</td>
+                        <td></td>
+                        <td>Dirt Dawgs</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+
+                    <!-- WEEK 8 -->
+                    <tr><td colspan="7" class="week-header">Week 8</td></tr>
+                    <tr>
+                        <td>Mon 4/20</td>
+                        <td>7:00 PM</td>
+                        <td>Dirt Dawgs</td>
+                        <td></td>
+                        <td>Motiv8</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 4/20</td>
+                        <td>8:00 PM</td>
+                        <td>HS Legends/MOST</td>
+                        <td></td>
+                        <td>Rocket Power</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr class="drive-game">
+                        <td>Mon 4/20</td>
+                        <td>9:00 PM</td>
+                        <td><strong style="color: var(--blue-bright);">Drive</strong></td>
+                        <td></td>
+                        <td>Flamingos</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+
+                    <!-- WEEK 9 -->
+                    <tr><td colspan="7" class="week-header">Week 9</td></tr>
+                    <tr>
+                        <td>Mon 4/27</td>
+                        <td>7:00 PM</td>
+                        <td>Flamingos</td>
+                        <td></td>
+                        <td>Rocket Power</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr class="drive-game">
+                        <td>Mon 4/27</td>
+                        <td>8:00 PM</td>
+                        <td><strong style="color: var(--blue-bright);">Drive</strong></td>
+                        <td></td>
+                        <td>Dirt Dawgs</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 4/27</td>
+                        <td>9:00 PM</td>
+                        <td>Motiv8</td>
+                        <td></td>
+                        <td>HS Legends/MOST</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+
+                    <!-- PLAYOFFS -->
+                    <tr><td colspan="7" class="playoff-header">🏆 Playoff Round 1 — Mon 5/4</td></tr>
+                    <tr>
+                        <td>Mon 5/4</td>
+                        <td>7:00 PM</td>
+                        <td>4th Seed</td>
+                        <td></td>
+                        <td>5th Seed</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 5/4</td>
+                        <td>8:00 PM</td>
+                        <td>3rd Seed</td>
+                        <td></td>
+                        <td>6th Seed</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+
+                    <tr><td colspan="7" class="playoff-header">🏆 Playoff Round 2</td></tr>
+                    <tr>
+                        <td>Mon 5/4</td>
+                        <td>9:00 PM</td>
+                        <td>1st Seed</td>
+                        <td></td>
+                        <td>G1 Winner</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                    <tr>
+                        <td>Mon 5/11</td>
+                        <td>7:00 PM</td>
+                        <td>2nd Seed</td>
+                        <td></td>
+                        <td>G2 Winner</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+
+                    <tr><td colspan="7" class="playoff-header">🏆 Championship Round</td></tr>
+                    <tr>
+                        <td>Mon 5/11</td>
+                        <td>8:15 PM</td>
+                        <td>G3 Winner</td>
+                        <td></td>
+                        <td>G4 Winner</td>
+                        <td></td>
+                        <td>HP2</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
