@@ -250,7 +250,7 @@
         <div class="header-right">
             <div class="record" id="header-record">1 - 0</div>
             <div class="record-label">Record</div>
-            <div class="last-result" id="last-result" style="color:var(--win);">W 16-5 vs Motiv8</div>
+            <div class="last-result" id="last-result" style="color:var(--win);cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;" onclick="goToScores()">W 16-5 vs Motiv8</div>
         </div>
     </div>
 </div>
@@ -521,6 +521,22 @@ function shareRoast(btn){
             setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='🔗 Share Roast';},2000);
         });
     }
+}
+
+// Tap last result to jump to scores
+function goToScores(){
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    const gamesTab=document.querySelector('[data-tab="games"]');
+    gamesTab.classList.add('active');
+    document.getElementById('games').classList.add('active');
+    // Make sure Scores sub-tab is active
+    const gamesSection=document.getElementById('games');
+    gamesSection.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));
+    gamesSection.querySelectorAll('.sub-content').forEach(s=>s.classList.remove('active'));
+    gamesSection.querySelector('[data-sub="scores-view"]').classList.add('active');
+    document.getElementById('scores-view').classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // Expand older roasts on click
