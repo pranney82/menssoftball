@@ -160,34 +160,28 @@
         .share-btn.copied { background:rgba(34,197,94,0.15); color:var(--win); border-color:rgba(34,197,94,0.3); }
         .empty-state { text-align:center; padding:40px; color:var(--gray-dark); font-family:'Oswald',sans-serif; font-size:15px; letter-spacing:2px; text-transform:uppercase; }
 
-        /* RULES */
-        .rules-content { font-size:15px; line-height:1.8; color:var(--gray); }
-        .rules-content h3 { font-family:'Oswald',sans-serif; font-size:18px; text-transform:uppercase; letter-spacing:2px; color:var(--blue-bright); margin:24px 0 10px; padding-bottom:6px; border-bottom:1px solid rgba(37,99,235,0.15); }
-        .rules-content h3:first-child { margin-top:0; }
-        .rules-content p { margin-bottom:8px; }
-        .rules-content ul { margin:0 0 12px 20px; } .rules-content li { margin-bottom:4px; }
-        .rules-content strong { color:var(--white); }
-
-        /* CHAT */
-        .chat-container { max-width:700px; margin:0 auto; }
-        .chat-header { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:var(--surface); border:1px solid rgba(37,99,235,0.15); border-radius:10px 10px 0 0; font-family:'Oswald',sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:2px; color:var(--blue-bright); }
-        .chat-powered { font-size:10px; color:var(--gray-dark); letter-spacing:1px; }
-        .chat-messages { background:var(--primary); border-left:1px solid rgba(255,255,255,0.06); border-right:1px solid rgba(255,255,255,0.06); padding:16px; min-height:200px; max-height:400px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; }
-        .chat-msg { padding:10px 14px; border-radius:10px; font-size:14px; line-height:1.6; max-width:85%; animation:fadeInUp 0.3s ease-out; }
+        /* FLOATING CHAT */
+        .chat-bubble { position:fixed; bottom:24px; right:24px; width:56px; height:56px; background:var(--blue); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; cursor:pointer; z-index:1000; box-shadow:0 4px 20px rgba(37,99,235,0.4); transition:all 0.2s; border:2px solid var(--blue-bright); }
+        .chat-bubble:hover { transform:scale(1.1); box-shadow:0 6px 28px rgba(37,99,235,0.6); }
+        .chat-bubble.hidden { display:none; }
+        .chat-panel { position:fixed; bottom:24px; right:24px; width:380px; max-height:520px; background:var(--primary-dark); border:1px solid rgba(37,99,235,0.25); border-radius:16px; z-index:1001; display:none; flex-direction:column; overflow:hidden; box-shadow:0 8px 40px rgba(0,0,0,0.5); }
+        .chat-panel.open { display:flex; animation:fadeInUp 0.3s ease-out; }
+        .chat-header { display:flex; justify-content:space-between; align-items:center; padding:14px 18px; background:var(--surface); font-family:'Oswald',sans-serif; font-size:14px; text-transform:uppercase; letter-spacing:2px; color:var(--blue-bright); border-bottom:1px solid rgba(37,99,235,0.15); }
+        .chat-close { background:none; border:none; color:var(--gray-dark); font-size:18px; cursor:pointer; padding:0 4px; } .chat-close:hover { color:var(--white); }
+        .chat-messages { flex:1; padding:16px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; min-height:200px; max-height:340px; }
+        .chat-msg { padding:10px 14px; border-radius:10px; font-size:14px; line-height:1.6; max-width:88%; animation:fadeInUp 0.25s ease-out; }
         .chat-msg.ai { background:var(--surface); color:var(--gray); border:1px solid rgba(255,255,255,0.06); align-self:flex-start; }
         .chat-msg.user { background:rgba(37,99,235,0.2); color:var(--white); border:1px solid rgba(37,99,235,0.3); align-self:flex-end; }
         .chat-msg.loading { color:var(--gray-dark); font-style:italic; }
-        .chat-input-wrap { display:flex; gap:0; border:1px solid rgba(255,255,255,0.06); border-top:none; border-radius:0 0 10px 10px; overflow:hidden; }
+        .chat-input-wrap { display:flex; border-top:1px solid rgba(255,255,255,0.06); }
         .chat-input { flex:1; padding:14px 16px; background:var(--surface); border:none; color:var(--white); font-size:14px; font-family:'Roboto Condensed',sans-serif; outline:none; }
         .chat-input::placeholder { color:var(--gray-dark); }
         .chat-send { background:var(--blue); color:white; border:none; padding:14px 20px; font-family:'Oswald',sans-serif; font-size:14px; text-transform:uppercase; letter-spacing:1px; cursor:pointer; transition:background 0.2s; }
         .chat-send:hover { background:var(--blue-bright); }
-        .chat-key-wrap { display:flex; gap:8px; margin-top:12px; align-items:center; }
-        .chat-key-wrap.hidden { display:none; }
-        .chat-key-input { flex:1; padding:10px 14px; background:var(--surface); border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:var(--white); font-size:13px; font-family:monospace; outline:none; }
-        .chat-key-input:focus { border-color:var(--blue); }
-        .chat-key-btn { background:var(--blue); color:white; border:none; padding:10px 18px; border-radius:6px; font-family:'Oswald',sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:1px; cursor:pointer; }
-        .chat-key-saved { font-size:11px; color:var(--win); font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:1px; }
+        @media (max-width:768px) {
+            .chat-panel { bottom:0; right:0; left:0; width:100%; max-height:70vh; border-radius:16px 16px 0 0; }
+            .chat-bubble { bottom:16px; right:16px; width:50px; height:50px; font-size:20px; }
+        }
         .footer { max-width:1200px; margin:30px auto 0; padding:16px 20px; border-top:1px solid rgba(255,255,255,0.06); text-align:center; font-size:11px; color:var(--gray-dark); letter-spacing:1px; }
         @media (max-width:768px) {
             .header-inner{gap:10px;padding:10px 14px} .team-logo{width:44px;height:44px} .header-text h1{font-size:24px} .header-text .league-name{font-size:9px;letter-spacing:2px}
@@ -226,7 +220,6 @@
     <button class="nav-tab" data-tab="games" id="games-tab">Games</button>
     <button class="nav-tab" data-tab="players">Players</button>
     <button class="nav-tab" data-tab="roast">Roast</button>
-    <button class="nav-tab" data-tab="rules">Rules</button>
 </div></div>
 
 <div class="main">
@@ -252,34 +245,21 @@
         <div class="section-header"><div class="accent-bar"></div><h2>AI Weekly Roast</h2></div>
         <div id="roast-feed"></div>
     </div>
+</div>
 
-    <div class="section" id="rules">
-        <div class="sub-tabs">
-            <button class="sub-tab active" data-sub="rules-view">League Rules</button>
-            <button class="sub-tab" data-sub="rules-chat-view">Ask AI</button>
-        </div>
-        <div class="sub-content active" id="rules-view">
-            <div id="rules-content" class="rules-content"></div>
-        </div>
-        <div class="sub-content" id="rules-chat-view">
-            <div class="chat-container">
-                <div class="chat-header">
-                    <span>⚾ Rules Assistant</span>
-                    <span class="chat-powered">Powered by Claude</span>
-                </div>
-                <div class="chat-messages" id="chat-messages">
-                    <div class="chat-msg ai">Ask me anything about the league rules — pitch rules, lineup requirements, playoff format, whatever.</div>
-                </div>
-                <div class="chat-input-wrap">
-                    <input type="text" id="chat-input" class="chat-input" placeholder="e.g. What's the mercy rule?" onkeydown="if(event.key==='Enter')sendChat()">
-                    <button class="chat-send" onclick="sendChat()">→</button>
-                </div>
-                <div class="chat-key-wrap" id="chat-key-wrap">
-                    <input type="password" id="chat-api-key" class="chat-key-input" placeholder="Enter API key to enable chat">
-                    <button class="chat-key-btn" onclick="saveApiKey()">Save</button>
-                </div>
-            </div>
-        </div>
+<!-- FLOATING CHAT BUBBLE -->
+<div class="chat-bubble" id="chat-bubble" onclick="toggleChat()">⚾</div>
+<div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+        <span>⚾ Rules Assistant</span>
+        <button class="chat-close" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+        <div class="chat-msg ai">Ask me anything about the league rules — mercy rule, home run limits, lineup requirements, whatever.</div>
+    </div>
+    <div class="chat-input-wrap">
+        <input type="text" id="chat-input" class="chat-input" placeholder="e.g. What's the mercy rule?" onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="chat-send" onclick="sendChat()">→</button>
     </div>
 </div>
 
@@ -478,62 +458,43 @@ function collapsePastWeeks(){
 
 function checkGameDay(){if(new Date().getDay()===1){const t=document.getElementById('games-tab');if(t&&!t.querySelector('.live-dot'))t.innerHTML+='<span class="live-dot"></span>';}}
 
-// RULES
+// FLOATING CHAT
+const CHAT_KEY=''; // Peter's Anthropic API key goes here
 let RULES_TEXT='';
-function renderRules(data){
-    const el=document.getElementById('rules-content');
-    if(!data||!data.sections||!data.sections.length){el.innerHTML='<div class="empty-state">League rules coming soon</div>';return;}
-    let html='';
-    data.sections.forEach(s=>{
-        html+=`<h3>${s.heading}</h3>`;
-        if(s.rules&&s.rules.length){html+='<ul>'+s.rules.map(r=>`<li>${r}</li>`).join('')+'</ul>';}
-        if(s.text){html+=`<p>${s.text}</p>`;}
-    });
-    el.innerHTML=html;
-    // Build plain text for AI context
+let chatHistory=[];
+
+function toggleChat(){
+    const panel=document.getElementById('chat-panel');
+    const bubble=document.getElementById('chat-bubble');
+    panel.classList.toggle('open');
+    bubble.classList.toggle('hidden');
+    if(panel.classList.contains('open')){
+        document.getElementById('chat-input').focus();
+    }
+}
+
+function loadRulesText(data){
+    if(!data||!data.sections)return;
     RULES_TEXT=data.sections.map(s=>{
-        let t=s.heading+'\n';
+        let t=s.heading+':\n';
         if(s.rules)t+=s.rules.map(r=>'- '+r).join('\n');
         if(s.text)t+=s.text;
         return t;
     }).join('\n\n');
 }
 
-// AI CHAT
-let chatKey=localStorage.getItem('softball_api_key')||'';
-let chatHistory=[];
-
-function initChat(){
-    if(chatKey){
-        document.getElementById('chat-key-wrap').innerHTML='<span class="chat-key-saved">✓ API key saved</span>';
-    }
-}
-
-function saveApiKey(){
-    const key=document.getElementById('chat-api-key').value.trim();
-    if(!key)return;
-    chatKey=key;
-    localStorage.setItem('softball_api_key',key);
-    document.getElementById('chat-key-wrap').innerHTML='<span class="chat-key-saved">✓ API key saved</span>';
-}
-
 async function sendChat(){
     const input=document.getElementById('chat-input');
     const msg=input.value.trim();
-    if(!msg)return;
-    if(!chatKey){document.getElementById('chat-api-key').focus();return;}
+    if(!msg||!CHAT_KEY)return;
 
     const messages=document.getElementById('chat-messages');
-    // Add user message
     messages.innerHTML+=`<div class="chat-msg user">${msg}</div>`;
     input.value='';
     messages.scrollTop=messages.scrollHeight;
-
-    // Add loading
     messages.innerHTML+=`<div class="chat-msg ai loading" id="chat-loading">Thinking...</div>`;
     messages.scrollTop=messages.scrollHeight;
 
-    // Build conversation
     chatHistory.push({role:'user',content:msg});
 
     try{
@@ -541,14 +502,14 @@ async function sendChat(){
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
-                'x-api-key':chatKey,
+                'x-api-key':CHAT_KEY,
                 'anthropic-version':'2023-06-01',
                 'anthropic-dangerous-direct-browser-access':'true'
             },
             body:JSON.stringify({
                 model:'claude-sonnet-4-20250514',
                 max_tokens:500,
-                system:`You are a helpful rules assistant for the Hobgood Intermediate Softball League. Answer questions about the league rules clearly and concisely. If a rule isn't covered, say so honestly. Keep answers short — 2-3 sentences max unless the question requires more detail. Be friendly but direct.\n\nLEAGUE RULES:\n${RULES_TEXT||'Rules have not been loaded yet. Let the user know rules are coming soon.'}`,
+                system:`You are a helpful rules assistant for the Hobgood Intermediate Softball League (Men's Intermediate division). Answer questions about the league rules clearly and concisely. Keep answers short — 2-3 sentences max unless the question needs more. Be friendly and direct. If a rule isn't covered, say so.\n\nLEAGUE RULES:\n${RULES_TEXT}`,
                 messages:chatHistory
             })
         });
@@ -565,7 +526,7 @@ async function sendChat(){
     }catch(e){
         document.getElementById('chat-loading')?.remove();
         chatHistory.pop();
-        messages.innerHTML+=`<div class="chat-msg ai" style="color:var(--loss);">Failed to connect. Check your API key.</div>`;
+        messages.innerHTML+=`<div class="chat-msg ai" style="color:var(--loss);">Failed to connect.</div>`;
     }
     messages.scrollTop=messages.scrollHeight;
 }
@@ -592,8 +553,7 @@ async function init(){
     if(career)renderCareerStats(career);
     if(roasts)renderRoasts(roasts);
     const rules=await loadJSON('data/rules.json');
-    if(rules)renderRules(rules);
-    initChat();
+    if(rules)loadRulesText(rules);
     checkGameDay();
 }
 init();

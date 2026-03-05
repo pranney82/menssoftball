@@ -3,10 +3,101 @@
   "lastUpdated": "Spring 2026",
   "sections": [
     {
-      "heading": "League rules will be added soon",
+      "heading": "General",
       "rules": [
-        "Send Peter the official league rules document or screenshots and they will be loaded here.",
-        "Once loaded, you can use the Ask AI tab to ask questions about any rule."
+        "ASA/USA slow pitch rules govern league play except when superseded by league-specific rules.",
+        "Adult Softball consists of a Spring and Fall League. Summer is One-Pitch.",
+        "Rosters must be turned in on the team's first game. Rosters lock after Week 4.",
+        "After rosters lock, players cannot be added. Removals for injury require League Coordinator approval.",
+        "Players must check in with IDs before every game for Weeks 1-5 (9-game season) or Weeks 1-4 (8-game season).",
+        "IDs will be checked against rosters before each playoff game. No ID = no play."
+      ]
+    },
+    {
+      "heading": "Game Day",
+      "rules": [
+        "Minimum 2 umpires per game. Game will be played with 1 umpire if needed.",
+        "1-hour time limit per game. No new inning begins after 58 minutes (2 minutes remaining on clock).",
+        "4 completed innings or 35 minutes passed = official game in case of rainout (3.5 innings if home team is ahead).",
+        "Each team can bat up to 12 players.",
+        "Minimum 8 players to start or continue a game. Below 8 = automatic forfeit.",
+        "Teams may pick up player(s) to get to 8 to prevent forfeit. Pickup must be approved by supervisor and opposing captain.",
+        "Pickup players are only eligible until rostered players arrive. Once team has 8 rostered players, pickups must leave.",
+        "Late players: If team starts with less than 10, can only add up to 10 throughout the game. Late players must be rostered and written as subs on lineup before game starts.",
+        "Extra players (over 12-player limit) must be written as subs on lineup before game starts. Cannot be added once game starts.",
+        "Pitcher and Catcher positions must be occupied when fielding.",
+        "Injured player removed from game: no out charged for their turn at bat, but they cannot re-enter.",
+        "Player removed for unsportsmanlike conduct: out IS charged for their at-bat turn.",
+        "10-minute grace period only for 6:30 PM games. Grace period counts as game time. Game starts immediately once 8 players present."
+      ]
+    },
+    {
+      "heading": "Pitching",
+      "rules": [
+        "Pitching arc is 4-10 feet from the ground.",
+        "Pitcher may deliver from between the second line and the pitching plate, with one foot between the line and plate after coming to a pause.",
+        "Pitcher may NOT fake a pitch, pitch behind their back, or between their legs. Repeated offense = automatic base for batter + pitcher removed from defense (can still bat).",
+        "Count starts 0-0. Umpires use 3-ball, 2-strike method. Batters get 1 extra foul.",
+        "Pitching screens MUST be used in all adult leagues, no exceptions.",
+        "Screen must cover at least half the pitching plate, placed 2-4 feet in front of plate.",
+        "Screen can only be adjusted for left/right-handed pitcher.",
+        "1st contact per batter with screen = dead ball/foul. 2nd contact per batter with screen = dead ball/out.",
+        "If batter has no fouls left and contacts screen = out.",
+        "No runners may advance on batted ball hitting screen. Thrown ball hitting screen is live unless umpire already signaled dead ball."
+      ]
+    },
+    {
+      "heading": "Home Runs",
+      "rules": [
+        "Over-the-fence home runs are permitted in all divisions.",
+        "Intermediate League: Each team allowed 2 over-the-fence HRs, then 1-up rule applies, max 6 total HRs per team.",
+        "Any HR hit over the limit or violating 1-up rule = OUT. All runners return to last legal base. Excess HR out can end the inning.",
+        "In the last playable inning (bottom 7th) and extra innings: home team may NOT use 1-up HR rule.",
+        "Timing protection: If home team legally hits a 1-up HR before the 7th that puts them ahead, it counts even if clock falls below 2 minutes during that half-inning."
+      ]
+    },
+    {
+      "heading": "Mercy Rule",
+      "rules": [
+        "15 runs after 3 innings.",
+        "12 runs after 4 innings.",
+        "10 runs after 5 innings."
+      ]
+    },
+    {
+      "heading": "Extra Innings",
+      "rules": [
+        "If tied after 1-hour time limit or 7 completed innings, extra innings use 1-pitch format with International Tiebreaker (last batted out starts on 2nd base).",
+        "Defense pitches to offense. Each batter gets 1 pitch. Strike or foul = out. Ball = walk."
+      ]
+    },
+    {
+      "heading": "Base Running",
+      "rules": [
+        "Stealing bases is NOT allowed.",
+        "Leading off / leaving base before ball is hit is NOT allowed.",
+        "1 courtesy runner allowed per inning. Can be anyone in the lineup.",
+        "First person to step on base as courtesy runner = legal runner.",
+        "If courtesy runner is due up next and is on base = automatic out for their at-bat."
+      ]
+    },
+    {
+      "heading": "Equipment",
+      "rules": [
+        "Only ASA/USA approved bats allowed. Must have ASA/USA stamp. Non-approved bat = batter OUT, ejected, runners return.",
+        "Approved softballs: .44 Core, compression rating no greater than 375.",
+        "Men's league: 12-inch softballs only.",
+        "Each team must provide league-approved game balls to umpire before each game.",
+        "Additional balls: $8 per ball."
+      ]
+    },
+    {
+      "heading": "Uniforms",
+      "rules": [
+        "Alike-colored shirts/jerseys with number on front or back required by Week 2.",
+        "Week 3 onward: uniform rules enforced. Out-of-uniform players cannot play.",
+        "Jersey numbers must be unique per team.",
+        "Athletic shoes required. Steel cleats NOT allowed."
       ]
     }
   ]
