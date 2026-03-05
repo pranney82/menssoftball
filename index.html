@@ -180,10 +180,10 @@
         .chat-btn:hover { color:var(--white); background:rgba(255,255,255,0.06); }
         .chat-btn:active { background:rgba(255,255,255,0.1); }
         .chat-messages { flex:1; padding:20px 16px 12px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; min-height:0; scroll-behavior:smooth; }
-        .chat-welcome { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:24px 20px; flex:1; min-height:160px; }
-        .chat-welcome-icon { width:48px; height:48px; margin-bottom:14px; opacity:0.5; }
-        .chat-welcome-text { font-family:'Oswald',sans-serif; font-size:16px; text-transform:uppercase; letter-spacing:2px; color:var(--gray-dark); margin-bottom:6px; }
-        .chat-welcome-sub { font-size:13px; color:var(--gray-dark); line-height:1.5; opacity:0.7; }
+        .chat-welcome { display:flex; flex-direction:column; align-items:center; justify-content:flex-end; text-align:center; padding:20px 20px 0; flex:1; min-height:0; }
+        .chat-welcome-icon { width:40px; height:40px; margin-bottom:12px; opacity:0.4; }
+        .chat-welcome-text { font-family:'Oswald',sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:2px; color:var(--gray-dark); margin-bottom:4px; }
+        .chat-welcome-sub { font-size:13px; color:var(--gray-dark); line-height:1.5; opacity:0.6; }
         .chat-msg { padding:12px 16px; border-radius:16px; font-size:14px; line-height:1.65; max-width:85%; word-wrap:break-word; flex-shrink:0; animation:chatMsgIn 0.25s cubic-bezier(0.4,0,0.2,1); }
         @keyframes chatMsgIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
         .chat-msg.ai { background:var(--surface); color:var(--gray); border:1px solid rgba(255,255,255,0.05); align-self:flex-start; border-bottom-left-radius:6px; }
@@ -197,7 +197,7 @@
         .typing-dots span:nth-child(2) { animation-delay:0.2s; }
         .typing-dots span:nth-child(3) { animation-delay:0.4s; }
         @keyframes typingBounce { 0%,60%,100%{transform:translateY(0);opacity:0.3} 30%{transform:translateY(-8px);opacity:1} }
-        .chat-chips { display:flex; flex-wrap:wrap; gap:8px; padding:4px 16px 14px; flex-shrink:0; }
+        .chat-chips { display:flex; flex-wrap:wrap; gap:8px; padding:16px 0 8px; justify-content:center; flex-shrink:0; }
         .chat-chip { font-family:'Oswald',sans-serif; font-size:12px; text-transform:uppercase; letter-spacing:1px; padding:8px 16px; border-radius:24px; background:rgba(37,99,235,0.08); border:1px solid rgba(37,99,235,0.18); color:var(--blue-bright); cursor:pointer; transition:all 0.15s; white-space:nowrap; -webkit-tap-highlight-color:transparent; }
         .chat-chip:active { background:rgba(37,99,235,0.25); transform:scale(0.95); }
         .chat-input-wrap { display:flex; align-items:center; gap:0; margin:0 12px 12px; border-radius:14px; background:var(--surface); border:1px solid rgba(255,255,255,0.06); overflow:hidden; flex-shrink:0; transition:border-color 0.2s; }
@@ -223,7 +223,6 @@
             .chat-input-wrap { margin:0 10px; margin-bottom:calc(10px + env(safe-area-inset-bottom,0px)); border-radius:14px; }
             .chat-input { font-size:16px; padding:14px 16px; }
             .chat-send { width:42px; height:42px; }
-            .chat-chips { padding:4px 12px 10px; }
             .chat-chip { font-size:12px; padding:9px 16px; }
         }
         .footer { max-width:1200px; margin:30px auto 0; padding:16px 20px; border-top:1px solid rgba(255,255,255,0.06); text-align:center; font-size:11px; color:var(--gray-dark); letter-spacing:1px; }
@@ -322,12 +321,12 @@
             <div class="chat-welcome-text">Ask me anything</div>
             <div class="chat-welcome-sub">Rules, standings, scores, schedule, player stats</div>
         </div>
-    </div>
-    <div class="chat-chips" id="chat-chips">
-        <span class="chat-chip" onclick="askChip(this)">Next game?</span>
-        <span class="chat-chip" onclick="askChip(this)">Standings</span>
-        <span class="chat-chip" onclick="askChip(this)">Mercy rule</span>
-        <span class="chat-chip" onclick="askChip(this)">HR limit</span>
+        <div class="chat-chips" id="chat-chips">
+            <span class="chat-chip" onclick="askChip(this)">Next game?</span>
+            <span class="chat-chip" onclick="askChip(this)">Standings</span>
+            <span class="chat-chip" onclick="askChip(this)">Mercy rule</span>
+            <span class="chat-chip" onclick="askChip(this)">HR limit</span>
+        </div>
     </div>
     <div class="chat-input-wrap">
         <input type="text" id="chat-input" class="chat-input" placeholder="Ask a question..." enterkeyhint="send" autocomplete="off" onkeydown="if(event.key==='Enter')sendChat()">
@@ -561,9 +560,13 @@ function clearChat(){
         <svg class="chat-welcome-icon" viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="rgba(148,163,184,0.25)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg>
         <div class="chat-welcome-text">Ask me anything</div>
         <div class="chat-welcome-sub">Rules, standings, scores, schedule, player stats</div>
+    </div>
+    <div class="chat-chips" id="chat-chips">
+        <span class="chat-chip" onclick="askChip(this)">Next game?</span>
+        <span class="chat-chip" onclick="askChip(this)">Standings</span>
+        <span class="chat-chip" onclick="askChip(this)">Mercy rule</span>
+        <span class="chat-chip" onclick="askChip(this)">HR limit</span>
     </div>`;
-    const chips=document.getElementById('chat-chips');
-    if(chips)chips.style.display='';
     document.getElementById('chat-input').focus();
 }
 
@@ -580,8 +583,8 @@ function scrollChat(){
 function hideWelcome(){
     const w=document.getElementById('chat-welcome');
     if(w)w.remove();
-    const chips=document.getElementById('chat-chips');
-    if(chips)chips.style.display='none';
+    const c=document.getElementById('chat-chips');
+    if(c)c.remove();
 }
 
 function buildChatContext(data){
