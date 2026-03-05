@@ -216,8 +216,9 @@
             html.chat-open { overflow:hidden; height:100%; }
             .chat-panel { position:fixed; top:var(--vvt,0px); left:0; width:100%; height:var(--vvh,100%); border-radius:0; border:none; box-shadow:none; transform:none; opacity:1; overflow:hidden; }
             .chat-panel.open { display:flex; }
-            .chat-header { padding-top:calc(12px + env(safe-area-inset-top,20px)); }
+            .chat-header { padding-top:calc(16px + env(safe-area-inset-top,20px)); background:linear-gradient(180deg,var(--primary-dark) 0%,var(--surface) 30%,rgba(22,33,62,0.95) 100%); }
             .chat-messages { flex:1; padding:16px; min-height:0; overflow-y:auto; }
+            .chat-welcome { justify-content:center; }
             .chat-msg { font-size:15px; }
             .chat-bubble { bottom:16px; right:16px; width:56px; height:56px; }
             .chat-bubble svg { width:28px; height:28px; }
