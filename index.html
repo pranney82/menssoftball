@@ -382,7 +382,7 @@
                     <p><span class="zinger">Rocket Power dropped 34 on the Dirt Dawgs, so let's not get too comfortable.</span> Drive's 16 runs look cute next to that. That's like bragging about your Honda Civic at a Ferrari dealership — which, given the team name, is painfully on brand.</p>
                     <p>Next week: Flamingos. If you lose to a team called the Flamingos, every single one of you owes the group chat a pink jersey selfie. No exceptions. See you Monday. ⚾</p>
                 </div>
-                <button class="share-btn" onclick="shareRoast(this)">📋 Copy to Clipboard</button>
+                <button class="share-btn" onclick="shareRoast(this)">🔗 Share Roast</button>
             </div>
 
         </div>
@@ -499,18 +499,28 @@ function updateRecord(data){
     const el=document.getElementById('header-record');if(el)el.textContent=(d.W||0)+' - '+(d.L||0);
 }
 
-// Share roast (per card)
+// Share roast (native share on mobile, clipboard fallback on desktop)
 function shareRoast(btn){
     const card=btn.closest('.roast-card');
     const text=card.querySelector('.roast-text').innerText;
-    navigator.clipboard.writeText(text).then(()=>{
-        btn.classList.add('copied');btn.innerHTML='✅ Copied!';
-        setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📋 Copy to Clipboard';},2000);
-    }).catch(()=>{
-        const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-        btn.classList.add('copied');btn.innerHTML='✅ Copied!';
-        setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📋 Copy to Clipboard';},2000);
-    });
+    const week=card.querySelector('.roast-badge')?.innerText?.trim()||'Weekly Roast';
+
+    if(navigator.share){
+        navigator.share({
+            title:'Drive Auto Repair — '+week,
+            text:text,
+            url:'https://pranney82.github.io/menssoftball/'
+        }).catch(()=>{});
+    } else {
+        navigator.clipboard.writeText(text+'\n\nhttps://pranney82.github.io/menssoftball/').then(()=>{
+            btn.classList.add('copied');btn.innerHTML='✅ Copied!';
+            setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='🔗 Share Roast';},2000);
+        }).catch(()=>{
+            const ta=document.createElement('textarea');ta.value=text+'\n\nhttps://pranney82.github.io/menssoftball/';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+            btn.classList.add('copied');btn.innerHTML='✅ Copied!';
+            setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='🔗 Share Roast';},2000);
+        });
+    }
 }
 
 // Expand older roasts on click
