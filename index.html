@@ -625,32 +625,6 @@
             transform: none;
         }
 
-        /* === PHOTOS GRID === */
-        .photos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
-        }
-        .photo-card {
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: all 0.2s;
-            background: var(--surface);
-        }
-        .photo-card:hover { border-color: var(--blue); transform: translateY(-2px); }
-        .photo-card img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            display: block;
-        }
-        .photo-card .photo-caption {
-            padding: 10px 14px;
-            font-size: 13px;
-            color: var(--gray);
-        }
-
         /* === API KEY MODAL === */
         .modal-overlay {
             display: none;
@@ -770,10 +744,6 @@
             .countdown-matchup { font-size: 14px; }
             .countdown-timer { font-size: 18px; }
 
-            /* === PHOTOS MOBILE === */
-            .photos-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
-            .photo-card img { height: 160px; }
-
             /* === MODAL MOBILE === */
             .modal-box { padding: 20px; }
         }
@@ -846,7 +816,6 @@
         <button class="nav-tab" data-tab="stats">Player Stats</button>
         <button class="nav-tab" data-tab="roster">Roster</button>
         <button class="nav-tab" data-tab="roast">AI Roast</button>
-        <button class="nav-tab" data-tab="photos">Photos</button>
     </div>
 </div>
 
@@ -1426,19 +1395,6 @@
         </div>
     </div>
 
-    <!-- PHOTOS -->
-    <div class="section" id="photos">
-        <div class="section-header">
-            <div class="accent-bar"></div>
-            <h2>Photos</h2>
-        </div>
-        <div class="photos-grid" id="photos-grid">
-            <div style="text-align: center; padding: 60px 16px; color: var(--gray-dark); font-family: 'Oswald', sans-serif; font-size: 16px; letter-spacing: 2px; text-transform: uppercase;">
-                Photos coming soon — add image URLs to your Google Sheet "photos" tab
-            </div>
-        </div>
-    </div>
-
 </div>
 
 <!-- FOOTER -->
@@ -1689,20 +1645,6 @@
         grid.innerHTML = html;
     }
 
-    function renderPhotos(data) {
-        if (!data || !data.length) return;
-        const grid = document.getElementById('photos-grid');
-        if (!grid) return;
-        const validPhotos = data.filter(r => r.URL && r.URL.trim());
-        if (!validPhotos.length) return;
-        grid.innerHTML = validPhotos.map(p => `
-            <div class="photo-card">
-                <img src="${p.URL}" alt="${p.Caption || ''}" loading="lazy" onerror="this.parentElement.style.display='none'">
-                ${p.Caption ? `<div class="photo-caption">${p.Caption}</div>` : ''}
-            </div>
-        `).join('');
-    }
-
     function renderRoast(data) {
         if (!data || !data.length) return;
         // Use the most recent roast entry
@@ -1829,15 +1771,13 @@ Rules:
         // If Google Sheet is configured, load data
         if (SHEET_ID) {
             try {
-                const [standings, schedule, photos, roast] = await Promise.all([
+                const [standings, schedule, roast] = await Promise.all([
                     fetchSheet('standings'),
                     fetchSheet('schedule'),
-                    fetchSheet('photos'),
                     fetchSheet('roast')
                 ]);
                 if (standings) { renderStandings(standings); updateRecord(standings); }
                 if (schedule) { renderSchedule(schedule); renderScores(schedule); }
-                if (photos) renderPhotos(photos);
                 if (roast) renderRoast(roast);
             } catch (e) {
                 console.warn('Google Sheets load failed, using static data:', e);
