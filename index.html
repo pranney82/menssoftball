@@ -579,8 +579,51 @@
             .games-grid { grid-template-columns: 1fr; }
             .roster-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
             .nav-tab { padding: 12px 16px; font-size: 12px; }
+            .main { padding: 16px 12px; }
+            .roast-card { padding: 20px 16px; }
+            .roast-text { font-size: 15px; }
+
+            /* === STANDINGS MOBILE === */
+            .standings-table { font-size: 13px; }
+            .standings-table thead th { padding: 8px 6px; font-size: 10px; letter-spacing: 1px; }
+            .standings-table td { padding: 10px 6px; }
+            .standings-table .team-name { font-size: 14px; }
+            .standings-table .rank { font-size: 16px; }
+            .standings-table .win-pct { font-size: 16px; }
+            /* Hide less critical columns on mobile */
+            .standings-table .col-t,
+            .standings-table .col-gp,
+            .standings-table .col-coach { display: none; }
+
+            /* === SCHEDULE MOBILE === */
+            .schedule-table { font-size: 13px; }
+            .schedule-table thead th { padding: 8px 6px; font-size: 10px; }
+            .schedule-table td { padding: 8px 6px; }
+            .schedule-table .col-date,
+            .schedule-table .col-loc { display: none; }
+            .schedule-table .score-val { font-size: 16px; }
+            .schedule-table .week-header,
+            .schedule-table .playoff-header { font-size: 12px; }
+
+            /* === STATS TABLE MOBILE === */
             .stats-table { font-size: 12px; }
-            .stats-table td, .stats-table th { padding: 8px 6px; }
+            .stats-table td, .stats-table th { padding: 8px 5px; }
+            .stats-table thead th { font-size: 10px; letter-spacing: 0.5px; }
+
+            /* === GAME CARDS MOBILE === */
+            .game-team-name { font-size: 13px; }
+            .game-score { font-size: 24px; }
+        }
+
+        @media (max-width: 420px) {
+            .header-text h1 { font-size: 28px; }
+            .nav-tab { padding: 10px 10px; font-size: 11px; letter-spacing: 1px; }
+            .standings-table { font-size: 12px; }
+            .standings-table .team-name { font-size: 13px; }
+            .standings-table thead th { padding: 8px 4px; }
+            .standings-table td { padding: 8px 4px; }
+            .schedule-table { font-size: 12px; }
+            .schedule-table td { padding: 6px 4px; }
         }
 
         /* === SCROLL BAR === */
@@ -650,12 +693,12 @@
                     <th>Team</th>
                     <th>W</th>
                     <th>L</th>
-                    <th>T</th>
+                    <th class="col-t">T</th>
                     <th>GB</th>
-                    <th>GP</th>
+                    <th class="col-gp">GP</th>
                     <th>PCT</th>
                     <th>STRK</th>
-                    <th>Coach</th>
+                    <th class="col-coach">Coach</th>
                 </tr>
             </thead>
             <tbody>
@@ -664,72 +707,72 @@
                     <td class="team-name">Rocket Power</td>
                     <td>1</td>
                     <td>0</td>
-                    <td>0</td>
+                    <td class="col-t">0</td>
                     <td class="gb">—</td>
-                    <td>1</td>
+                    <td class="col-gp">1</td>
                     <td class="win-pct">1.000</td>
                     <td style="color: var(--win);">W1</td>
-                    <td>Landry</td>
+                    <td class="col-coach">Landry</td>
                 </tr>
                 <tr>
                     <td class="rank">2</td>
                     <td class="team-name">HS Legends/MOST</td>
                     <td>1</td>
                     <td>0</td>
-                    <td>0</td>
+                    <td class="col-t">0</td>
                     <td class="gb">—</td>
-                    <td>1</td>
+                    <td class="col-gp">1</td>
                     <td class="win-pct">1.000</td>
                     <td style="color: var(--win);">W1</td>
-                    <td>Stewart</td>
+                    <td class="col-coach">Stewart</td>
                 </tr>
                 <tr class="highlight">
                     <td class="rank">3</td>
                     <td class="team-name" style="color: var(--blue-bright);">⚾ Drive</td>
                     <td>1</td>
                     <td>0</td>
-                    <td>0</td>
+                    <td class="col-t">0</td>
                     <td class="gb">—</td>
-                    <td>1</td>
+                    <td class="col-gp">1</td>
                     <td class="win-pct">1.000</td>
                     <td style="color: var(--win);">W1</td>
-                    <td>Ranney</td>
+                    <td class="col-coach">Ranney</td>
                 </tr>
                 <tr>
                     <td class="rank">4</td>
                     <td class="team-name">Dirt Dawgs</td>
                     <td>0</td>
                     <td>1</td>
-                    <td>0</td>
+                    <td class="col-t">0</td>
                     <td class="gb">1</td>
-                    <td>1</td>
+                    <td class="col-gp">1</td>
                     <td class="win-pct">.000</td>
                     <td style="color: var(--loss);">L1</td>
-                    <td>Stubblefield</td>
+                    <td class="col-coach">Stubblefield</td>
                 </tr>
                 <tr>
                     <td class="rank">5</td>
                     <td class="team-name">Flamingos</td>
                     <td>0</td>
                     <td>1</td>
-                    <td>0</td>
+                    <td class="col-t">0</td>
                     <td class="gb">1</td>
-                    <td>1</td>
+                    <td class="col-gp">1</td>
                     <td class="win-pct">.000</td>
                     <td style="color: var(--loss);">L1</td>
-                    <td>Herron</td>
+                    <td class="col-coach">Herron</td>
                 </tr>
                 <tr>
                     <td class="rank">6</td>
                     <td class="team-name">Motiv8</td>
                     <td>0</td>
                     <td>1</td>
-                    <td>0</td>
+                    <td class="col-t">0</td>
                     <td class="gb">1</td>
-                    <td>1</td>
+                    <td class="col-gp">1</td>
                     <td class="win-pct">.000</td>
                     <td style="color: var(--loss);">L1</td>
-                    <td>Harrison</td>
+                    <td class="col-coach">Harrison</td>
                 </tr>
             </tbody>
         </table>
@@ -828,164 +871,164 @@
             <table class="schedule-table">
                 <thead>
                     <tr>
-                        <th>Date</th>
+                        <th class="col-date">Date</th>
                         <th>Time</th>
                         <th>Home</th>
                         <th></th>
                         <th>Away</th>
                         <th></th>
-                        <th>Location</th>
+                        <th class="col-loc">Location</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- WEEK 1 -->
                     <tr><td colspan="7" class="week-header">Week 1</td></tr>
                     <tr>
-                        <td>Mon 3/2</td>
+                        <td class="col-date">Mon 3/2</td>
                         <td>7:00 PM</td>
                         <td><strong>HS Legends/MOST</strong></td>
                         <td><span class="score-val score-win">19</span></td>
                         <td>Flamingos</td>
                         <td><span class="score-val score-loss">11</span></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr class="drive-game">
-                        <td>Mon 3/2</td>
+                        <td class="col-date">Mon 3/2</td>
                         <td>8:00 PM</td>
                         <td><strong style="color: var(--blue-bright);">Drive</strong></td>
                         <td><span class="score-val score-win">16</span></td>
                         <td>Motiv8</td>
                         <td><span class="score-val score-loss">5</span></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 3/2</td>
+                        <td class="col-date">Mon 3/2</td>
                         <td>9:00 PM</td>
                         <td>Dirt Dawgs</td>
                         <td><span class="score-val score-loss">13</span></td>
                         <td><strong>Rocket Power</strong></td>
                         <td><span class="score-val score-win">34</span></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
 
                     <!-- WEEK 2 -->
                     <tr><td colspan="7" class="week-header">Week 2</td></tr>
                     <tr>
-                        <td>Mon 3/9</td>
+                        <td class="col-date">Mon 3/9</td>
                         <td>7:00 PM</td>
                         <td>Motiv8</td>
                         <td></td>
                         <td>Dirt Dawgs</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 3/9</td>
+                        <td class="col-date">Mon 3/9</td>
                         <td>8:00 PM</td>
                         <td>Rocket Power</td>
                         <td></td>
                         <td>HS Legends/MOST</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr class="drive-game">
-                        <td>Mon 3/9</td>
+                        <td class="col-date">Mon 3/9</td>
                         <td>9:00 PM</td>
                         <td>Flamingos</td>
                         <td></td>
                         <td style="color: var(--blue-bright);"><strong>Drive</strong></td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
 
                     <!-- WEEK 3 -->
                     <tr><td colspan="7" class="week-header">Week 3</td></tr>
                     <tr>
-                        <td>Mon 3/16</td>
+                        <td class="col-date">Mon 3/16</td>
                         <td>7:00 PM</td>
                         <td>Rocket Power</td>
                         <td></td>
                         <td>Flamingos</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr class="drive-game">
-                        <td>Mon 3/16</td>
+                        <td class="col-date">Mon 3/16</td>
                         <td>8:00 PM</td>
                         <td>Dirt Dawgs</td>
                         <td></td>
                         <td style="color: var(--blue-bright);"><strong>Drive</strong></td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 3/16</td>
+                        <td class="col-date">Mon 3/16</td>
                         <td>9:00 PM</td>
                         <td>HS Legends/MOST</td>
                         <td></td>
                         <td>Motiv8</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
 
                     <!-- WEEK 4 -->
                     <tr><td colspan="7" class="week-header">Week 4</td></tr>
                     <tr class="drive-game">
-                        <td>Mon 3/23</td>
+                        <td class="col-date">Mon 3/23</td>
                         <td>7:00 PM</td>
                         <td><strong style="color: var(--blue-bright);">Drive</strong></td>
                         <td></td>
                         <td>HS Legends/MOST</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 3/23</td>
+                        <td class="col-date">Mon 3/23</td>
                         <td>8:00 PM</td>
                         <td>Dirt Dawgs</td>
                         <td></td>
                         <td>Flamingos</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 3/23</td>
+                        <td class="col-date">Mon 3/23</td>
                         <td>9:00 PM</td>
                         <td>Motiv8</td>
                         <td></td>
                         <td>Rocket Power</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
 
                     <!-- WEEK 5 -->
                     <tr><td colspan="7" class="week-header">Week 5</td></tr>
                     <tr class="drive-game">
-                        <td>Mon 3/30</td>
+                        <td class="col-date">Mon 3/30</td>
                         <td>7:00 PM</td>
                         <td>Rocket Power</td>
                         <td></td>
                         <td style="color: var(--blue-bright);"><strong>Drive</strong></td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 3/30</td>
+                        <td class="col-date">Mon 3/30</td>
                         <td>8:00 PM</td>
                         <td>Flamingos</td>
                         <td></td>
                         <td>Motiv8</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 3/30</td>
+                        <td class="col-date">Mon 3/30</td>
                         <td>9:00 PM</td>
                         <td>HS Legends/MOST</td>
                         <td></td>
                         <td>Dirt Dawgs</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
 
                     <!-- WEEK 6 -->
@@ -997,143 +1040,143 @@
                     <!-- WEEK 7 -->
                     <tr><td colspan="7" class="week-header">Week 7</td></tr>
                     <tr class="drive-game">
-                        <td>Mon 4/13</td>
+                        <td class="col-date">Mon 4/13</td>
                         <td>7:00 PM</td>
                         <td>Motiv8</td>
                         <td></td>
                         <td style="color: var(--blue-bright);"><strong>Drive</strong></td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 4/13</td>
+                        <td class="col-date">Mon 4/13</td>
                         <td>8:00 PM</td>
                         <td>Flamingos</td>
                         <td></td>
                         <td>HS Legends/MOST</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 4/13</td>
+                        <td class="col-date">Mon 4/13</td>
                         <td>9:00 PM</td>
                         <td>Rocket Power</td>
                         <td></td>
                         <td>Dirt Dawgs</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
 
                     <!-- WEEK 8 -->
                     <tr><td colspan="7" class="week-header">Week 8</td></tr>
                     <tr>
-                        <td>Mon 4/20</td>
+                        <td class="col-date">Mon 4/20</td>
                         <td>7:00 PM</td>
                         <td>Dirt Dawgs</td>
                         <td></td>
                         <td>Motiv8</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 4/20</td>
+                        <td class="col-date">Mon 4/20</td>
                         <td>8:00 PM</td>
                         <td>HS Legends/MOST</td>
                         <td></td>
                         <td>Rocket Power</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr class="drive-game">
-                        <td>Mon 4/20</td>
+                        <td class="col-date">Mon 4/20</td>
                         <td>9:00 PM</td>
                         <td><strong style="color: var(--blue-bright);">Drive</strong></td>
                         <td></td>
                         <td>Flamingos</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
 
                     <!-- WEEK 9 -->
                     <tr><td colspan="7" class="week-header">Week 9</td></tr>
                     <tr>
-                        <td>Mon 4/27</td>
+                        <td class="col-date">Mon 4/27</td>
                         <td>7:00 PM</td>
                         <td>Flamingos</td>
                         <td></td>
                         <td>Rocket Power</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr class="drive-game">
-                        <td>Mon 4/27</td>
+                        <td class="col-date">Mon 4/27</td>
                         <td>8:00 PM</td>
                         <td><strong style="color: var(--blue-bright);">Drive</strong></td>
                         <td></td>
                         <td>Dirt Dawgs</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 4/27</td>
+                        <td class="col-date">Mon 4/27</td>
                         <td>9:00 PM</td>
                         <td>Motiv8</td>
                         <td></td>
                         <td>HS Legends/MOST</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
 
                     <!-- PLAYOFFS -->
                     <tr><td colspan="7" class="playoff-header">🏆 Playoff Round 1 — Mon 5/4</td></tr>
                     <tr>
-                        <td>Mon 5/4</td>
+                        <td class="col-date">Mon 5/4</td>
                         <td>7:00 PM</td>
                         <td>4th Seed</td>
                         <td></td>
                         <td>5th Seed</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 5/4</td>
+                        <td class="col-date">Mon 5/4</td>
                         <td>8:00 PM</td>
                         <td>3rd Seed</td>
                         <td></td>
                         <td>6th Seed</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
 
                     <tr><td colspan="7" class="playoff-header">🏆 Playoff Round 2</td></tr>
                     <tr>
-                        <td>Mon 5/4</td>
+                        <td class="col-date">Mon 5/4</td>
                         <td>9:00 PM</td>
                         <td>1st Seed</td>
                         <td></td>
                         <td>G1 Winner</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                     <tr>
-                        <td>Mon 5/11</td>
+                        <td class="col-date">Mon 5/11</td>
                         <td>7:00 PM</td>
                         <td>2nd Seed</td>
                         <td></td>
                         <td>G2 Winner</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
 
                     <tr><td colspan="7" class="playoff-header">🏆 Championship Round</td></tr>
                     <tr>
-                        <td>Mon 5/11</td>
+                        <td class="col-date">Mon 5/11</td>
                         <td>8:15 PM</td>
                         <td>G3 Winner</td>
                         <td></td>
                         <td>G4 Winner</td>
                         <td></td>
-                        <td>HP2</td>
+                        <td class="col-loc">HP2</td>
                     </tr>
                 </tbody>
             </table>
