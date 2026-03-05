@@ -86,17 +86,25 @@
         .game-result { display:inline-block; font-family:'Oswald',sans-serif; font-size:11px; padding:2px 8px; border-radius:3px; text-transform:uppercase; letter-spacing:1px; margin-top:6px; }
         .game-result.win { background:rgba(34,197,94,0.2); color:var(--win); } .game-result.loss { background:rgba(239,68,68,0.2); color:var(--loss); }
         .game-card.expandable { cursor:pointer; }
-        .game-card .expand-hint { font-family:'Oswald',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--gray-dark); text-align:center; margin-top:8px; } .game-card .expand-hint::after { content:'tap for line score ▾'; }
-        .game-card.expanded .expand-hint::after { content:'hide line score ▴'; }
-        .line-score { max-height:0; overflow:hidden; transition:max-height 0.3s ease-out; }
-        .game-card.expanded .line-score { max-height:200px; }
-        .line-score-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:12px; border-top:1px solid rgba(255,255,255,0.06); padding-top:10px; }
-        .line-score-table th { font-family:'Oswald',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--gray-dark); padding:6px 8px; text-align:center; min-width:26px; }
-        .line-score-table th:first-child { text-align:left; min-width:auto; }
-        .line-score-table td { font-family:'Bebas Neue',sans-serif; font-size:16px; padding:6px 8px; text-align:center; color:var(--gray); }
-        .line-score-table td:first-child { font-family:'Oswald',sans-serif; font-size:13px; font-weight:500; text-align:left; color:var(--white); }
-        .line-score-table td.total { color:var(--white); font-size:18px; border-left:1px solid rgba(255,255,255,0.08); }
-        .line-score-table tr.winner td { color:var(--white); } .line-score-table tr.winner td.total { color:var(--win); }
+        .game-card .expand-hint { font-family:'Oswald',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--gray-dark); text-align:center; margin-top:8px; } .game-card .expand-hint::after { content:'tap for box score ▾'; }
+        .game-card.expanded .expand-hint::after { content:'hide box score ▴'; }
+        .game-expand { max-height:0; overflow:hidden; transition:max-height 0.4s ease-out; }
+        .game-card.expanded .game-expand { max-height:800px; }
+        .innings-row { display:flex; align-items:center; gap:0; margin-top:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.06); font-family:'Oswald',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--gray-dark); }
+        .innings-row .inn-label { min-width:60px; }
+        .innings-row .inn-cells { display:flex; gap:0; }
+        .innings-row .inn-cell { min-width:28px; text-align:center; padding:4px 2px; font-family:'Bebas Neue',sans-serif; font-size:16px; color:var(--white); }
+        .innings-row .inn-cell.header { font-family:'Oswald',sans-serif; font-size:10px; color:var(--gray-dark); }
+        .innings-row .inn-total { min-width:32px; text-align:center; padding:4px 4px; font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--win); border-left:1px solid rgba(255,255,255,0.08); margin-left:4px; }
+        .box-score-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:10px; }
+        .box-score-table thead th { font-family:'Oswald',sans-serif; font-size:9px; text-transform:uppercase; letter-spacing:1px; color:var(--gray-dark); padding:6px 4px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.06); }
+        .box-score-table thead th:first-child { text-align:left; }
+        .box-score-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.03); }
+        .box-score-table tbody tr:hover { background:rgba(37,99,235,0.06); }
+        .box-score-table td { padding:5px 4px; text-align:center; color:var(--gray); }
+        .box-score-table td:first-child { text-align:left; font-family:'Oswald',sans-serif; font-size:12px; color:var(--white); font-weight:500; }
+        .box-score-table td.hot { color:var(--win); font-weight:700; }
+        .box-score-table td.cold { color:var(--loss); }
         .schedule-table { width:100%; border-collapse:collapse; font-size:14px; }
         .schedule-table thead th { font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:11px; letter-spacing:2px; color:var(--gray-dark); padding:10px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.06); }
         .schedule-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 0.15s; }
@@ -258,16 +266,29 @@ function renderScores(schedule){
         const driveWon=isDrive&&((g.home.toLowerCase().includes('drive')&&hw)||(!g.home.toLowerCase().includes('drive')&&!hw));
         const hLogo=g.home.toLowerCase().includes('drive')?'<div class="game-team-logo drive"><img src="logo.png" alt="D"></div>':`<div class="game-team-logo">${g.home.substring(0,2).toUpperCase()}</div>`;
         const aLogo=g.away.toLowerCase().includes('drive')?'<div class="game-team-logo drive"><img src="logo.png" alt="D"></div>':`<div class="game-team-logo">${g.away.substring(0,2).toUpperCase()}</div>`;
-        const hasInnings=g.innings&&g.innings.home&&g.innings.away;
-        let lineScore='';
-        if(hasInnings){
-            const numInnings=Math.max(g.innings.home.length,g.innings.away.length);
-            const headers=Array.from({length:numInnings},(_,j)=>`<th>${j+1}</th>`).join('');
-            const hCells=g.innings.home.map(v=>`<td>${v}</td>`).join('');
-            const aCells=g.innings.away.map(v=>`<td>${v}</td>`).join('');
-            lineScore=`<div class="line-score"><table class="line-score-table"><thead><tr><th></th>${headers}<th>R</th></tr></thead><tbody><tr class="${hw?'winner':''}"><td>${g.home}</td>${hCells}<td class="total">${g.homeScore}</td></tr><tr class="${!hw?'winner':''}"><td>${g.away}</td>${aCells}<td class="total">${g.awayScore}</td></tr></tbody></table></div>`;
+        const hasExpand=isDrive&&(g.innings||g.boxScore);
+        let expandHtml='';
+        if(hasExpand){
+            expandHtml='<div class="game-expand">';
+            // Drive innings
+            if(g.innings&&g.innings.length){
+                const driveScore=g.home.toLowerCase().includes('drive')?g.homeScore:g.awayScore;
+                expandHtml+=`<div class="innings-row"><span class="inn-label">Drive</span><div class="inn-cells">${g.innings.map((v,j)=>`<div class="inn-cell header">${j+1}</div>`).join('')}<div class="inn-cell header" style="border-left:1px solid rgba(255,255,255,0.08);margin-left:4px;">R</div></div></div>`;
+                expandHtml+=`<div class="innings-row"><span class="inn-label"></span><div class="inn-cells">${g.innings.map(v=>`<div class="inn-cell">${v}</div>`).join('')}<div class="inn-total">${driveScore}</div></div></div>`;
+            }
+            // Box score
+            if(g.boxScore&&g.boxScore.length){
+                expandHtml+=`<table class="box-score-table"><thead><tr><th>Player</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>SAC</th><th>FC</th><th>E</th><th>OUT</th><th>R</th><th>RBI</th></tr></thead><tbody>`;
+                expandHtml+=g.boxScore.map(p=>{
+                    const hits=(p['1b']||0)+(p['2b']||0)+(p['3b']||0)+(p.hr||0);
+                    const isHot=hits>=3;const isCold=hits===0&&(p.out||0)>=2;
+                    return`<tr><td>${p.player}</td><td${p['1b']?' class="hot"':''}>${p['1b']||0}</td><td${p['2b']?' class="hot"':''}>${p['2b']||0}</td><td${p['3b']?' class="hot"':''}>${p['3b']||0}</td><td${p.hr?' class="hot"':''}>${p.hr||0}</td><td>${p.bb||0}</td><td>${p.sac||0}</td><td>${p.fc||0}</td><td${p.e?' class="cold"':''}>${p.e||0}</td><td>${p.out||0}</td><td>${p.r||0}</td><td>${p.rbi||0}</td></tr>`;
+                }).join('');
+                expandHtml+=`</tbody></table>`;
+            }
+            expandHtml+='</div>';
         }
-        return`<div class="game-card${hasInnings?' expandable':''}" style="animation-delay:${i*0.05}s" ${hasInnings?'onclick="this.classList.toggle(\'expanded\')"':''}><div class="game-card-header"><span>${g.week} — ${g.date}, ${g.time}</span><span>Final</span></div><div class="game-card-body"><div class="game-matchup"><div class="game-team">${hLogo}<span class="game-team-name">${g.home}</span></div><div class="game-score"><span style="color:var(${hw?'--win':'--loss'});">${g.homeScore}</span><span class="dash">-</span><span style="color:var(${!hw?'--win':'--loss'});">${g.awayScore}</span></div><div class="game-team" style="justify-content:flex-end;"><span class="game-team-name">${g.away}</span>${aLogo}</div></div>${isDrive?`<div style="text-align:center;"><span class="game-result ${driveWon?'win':'loss'}">${driveWon?'Win':'Loss'}</span></div>`:''}${hasInnings?'<div class="expand-hint"></div>':''}${lineScore}</div></div>`;
+        return`<div class="game-card${hasExpand?' expandable':''}" style="animation-delay:${i*0.05}s" ${hasExpand?'onclick="this.classList.toggle(\'expanded\')"':''}><div class="game-card-header"><span>${g.week} — ${g.date}, ${g.time}</span><span>Final</span></div><div class="game-card-body"><div class="game-matchup"><div class="game-team">${hLogo}<span class="game-team-name">${g.home}</span></div><div class="game-score"><span style="color:var(${hw?'--win':'--loss'});">${g.homeScore}</span><span class="dash">-</span><span style="color:var(${!hw?'--win':'--loss'});">${g.awayScore}</span></div><div class="game-team" style="justify-content:flex-end;"><span class="game-team-name">${g.away}</span>${aLogo}</div></div>${isDrive?`<div style="text-align:center;"><span class="game-result ${driveWon?'win':'loss'}">${driveWon?'Win':'Loss'}</span></div>`:''}${hasExpand?'<div class="expand-hint"></div>':''}${expandHtml}</div></div>`;
     }).join('');
     // Update last result
     const lastDrive=[...played].reverse().find(g=>g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive'));
