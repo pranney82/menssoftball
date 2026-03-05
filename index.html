@@ -458,9 +458,8 @@ function collapsePastWeeks(){
 
 function checkGameDay(){if(new Date().getDay()===1){const t=document.getElementById('games-tab');if(t&&!t.querySelector('.live-dot'))t.innerHTML+='<span class="live-dot"></span>';}}
 
-// FLOATING CHAT
-const CHAT_KEY=''; // Peter's Anthropic API key goes here
-let RULES_TEXT='';
+// FLOATING CHAT — powered by Cloudflare Workers AI
+const WORKER_URL='https://softball-rules-chat.peterranney.workers.dev';
 let chatHistory=[];
 
 function toggleChat(){
@@ -473,20 +472,10 @@ function toggleChat(){
     }
 }
 
-function loadRulesText(data){
-    if(!data||!data.sections)return;
-    RULES_TEXT=data.sections.map(s=>{
-        let t=s.heading+':\n';
-        if(s.rules)t+=s.rules.map(r=>'- '+r).join('\n');
-        if(s.text)t+=s.text;
-        return t;
-    }).join('\n\n');
-}
-
 async function sendChat(){
     const input=document.getElementById('chat-input');
     const msg=input.value.trim();
-    if(!msg||!CHAT_KEY)return;
+    if(!msg)return;
 
     const messages=document.getElementById('chat-messages');
     messages.innerHTML+=`<div class="chat-msg user">${msg}</div>`;
@@ -498,30 +487,19 @@ async function sendChat(){
     chatHistory.push({role:'user',content:msg});
 
     try{
-        const res=await fetch('https://api.anthropic.com/v1/messages',{
+        const res=await fetch(WORKER_URL,{
             method:'POST',
-            headers:{
-                'Content-Type':'application/json',
-                'x-api-key':CHAT_KEY,
-                'anthropic-version':'2023-06-01',
-                'anthropic-dangerous-direct-browser-access':'true'
-            },
-            body:JSON.stringify({
-                model:'claude-sonnet-4-20250514',
-                max_tokens:500,
-                system:`You are a helpful rules assistant for the Hobgood Intermediate Softball League (Men's Intermediate division). Answer questions about the league rules clearly and concisely. Keep answers short — 2-3 sentences max unless the question needs more. Be friendly and direct. If a rule isn't covered, say so.\n\nLEAGUE RULES:\n${RULES_TEXT}`,
-                messages:chatHistory
-            })
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({messages:chatHistory})
         });
         const data=await res.json();
         document.getElementById('chat-loading')?.remove();
-        if(data.content&&data.content[0]){
-            const reply=data.content[0].text;
-            chatHistory.push({role:'assistant',content:reply});
-            messages.innerHTML+=`<div class="chat-msg ai">${reply}</div>`;
+        if(data.reply){
+            chatHistory.push({role:'assistant',content:data.reply});
+            messages.innerHTML+=`<div class="chat-msg ai">${data.reply}</div>`;
         }else if(data.error){
             chatHistory.pop();
-            messages.innerHTML+=`<div class="chat-msg ai" style="color:var(--loss);">Error: ${data.error.message}</div>`;
+            messages.innerHTML+=`<div class="chat-msg ai" style="color:var(--loss);">Error: ${data.error}</div>`;
         }
     }catch(e){
         document.getElementById('chat-loading')?.remove();
@@ -552,8 +530,6 @@ async function init(){
     if(stats)renderStats(stats);
     if(career)renderCareerStats(career);
     if(roasts)renderRoasts(roasts);
-    const rules=await loadJSON('data/rules.json');
-    if(rules)loadRulesText(rules);
     checkGameDay();
 }
 init();
