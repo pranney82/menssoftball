@@ -388,7 +388,7 @@ function renderStandings(data){
         document.getElementById('header-record').textContent=drive.w+' - '+drive.l;
     }
     tb.innerHTML=data.map((r,i)=>{const dr=r.team.toLowerCase().includes('drive');const w=r.streak.startsWith('W');
-    return`<tr class="${dr?'highlight':''}" style="animation-delay:${i*0.05}s"><td class="rank">${r.rank}</td><td class="team-name"${dr?' style="color:var(--blue-bright);"':''}>${dr?'⚾ ':''}${r.team}</td><td>${r.w}</td><td>${r.l}</td><td>${r.t}</td><td class="gb">${r.gb==='--'?'—':r.gb}</td><td>${r.gp}</td><td class="win-pct">${r.pct}</td><td style="color:var(${w?'--win':'--loss'});">${r.streak}</td><td>${r.coach}</td></tr>`;}).join('');
+    return`<tr class="${dr?'highlight':''}" style="animation-delay:${i*0.05}s"><td class="rank">${r.rank}</td><td class="team-name"${dr?' style="color:var(--blue-bright);"':''}>${dr?'<img src="logo.png" alt="Drive" style="width:20px;height:20px;vertical-align:middle;border-radius:50%;margin-right:4px;">':''}${r.team}</td><td>${r.w}</td><td>${r.l}</td><td>${r.t}</td><td class="gb">${r.gb==='--'?'—':r.gb}</td><td>${r.gp}</td><td class="win-pct">${r.pct}</td><td style="color:var(${w?'--win':'--loss'});">${r.streak}</td><td>${r.coach}</td></tr>`;}).join('');
 }
 
 // RENDER SCORES
