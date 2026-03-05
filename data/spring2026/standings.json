@@ -1,0 +1,8 @@
+[
+  { "rank": 1, "team": "Rocket Power", "w": 1, "l": 0, "t": 0, "gb": "--", "gp": 1, "pct": "1.000", "streak": "W1", "coach": "Landry" },
+  { "rank": 2, "team": "HS Legends/MOST", "w": 1, "l": 0, "t": 0, "gb": "--", "gp": 1, "pct": "1.000", "streak": "W1", "coach": "Stewart" },
+  { "rank": 3, "team": "Drive", "w": 1, "l": 0, "t": 0, "gb": "--", "gp": 1, "pct": "1.000", "streak": "W1", "coach": "Ranney" },
+  { "rank": 4, "team": "Dirt Dawgs", "w": 0, "l": 1, "t": 0, "gb": "1", "gp": 1, "pct": ".000", "streak": "L1", "coach": "Stubblefield" },
+  { "rank": 5, "team": "Flamingos", "w": 0, "l": 1, "t": 0, "gb": "1", "gp": 1, "pct": ".000", "streak": "L1", "coach": "Herron" },
+  { "rank": 6, "team": "Motiv8", "w": 0, "l": 1, "t": 0, "gb": "1", "gp": 1, "pct": ".000", "streak": "L1", "coach": "Harrison" }
+]

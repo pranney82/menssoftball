@@ -1,0 +1,9 @@
+{
+  "activeSeason": "spring2026",
+  "seasons": [
+    { "id": "spring2026", "label": "Spring 2026", "folder": "spring2026" }
+  ],
+  "team": "Drive",
+  "teamFull": "Drive Auto Repair",
+  "league": "Hobgood Intermediate Softball"
+}

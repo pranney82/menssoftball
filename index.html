@@ -21,26 +21,17 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #1a1a2e; --primary-dark: #0f0f1a; --surface: #16213e;
-            --surface-light: #1c2a4a; --blue: #2563eb; --blue-bright: #3b82f6;
-            --blue-glow: #60a5fa; --white: #f1f5f9; --gray: #94a3b8;
-            --gray-dark: #64748b; --win: #22c55e; --loss: #ef4444; --gold: #fbbf24;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--primary-dark); color: var(--white); font-family: 'Roboto Condensed', sans-serif; min-height: 100vh; overflow-x: hidden; }
-
-        @keyframes fadeInUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
-        @keyframes countUp { from { opacity:0; transform:scale(0.8); } to { opacity:1; transform:scale(1); } }
-
-        .section { display: none; }
-        .section.active { display: block; animation: fadeIn 0.3s ease-out; }
-
-        /* HEADER */
-        .header { background: linear-gradient(135deg, var(--primary) 0%, var(--surface) 50%, var(--primary) 100%); border-bottom: 3px solid var(--blue); position: relative; overflow: hidden; }
-        .header::before { content: ''; position: absolute; top:0;left:0;right:0;bottom:0; background: repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(37,99,235,0.03) 40px,rgba(37,99,235,0.03) 41px); }
+        :root { --primary:#1a1a2e; --primary-dark:#0f0f1a; --surface:#16213e; --surface-light:#1c2a4a; --blue:#2563eb; --blue-bright:#3b82f6; --blue-glow:#60a5fa; --white:#f1f5f9; --gray:#94a3b8; --gray-dark:#64748b; --win:#22c55e; --loss:#ef4444; --gold:#fbbf24; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background:var(--primary-dark); color:var(--white); font-family:'Roboto Condensed',sans-serif; min-height:100vh; overflow-x:hidden; }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        @keyframes countUp { from{opacity:0;transform:scale(0.8)} to{opacity:1;transform:scale(1)} }
+        @keyframes livePulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.6)} 50%{box-shadow:0 0 0 6px rgba(34,197,94,0)} }
+        .section { display:none; } .section.active { display:block; animation:fadeIn 0.3s ease-out; }
+        .header { background:linear-gradient(135deg,var(--primary) 0%,var(--surface) 50%,var(--primary) 100%); border-bottom:3px solid var(--blue); position:relative; overflow:hidden; }
+        .header::before { content:''; position:absolute; top:0;left:0;right:0;bottom:0; background:repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(37,99,235,0.03) 40px,rgba(37,99,235,0.03) 41px); }
         .header-inner { max-width:1200px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; gap:14px; position:relative; z-index:1; }
         .team-logo { width:56px; height:56px; border-radius:50%; overflow:hidden; flex-shrink:0; }
         .team-logo img { width:100%; height:100%; object-fit:cover; }
@@ -49,55 +40,38 @@
         .header-right { margin-left:auto; text-align:center; }
         .header-right .record { font-family:'Bebas Neue',sans-serif; font-size:34px; letter-spacing:2px; line-height:1; }
         .header-right .record-label { font-size:9px; color:var(--gray-dark); text-transform:uppercase; letter-spacing:2px; }
-        .header-right .last-result { font-size:11px; margin-top:2px; letter-spacing:1px; }
-
-        /* COUNTDOWN */
+        .header-right .last-result { font-size:11px; margin-top:2px; letter-spacing:1px; cursor:pointer; text-decoration:underline; text-decoration-style:dotted; text-underline-offset:3px; }
         .countdown-bar { background:linear-gradient(90deg,var(--surface) 0%,rgba(37,99,235,0.12) 50%,var(--surface) 100%); border-bottom:1px solid rgba(37,99,235,0.15); padding:10px 20px; display:none; }
         .countdown-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
         .countdown-label { font-family:'Oswald',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:3px; color:var(--gray-dark); }
         .countdown-matchup { font-family:'Oswald',sans-serif; font-size:15px; color:var(--blue-bright); }
         .countdown-timer { font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--white); background:rgba(37,99,235,0.12); padding:3px 12px; border-radius:6px; border:1px solid rgba(37,99,235,0.2); letter-spacing:2px; }
-
-        /* NAV */
         .nav-wrap { background:var(--primary); }
         .nav-tabs { max-width:1200px; margin:0 auto; display:flex; border-bottom:1px solid rgba(37,99,235,0.15); }
         .nav-tab { font-family:'Oswald',sans-serif; font-size:14px; text-transform:uppercase; letter-spacing:2px; padding:14px 28px; cursor:pointer; color:var(--gray-dark); border:none; border-bottom:3px solid transparent; background:none; transition:all 0.2s; white-space:nowrap; flex:1; text-align:center; }
-        .nav-tab:hover { color:var(--white); }
-        .nav-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
-
-        /* MAIN */
+        .nav-tab:hover { color:var(--white); } .nav-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
+        .nav-tab .live-dot { display:inline-block; width:7px; height:7px; background:var(--win); border-radius:50%; margin-left:6px; animation:livePulse 1.5s infinite; vertical-align:middle; }
         .main { max-width:1200px; margin:0 auto; padding:20px; }
         .section-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid var(--blue); }
         .section-header h2 { font-family:'Oswald',sans-serif; font-size:22px; text-transform:uppercase; letter-spacing:2px; }
         .section-header .accent-bar { width:4px; height:24px; background:var(--blue); border-radius:2px; }
-
-        /* SUB-TABS */
         .sub-tabs { display:flex; gap:0; margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.08); }
         .sub-tab { font-family:'Oswald',sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:2px; padding:10px 20px; cursor:pointer; color:var(--gray-dark); background:none; border:none; border-bottom:2px solid transparent; transition:all 0.2s; }
-        .sub-tab:hover { color:var(--white); }
-        .sub-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
-        .sub-content { display:none; animation:fadeIn 0.25s ease-out; }
-        .sub-content.active { display:block; }
-
-        /* STANDINGS */
+        .sub-tab:hover { color:var(--white); } .sub-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
+        .sub-content { display:none; animation:fadeIn 0.25s ease-out; } .sub-content.active { display:block; }
         .standings-table { width:100%; border-collapse:collapse; font-size:14px; }
         .standings-table thead th { font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:11px; letter-spacing:2px; color:var(--gray-dark); padding:10px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.06); }
         .standings-table thead th:not(:first-child):not(:nth-child(2)) { text-align:center; }
         .standings-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 0.15s; animation:fadeInUp 0.35s ease-out both; }
-        .standings-table tbody tr:nth-child(1){animation-delay:.05s} .standings-table tbody tr:nth-child(2){animation-delay:.1s} .standings-table tbody tr:nth-child(3){animation-delay:.15s} .standings-table tbody tr:nth-child(4){animation-delay:.2s} .standings-table tbody tr:nth-child(5){animation-delay:.25s} .standings-table tbody tr:nth-child(6){animation-delay:.3s}
         .standings-table tbody tr:hover { background:rgba(37,99,235,0.08); }
         .standings-table tbody tr.highlight { background:rgba(37,99,235,0.12); border-left:3px solid var(--blue); }
-        .standings-table td { padding:12px 14px; }
-        .standings-table td:not(:first-child):not(:nth-child(2)) { text-align:center; }
+        .standings-table td { padding:12px 14px; } .standings-table td:not(:first-child):not(:nth-child(2)) { text-align:center; }
         .standings-table .rank { font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--gray-dark); width:30px; }
         .standings-table .team-name { font-family:'Oswald',sans-serif; font-size:16px; font-weight:500; }
         .standings-table .win-pct { font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--blue-bright); }
         .gb { color:var(--gray-dark); }
-
-        /* GAME CARDS */
         .games-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:14px; }
         .game-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:8px; overflow:hidden; transition:border-color 0.2s,transform 0.2s; animation:fadeInUp 0.4s ease-out both; }
-        .game-card:nth-child(1){animation-delay:.05s} .game-card:nth-child(2){animation-delay:.1s} .game-card:nth-child(3){animation-delay:.15s}
         .game-card:hover { border-color:var(--blue); transform:translateY(-2px); }
         .game-card-header { background:rgba(37,99,235,0.08); padding:8px 16px; font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--gray-dark); font-family:'Oswald',sans-serif; display:flex; justify-content:space-between; }
         .game-card-body { padding:14px 16px; }
@@ -110,27 +84,22 @@
         .game-score { font-family:'Bebas Neue',sans-serif; font-size:26px; display:flex; align-items:center; gap:6px; animation:countUp 0.5s ease-out both; }
         .game-score .dash { color:var(--gray-dark); font-size:18px; }
         .game-result { display:inline-block; font-family:'Oswald',sans-serif; font-size:11px; padding:2px 8px; border-radius:3px; text-transform:uppercase; letter-spacing:1px; margin-top:6px; }
-        .game-result.win { background:rgba(34,197,94,0.2); color:var(--win); }
-        .game-result.loss { background:rgba(239,68,68,0.2); color:var(--loss); }
-
-        /* SCHEDULE */
+        .game-result.win { background:rgba(34,197,94,0.2); color:var(--win); } .game-result.loss { background:rgba(239,68,68,0.2); color:var(--loss); }
         .schedule-table { width:100%; border-collapse:collapse; font-size:14px; }
         .schedule-table thead th { font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:11px; letter-spacing:2px; color:var(--gray-dark); padding:10px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.06); }
         .schedule-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 0.15s; }
         .schedule-table tbody tr:hover { background:rgba(37,99,235,0.08); }
         .schedule-table tbody tr.drive-game { background:rgba(37,99,235,0.1); border-left:3px solid var(--blue); }
-        .schedule-table tbody tr.drive-game:hover { background:rgba(37,99,235,0.16); }
         .schedule-table tbody tr.current-week { background:rgba(251,191,36,0.06); border-left:3px solid var(--gold); }
-        .schedule-table tbody tr.current-week.drive-game { background:rgba(37,99,235,0.12); border-left:3px solid var(--gold); box-shadow:inset 0 0 20px rgba(251,191,36,0.05); }
+        .schedule-table tbody tr.current-week.drive-game { background:rgba(37,99,235,0.12); border-left:3px solid var(--gold); }
         .schedule-table td { padding:10px 14px; }
         .schedule-table .week-header { font-family:'Oswald',sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:2px; color:var(--blue-bright); background:rgba(37,99,235,0.06); padding:10px 14px; }
         .schedule-table .week-header.current { color:var(--gold); background:rgba(251,191,36,0.08); border-left:3px solid var(--gold); }
         .schedule-table .score-val { font-family:'Bebas Neue',sans-serif; font-size:18px; min-width:28px; display:inline-block; text-align:center; }
-        .schedule-table .score-win { color:var(--win); font-weight:700; }
-        .schedule-table .score-loss { color:var(--loss); }
+        .schedule-table .score-win { color:var(--win); font-weight:700; } .schedule-table .score-loss { color:var(--loss); }
         .schedule-table .playoff-header { font-family:'Oswald',sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:2px; color:var(--gold); background:rgba(251,191,36,0.06); padding:12px 14px; border-left:3px solid var(--gold); }
-
-        /* STATS */
+        .week-toggle { cursor:pointer; user-select:none; } .week-toggle::after { content:' ▾'; font-size:10px; opacity:0.5; } .week-toggle.collapsed::after { content:' ▸'; }
+        .week-games-hidden { display:none; }
         .stats-table { width:100%; border-collapse:collapse; font-size:14px; }
         .stats-table thead th { font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:11px; letter-spacing:1.5px; color:var(--gray-dark); padding:10px 12px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.06); position:sticky; top:0; background:var(--primary-dark); }
         .stats-table thead th:first-child { text-align:left; } .stats-table thead th:nth-child(2) { text-align:left; }
@@ -139,25 +108,14 @@
         .stats-table td { padding:10px 12px; text-align:center; }
         .stats-table td:first-child { text-align:left; font-family:'Bebas Neue',sans-serif; font-size:16px; color:var(--gray-dark); width:30px; }
         .stats-table td:nth-child(2) { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; }
-        .stat-highlight { color:var(--blue-bright); font-weight:700; }
-        .stats-leader { color:var(--gold); font-weight:700; }
-
-        /* ROSTER */
+        .stat-highlight { color:var(--blue-bright); font-weight:700; } .stats-leader { color:var(--gold); font-weight:700; }
         .roster-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
-        .roster-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:14px; display:flex; align-items:center; gap:12px; transition:all 0.2s; animation:fadeInUp 0.35s ease-out both; }
-        .roster-card:hover { border-color:var(--blue); background:var(--surface-light); }
-        .roster-number { font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--blue-bright); min-width:38px; text-align:center; }
-        .roster-info .roster-name { font-family:'Oswald',sans-serif; font-size:15px; font-weight:500; }
-        .roster-info .roster-pos { font-size:11px; color:var(--gray-dark); text-transform:uppercase; letter-spacing:1px; }
-
-        /* ROAST */
         .roast-card { background:linear-gradient(135deg,var(--surface) 0%,rgba(37,99,235,0.06) 100%); border:1px solid rgba(37,99,235,0.15); border-radius:12px; padding:28px; position:relative; overflow:hidden; animation:fadeInUp 0.5s ease-out both; }
         .roast-card::before { content:'"'; position:absolute; top:-20px; left:16px; font-family:'Bebas Neue',sans-serif; font-size:140px; color:rgba(37,99,235,0.06); line-height:1; }
         .roast-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(37,99,235,0.12); padding:4px 12px; border-radius:20px; font-family:'Oswald',sans-serif; font-size:12px; text-transform:uppercase; letter-spacing:2px; color:var(--blue-bright); margin-bottom:14px; }
         .roast-badge .dot { width:6px; height:6px; background:var(--blue-bright); border-radius:50%; animation:pulse 2s infinite; }
         .roast-text { font-size:16px; line-height:1.7; color:var(--gray); position:relative; z-index:1; }
-        .roast-text p { margin-bottom:10px; }
-        .roast-text .zinger { color:var(--blue-glow); font-weight:700; }
+        .roast-text p { margin-bottom:10px; } .roast-text .zinger { color:var(--blue-glow); font-weight:700; }
         #roast-feed { display:flex; flex-direction:column; gap:16px; }
         #roast-feed .roast-card:not(:first-child) .roast-text { max-height:0; overflow:hidden; transition:max-height 0.4s ease-out; }
         #roast-feed .roast-card:not(:first-child).expanded .roast-text { max-height:2000px; }
@@ -167,433 +125,251 @@
         #roast-feed .roast-card:not(:first-child) .share-btn { display:none; }
         #roast-feed .roast-card:not(:first-child).expanded .share-btn { display:inline-flex; }
         .roast-expand-hint { font-family:'Oswald',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--gray-dark); margin-top:8px; }
-        .roast-expand-hint::after { content:' ▸ tap to expand'; }
-        .expanded .roast-expand-hint { display:none; }
-
-        /* SHARE BUTTON */
+        .roast-expand-hint::after { content:' ▸ tap to expand'; } .expanded .roast-expand-hint { display:none; }
         .share-btn { display:inline-flex; align-items:center; gap:6px; background:rgba(37,99,235,0.12); color:var(--blue-bright); border:1px solid rgba(37,99,235,0.25); padding:8px 18px; border-radius:8px; font-family:'Oswald',sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:2px; cursor:pointer; transition:all 0.2s; margin-top:16px; }
         .share-btn:hover { background:rgba(37,99,235,0.25); transform:translateY(-1px); }
         .share-btn.copied { background:rgba(34,197,94,0.15); color:var(--win); border-color:rgba(34,197,94,0.3); }
-
-        /* COLLAPSIBLE WEEKS */
-        .week-toggle { cursor:pointer; user-select:none; }
-        .week-toggle::after { content:' ▾'; font-size:10px; opacity:0.5; }
-        .week-toggle.collapsed::after { content:' ▸'; }
-        .week-games-hidden { display:none; }
-
-        /* LIVE DOT */
-        @keyframes livePulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.6);} 50%{box-shadow:0 0 0 6px rgba(34,197,94,0);} }
-        .nav-tab .live-dot { display:inline-block; width:7px; height:7px; background:var(--win); border-radius:50%; margin-left:6px; animation:livePulse 1.5s infinite; vertical-align:middle; }
-
-        /* FOOTER */
+        .empty-state { text-align:center; padding:40px; color:var(--gray-dark); font-family:'Oswald',sans-serif; font-size:15px; letter-spacing:2px; text-transform:uppercase; }
         .footer { max-width:1200px; margin:30px auto 0; padding:16px 20px; border-top:1px solid rgba(255,255,255,0.06); text-align:center; font-size:11px; color:var(--gray-dark); letter-spacing:1px; }
-
-        /* RESPONSIVE */
         @media (max-width:768px) {
-            .header-inner { gap:10px; padding:10px 14px; }
-            .team-logo { width:44px; height:44px; }
-            .header-text h1 { font-size:24px; }
-            .header-text .league-name { font-size:9px; letter-spacing:2px; }
-            .header-right .record { font-size:26px; }
-            .header-right .record-label { font-size:8px; }
-            .header-right .last-result { font-size:9px; }
-            .nav-tab { padding:12px 8px; font-size:12px; letter-spacing:1px; }
-            .main { padding:16px 12px; }
-            .countdown-inner { flex-direction:column; gap:4px; }
-            .countdown-matchup { font-size:13px; }
-            .countdown-timer { font-size:17px; }
-            .standings-table { font-size:13px; }
-            .standings-table thead th { padding:8px 6px; font-size:10px; letter-spacing:1px; }
-            .standings-table td { padding:10px 6px; }
-            .standings-table .team-name { font-size:14px; }
-            .standings-table .col-t, .standings-table .col-gp, .standings-table .col-coach { display:none; }
-            .sub-tab { padding:8px 14px; font-size:12px; }
-            .schedule-table { font-size:13px; }
-            .schedule-table thead th { padding:8px 6px; font-size:10px; }
-            .schedule-table td { padding:8px 6px; }
-            .schedule-table .col-date, .schedule-table .col-loc { display:none; }
-            .games-grid { grid-template-columns:1fr; }
-            .game-team-name { font-size:13px; }
-            .game-score { font-size:22px; }
-            .stats-table { font-size:12px; }
-            .stats-table td,.stats-table th { padding:8px 5px; }
-            .stats-table thead th { font-size:10px; }
-            .roster-grid { grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); }
-            .roast-card { padding:20px 16px; }
-            .roast-text { font-size:15px; }
+            .header-inner{gap:10px;padding:10px 14px} .team-logo{width:44px;height:44px} .header-text h1{font-size:24px} .header-text .league-name{font-size:9px;letter-spacing:2px}
+            .header-right .record{font-size:26px} .header-right .record-label{font-size:8px} .header-right .last-result{font-size:9px}
+            .nav-tab{padding:12px 8px;font-size:12px;letter-spacing:1px} .main{padding:16px 12px}
+            .countdown-inner{flex-direction:column;gap:4px} .countdown-matchup{font-size:13px} .countdown-timer{font-size:17px}
+            .standings-table{font-size:13px} .standings-table thead th{padding:8px 6px;font-size:10px} .standings-table td{padding:10px 6px}
+            .standings-table .col-t,.standings-table .col-gp,.standings-table .col-coach{display:none}
+            .sub-tab{padding:8px 14px;font-size:12px}
+            .schedule-table{font-size:13px} .schedule-table thead th{padding:8px 6px;font-size:10px} .schedule-table td{padding:8px 6px}
+            .schedule-table .col-date,.schedule-table .col-loc{display:none}
+            .games-grid{grid-template-columns:1fr} .game-team-name{font-size:13px} .game-score{font-size:22px}
+            .stats-table{font-size:12px} .stats-table td,.stats-table th{padding:8px 5px} .stats-table thead th{font-size:10px}
+            .roast-card{padding:20px 16px} .roast-text{font-size:15px}
         }
-        @media (max-width:420px) {
-            .header-text h1 { font-size:20px; }
-            .header-right .record { font-size:22px; }
-            .nav-tab { padding:10px 6px; font-size:11px; letter-spacing:0.5px; }
-            .standings-table { font-size:12px; }
-            .standings-table thead th { padding:8px 4px; }
-            .standings-table td { padding:8px 4px; }
-            .schedule-table { font-size:12px; }
-            .schedule-table td { padding:6px 4px; }
-        }
-        ::-webkit-scrollbar { width:8px; height:8px; }
-        ::-webkit-scrollbar-track { background:var(--primary-dark); }
-        ::-webkit-scrollbar-thumb { background:var(--surface-light); border-radius:4px; }
-        ::-webkit-scrollbar-thumb:hover { background:var(--blue); }
+        @media (max-width:420px) { .header-text h1{font-size:20px} .header-right .record{font-size:22px} .nav-tab{padding:10px 6px;font-size:11px;letter-spacing:0.5px} .standings-table{font-size:12px} .schedule-table{font-size:12px} .schedule-table td{padding:6px 4px} }
+        ::-webkit-scrollbar{width:8px;height:8px} ::-webkit-scrollbar-track{background:var(--primary-dark)} ::-webkit-scrollbar-thumb{background:var(--surface-light);border-radius:4px} ::-webkit-scrollbar-thumb:hover{background:var(--blue)}
     </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="header-inner">
-        <div class="team-logo"><img src="logo.png" alt="Drive Auto Repair"></div>
-        <div class="header-text">
-            <h1>Drive Auto Repair</h1>
-            <div class="league-name">Hobgood Intermediate · Spring 2026</div>
-        </div>
-        <div class="header-right">
-            <div class="record" id="header-record">1 - 0</div>
-            <div class="record-label">Record</div>
-            <div class="last-result" id="last-result" style="color:var(--win);cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;" onclick="goToScores()">W 16-5 vs Motiv8</div>
-        </div>
-    </div>
-</div>
+<div class="header"><div class="header-inner">
+    <div class="team-logo"><img src="logo.png" alt="Drive Auto Repair"></div>
+    <div class="header-text"><h1>Drive Auto Repair</h1><div class="league-name" id="header-league">Hobgood Intermediate · Spring 2026</div></div>
+    <div class="header-right"><div class="record" id="header-record">0 - 0</div><div class="record-label">Record</div><div class="last-result" id="last-result" onclick="goToScores()"></div></div>
+</div></div>
 
-<div class="countdown-bar" id="countdown-bar">
-    <div class="countdown-inner">
-        <span class="countdown-label">Next Game</span>
-        <span class="countdown-matchup" id="countdown-matchup"></span>
-        <span class="countdown-timer" id="countdown-timer"></span>
-    </div>
-</div>
+<div class="countdown-bar" id="countdown-bar"><div class="countdown-inner">
+    <span class="countdown-label">Next Game</span>
+    <span class="countdown-matchup" id="countdown-matchup"></span>
+    <span class="countdown-timer" id="countdown-timer"></span>
+</div></div>
 
-<div class="nav-wrap">
-    <div class="nav-tabs">
-        <button class="nav-tab active" data-tab="standings">Standings</button>
-        <button class="nav-tab" data-tab="games">Games</button>
-        <button class="nav-tab" data-tab="players">Players</button>
-        <button class="nav-tab" data-tab="roast">Roast</button>
-    </div>
-</div>
+<div class="nav-wrap"><div class="nav-tabs">
+    <button class="nav-tab active" data-tab="standings">Standings</button>
+    <button class="nav-tab" data-tab="games" id="games-tab">Games</button>
+    <button class="nav-tab" data-tab="players">Players</button>
+    <button class="nav-tab" data-tab="roast">Roast</button>
+</div></div>
 
 <div class="main">
-
     <div class="section active" id="standings">
         <div class="section-header"><div class="accent-bar"></div><h2>League Standings</h2></div>
-        <table class="standings-table">
-            <thead><tr><th></th><th>Team</th><th>W</th><th>L</th><th class="col-t">T</th><th>GB</th><th class="col-gp">GP</th><th>PCT</th><th>STRK</th><th class="col-coach">Coach</th></tr></thead>
-            <tbody>
-                <tr><td class="rank">1</td><td class="team-name">Rocket Power</td><td>1</td><td>0</td><td class="col-t">0</td><td class="gb">—</td><td class="col-gp">1</td><td class="win-pct">1.000</td><td style="color:var(--win);">W1</td><td class="col-coach">Landry</td></tr>
-                <tr><td class="rank">2</td><td class="team-name">HS Legends/MOST</td><td>1</td><td>0</td><td class="col-t">0</td><td class="gb">—</td><td class="col-gp">1</td><td class="win-pct">1.000</td><td style="color:var(--win);">W1</td><td class="col-coach">Stewart</td></tr>
-                <tr class="highlight"><td class="rank">3</td><td class="team-name" style="color:var(--blue-bright);">⚾ Drive</td><td>1</td><td>0</td><td class="col-t">0</td><td class="gb">—</td><td class="col-gp">1</td><td class="win-pct">1.000</td><td style="color:var(--win);">W1</td><td class="col-coach">Ranney</td></tr>
-                <tr><td class="rank">4</td><td class="team-name">Dirt Dawgs</td><td>0</td><td>1</td><td class="col-t">0</td><td class="gb">1</td><td class="col-gp">1</td><td class="win-pct">.000</td><td style="color:var(--loss);">L1</td><td class="col-coach">Stubblefield</td></tr>
-                <tr><td class="rank">5</td><td class="team-name">Flamingos</td><td>0</td><td>1</td><td class="col-t">0</td><td class="gb">1</td><td class="col-gp">1</td><td class="win-pct">.000</td><td style="color:var(--loss);">L1</td><td class="col-coach">Herron</td></tr>
-                <tr><td class="rank">6</td><td class="team-name">Motiv8</td><td>0</td><td>1</td><td class="col-t">0</td><td class="gb">1</td><td class="col-gp">1</td><td class="win-pct">.000</td><td style="color:var(--loss);">L1</td><td class="col-coach">Harrison</td></tr>
-            </tbody>
-        </table>
+        <table class="standings-table"><thead><tr><th></th><th>Team</th><th>W</th><th>L</th><th class="col-t">T</th><th>GB</th><th class="col-gp">GP</th><th>PCT</th><th>STRK</th><th class="col-coach">Coach</th></tr></thead><tbody id="standings-body"></tbody></table>
     </div>
 
     <div class="section" id="games">
-        <div class="sub-tabs">
-            <button class="sub-tab active" data-sub="scores-view">Scores</button>
-            <button class="sub-tab" data-sub="schedule-view">Schedule</button>
-        </div>
-        <div class="sub-content active" id="scores-view">
-            <div class="games-grid">
-                <div class="game-card"><div class="game-card-header"><span>Week 1 — Mon 3/2, 7:00 PM</span><span>Final</span></div><div class="game-card-body"><div class="game-matchup"><div class="game-team"><div class="game-team-logo">HS</div><span class="game-team-name">HS Legends/MOST</span></div><div class="game-score"><span style="color:var(--win);">19</span><span class="dash">-</span><span>11</span></div><div class="game-team" style="justify-content:flex-end;"><span class="game-team-name">Flamingos</span><div class="game-team-logo">F</div></div></div></div></div>
-                <div class="game-card"><div class="game-card-header"><span>Week 1 — Mon 3/2, 8:00 PM</span><span>Final</span></div><div class="game-card-body"><div class="game-matchup"><div class="game-team"><div class="game-team-logo drive"><img src="logo.png" alt="D"></div><span class="game-team-name">Drive</span></div><div class="game-score"><span style="color:var(--win);">16</span><span class="dash">-</span><span>5</span></div><div class="game-team" style="justify-content:flex-end;"><span class="game-team-name">Motiv8</span><div class="game-team-logo">M</div></div></div><div style="text-align:center;"><span class="game-result win">Win</span></div></div></div>
-                <div class="game-card"><div class="game-card-header"><span>Week 1 — Mon 3/2, 9:00 PM</span><span>Final</span></div><div class="game-card-body"><div class="game-matchup"><div class="game-team"><div class="game-team-logo">DD</div><span class="game-team-name">Dirt Dawgs</span></div><div class="game-score"><span>13</span><span class="dash">-</span><span style="color:var(--win);">34</span></div><div class="game-team" style="justify-content:flex-end;"><span class="game-team-name">Rocket Power</span><div class="game-team-logo">RP</div></div></div></div></div>
-            </div>
-        </div>
-        <div class="sub-content" id="schedule-view">
-            <table class="schedule-table" id="schedule-table">
-                <thead><tr><th class="col-date">Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th class="col-loc">Loc</th></tr></thead>
-                <tbody>
-                    <tr><td colspan="7" class="week-header" data-week="2026-03-02">Week 1</td></tr>
-                    <tr><td class="col-date">Mon 3/2</td><td>7:00 PM</td><td><strong>HS Legends/MOST</strong></td><td><span class="score-val score-win">19</span></td><td>Flamingos</td><td><span class="score-val score-loss">11</span></td><td class="col-loc">HP2</td></tr>
-                    <tr class="drive-game"><td class="col-date">Mon 3/2</td><td>8:00 PM</td><td><strong style="color:var(--blue-bright);">Drive</strong></td><td><span class="score-val score-win">16</span></td><td>Motiv8</td><td><span class="score-val score-loss">5</span></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 3/2</td><td>9:00 PM</td><td>Dirt Dawgs</td><td><span class="score-val score-loss">13</span></td><td><strong>Rocket Power</strong></td><td><span class="score-val score-win">34</span></td><td class="col-loc">HP2</td></tr>
-                    <tr><td colspan="7" class="week-header" data-week="2026-03-09">Week 2</td></tr>
-                    <tr><td class="col-date">Mon 3/9</td><td>7:00 PM</td><td>Motiv8</td><td></td><td>Dirt Dawgs</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 3/9</td><td>8:00 PM</td><td>Rocket Power</td><td></td><td>HS Legends/MOST</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr class="drive-game"><td class="col-date">Mon 3/9</td><td>9:00 PM</td><td>Flamingos</td><td></td><td style="color:var(--blue-bright);"><strong>Drive</strong></td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td colspan="7" class="week-header" data-week="2026-03-16">Week 3</td></tr>
-                    <tr><td class="col-date">Mon 3/16</td><td>7:00 PM</td><td>Rocket Power</td><td></td><td>Flamingos</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr class="drive-game"><td class="col-date">Mon 3/16</td><td>8:00 PM</td><td>Dirt Dawgs</td><td></td><td style="color:var(--blue-bright);"><strong>Drive</strong></td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 3/16</td><td>9:00 PM</td><td>HS Legends/MOST</td><td></td><td>Motiv8</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td colspan="7" class="week-header" data-week="2026-03-23">Week 4</td></tr>
-                    <tr class="drive-game"><td class="col-date">Mon 3/23</td><td>7:00 PM</td><td><strong style="color:var(--blue-bright);">Drive</strong></td><td></td><td>HS Legends/MOST</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 3/23</td><td>8:00 PM</td><td>Dirt Dawgs</td><td></td><td>Flamingos</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 3/23</td><td>9:00 PM</td><td>Motiv8</td><td></td><td>Rocket Power</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td colspan="7" class="week-header" data-week="2026-03-30">Week 5</td></tr>
-                    <tr class="drive-game"><td class="col-date">Mon 3/30</td><td>7:00 PM</td><td>Rocket Power</td><td></td><td style="color:var(--blue-bright);"><strong>Drive</strong></td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 3/30</td><td>8:00 PM</td><td>Flamingos</td><td></td><td>Motiv8</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 3/30</td><td>9:00 PM</td><td>HS Legends/MOST</td><td></td><td>Dirt Dawgs</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td colspan="7" class="week-header">Week 6 — Spring Break</td></tr>
-                    <tr><td colspan="7" style="text-align:center;padding:16px;color:var(--gray-dark);font-style:italic;">No games</td></tr>
-                    <tr><td colspan="7" class="week-header" data-week="2026-04-13">Week 7</td></tr>
-                    <tr class="drive-game"><td class="col-date">Mon 4/13</td><td>7:00 PM</td><td>Motiv8</td><td></td><td style="color:var(--blue-bright);"><strong>Drive</strong></td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 4/13</td><td>8:00 PM</td><td>Flamingos</td><td></td><td>HS Legends/MOST</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 4/13</td><td>9:00 PM</td><td>Rocket Power</td><td></td><td>Dirt Dawgs</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td colspan="7" class="week-header" data-week="2026-04-20">Week 8</td></tr>
-                    <tr><td class="col-date">Mon 4/20</td><td>7:00 PM</td><td>Dirt Dawgs</td><td></td><td>Motiv8</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 4/20</td><td>8:00 PM</td><td>HS Legends/MOST</td><td></td><td>Rocket Power</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr class="drive-game"><td class="col-date">Mon 4/20</td><td>9:00 PM</td><td><strong style="color:var(--blue-bright);">Drive</strong></td><td></td><td>Flamingos</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td colspan="7" class="week-header" data-week="2026-04-27">Week 9</td></tr>
-                    <tr><td class="col-date">Mon 4/27</td><td>7:00 PM</td><td>Flamingos</td><td></td><td>Rocket Power</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr class="drive-game"><td class="col-date">Mon 4/27</td><td>8:00 PM</td><td><strong style="color:var(--blue-bright);">Drive</strong></td><td></td><td>Dirt Dawgs</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 4/27</td><td>9:00 PM</td><td>Motiv8</td><td></td><td>HS Legends/MOST</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td colspan="7" class="playoff-header">🏆 Playoff Round 1 — Mon 5/4</td></tr>
-                    <tr><td class="col-date">Mon 5/4</td><td>7:00 PM</td><td>4th Seed</td><td></td><td>5th Seed</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 5/4</td><td>8:00 PM</td><td>3rd Seed</td><td></td><td>6th Seed</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td colspan="7" class="playoff-header">🏆 Playoff Round 2</td></tr>
-                    <tr><td class="col-date">Mon 5/4</td><td>9:00 PM</td><td>1st Seed</td><td></td><td>G1 Winner</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td class="col-date">Mon 5/11</td><td>7:00 PM</td><td>2nd Seed</td><td></td><td>G2 Winner</td><td></td><td class="col-loc">HP2</td></tr>
-                    <tr><td colspan="7" class="playoff-header">🏆 Championship</td></tr>
-                    <tr><td class="col-date">Mon 5/11</td><td>8:15 PM</td><td>G3 Winner</td><td></td><td>G4 Winner</td><td></td><td class="col-loc">HP2</td></tr>
-                </tbody>
-            </table>
-        </div>
+        <div class="sub-tabs"><button class="sub-tab active" data-sub="scores-view">Scores</button><button class="sub-tab" data-sub="schedule-view">Schedule</button></div>
+        <div class="sub-content active" id="scores-view"><div class="games-grid" id="scores-grid"></div></div>
+        <div class="sub-content" id="schedule-view"><table class="schedule-table"><thead><tr><th class="col-date">Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th class="col-loc">Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div>
     </div>
 
     <div class="section" id="players">
-        <div class="sub-tabs">
-            <button class="sub-tab active" data-sub="stats-view">Stats</button>
-            <button class="sub-tab" data-sub="roster-view">Roster</button>
-        </div>
-        <div class="sub-content active" id="stats-view">
-            <div style="overflow-x:auto;">
-                <table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>GP</th><th>AB</th><th>H</th><th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>R</th><th>AVG</th></tr></thead>
-                <tbody><tr><td colspan="11" style="text-align:center;padding:40px;color:var(--gray-dark);font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:2px;text-transform:uppercase;">Player stats coming soon</td></tr></tbody></table>
-            </div>
-        </div>
-        <div class="sub-content" id="roster-view">
-            <div class="roster-grid"><div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray-dark);font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:2px;text-transform:uppercase;">Roster coming soon</div></div>
-        </div>
+        <div class="sub-tabs"><button class="sub-tab active" data-sub="stats-view">Stats</button><button class="sub-tab" data-sub="roster-view">Roster</button></div>
+        <div class="sub-content active" id="stats-view"><div style="overflow-x:auto;"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>GP</th><th>AB</th><th>H</th><th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>R</th><th>AVG</th></tr></thead><tbody id="stats-body"></tbody></table></div></div>
+        <div class="sub-content" id="roster-view"><div class="roster-grid"><div class="empty-state">Roster coming soon</div></div></div>
     </div>
 
     <div class="section" id="roast">
         <div class="section-header"><div class="accent-bar"></div><h2>AI Weekly Roast</h2></div>
-        <div id="roast-feed">
-
-            <!-- WEEK 1 ROAST (most recent on top — new weeks get added above this) -->
-            <div class="roast-card" data-roast-week="1">
-                <div class="roast-badge"><span class="dot"></span> Week 1 Report</div>
-                <div class="roast-text">
-                    <p>Congratulations to Drive Auto Repair for beating Motiv8 16-5. <span class="zinger">Real impressive, boys. You beat a team whose name is literally a motivational poster at a dentist's office.</span> Pop the champagne. Call ESPN. Alert the media. A bunch of grown men with knee braces scored 16 runs against what appeared to be a team that carpooled from a fantasy football draft.</p>
-                    <p><span class="zinger">Coach Ranney drew up the game plan on a napkin at Waffle House</span> and somehow it worked. The offense came out swinging like they all had outstanding warrants. The defense? Let's just say the errors weren't tracked because nobody wanted to do that much math.</p>
-                    <p>Meanwhile, <span class="zinger">half the lineup can't touch their toes but swears they're "warming up"</span> every Monday at 7:55 PM. The dugout smells like Bengay and bad decisions. One of you brought a lawn chair. You know who you are.</p>
-                    <p><span class="zinger">Rocket Power dropped 34 on the Dirt Dawgs, so let's not get too comfortable.</span> Drive's 16 runs look cute next to that. That's like bragging about your Honda Civic at a Ferrari dealership — which, given the team name, is painfully on brand.</p>
-                    <p>Next week: Flamingos. If you lose to a team called the Flamingos, every single one of you owes the group chat a pink jersey selfie. No exceptions. See you Monday. ⚾</p>
-                </div>
-                <button class="share-btn" onclick="shareRoast(this)">🔗 Share Roast</button>
-            </div>
-
-        </div>
+        <div id="roast-feed"></div>
     </div>
 </div>
 
 <div class="footer">DRIVE — HOBGOOD INTERMEDIATE LEAGUE — SPRING 2026<br><span style="color:var(--blue);">POWERED BY YOUR MOM</span> · UPDATED WEEKLY</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script>
-const SHEET_ID='';const TEAM='Drive';
-const SCHED=[
-{w:1,d:'2026-03-02',t:'8:00 PM',h:'Drive',hs:16,a:'Motiv8',as:5},
-{w:2,d:'2026-03-09',t:'9:00 PM',h:'Flamingos',a:'Drive'},
-{w:3,d:'2026-03-16',t:'8:00 PM',h:'Dirt Dawgs',a:'Drive'},
-{w:4,d:'2026-03-23',t:'7:00 PM',h:'Drive',a:'HS Legends/MOST'},
-{w:5,d:'2026-03-30',t:'7:00 PM',h:'Rocket Power',a:'Drive'},
-{w:7,d:'2026-04-13',t:'7:00 PM',h:'Motiv8',a:'Drive'},
-{w:8,d:'2026-04-20',t:'9:00 PM',h:'Drive',a:'Flamingos'},
-{w:9,d:'2026-04-27',t:'8:00 PM',h:'Drive',a:'Dirt Dawgs'}
-];
+const TEAM='Drive';
+let DATA={};
 
-// Tabs
-document.querySelectorAll('.nav-tab').forEach(tab=>{
-    tab.addEventListener('click',()=>{
-        document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-        document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-        tab.classList.add('active');
-        const s=document.getElementById(tab.dataset.tab);
-        s.classList.add('active');
-        s.style.animation='none';s.offsetHeight;s.style.animation='';
-    });
-});
-document.querySelectorAll('.sub-tab').forEach(tab=>{
-    tab.addEventListener('click',()=>{
-        const p=tab.closest('.section');
-        p.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));
-        p.querySelectorAll('.sub-content').forEach(s=>s.classList.remove('active'));
-        tab.classList.add('active');
-        const s=document.getElementById(tab.dataset.sub);
-        s.classList.add('active');
-        s.style.animation='none';s.offsetHeight;s.style.animation='';
-    });
-});
+// Fetch JSON
+async function loadJSON(path){
+    try{const r=await fetch(path+'?v='+Date.now());return r.ok?await r.json():null;}catch(e){return null;}
+}
 
-// Countdown
-function initCountdown(){
+// TABS
+document.querySelectorAll('.nav-tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');const s=document.getElementById(t.dataset.tab);s.classList.add('active');s.style.animation='none';s.offsetHeight;s.style.animation='';
+}));
+document.querySelectorAll('.sub-tab').forEach(t=>t.addEventListener('click',()=>{
+    const p=t.closest('.section');p.querySelectorAll('.sub-tab').forEach(x=>x.classList.remove('active'));p.querySelectorAll('.sub-content').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');const s=document.getElementById(t.dataset.sub);s.classList.add('active');s.style.animation='none';s.offsetHeight;s.style.animation='';
+}));
+
+function goToScores(){
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById('games-tab').classList.add('active');document.getElementById('games').classList.add('active');
+    const g=document.getElementById('games');g.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));g.querySelectorAll('.sub-content').forEach(s=>s.classList.remove('active'));
+    g.querySelector('[data-sub="scores-view"]').classList.add('active');document.getElementById('scores-view').classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// RENDER STANDINGS
+function renderStandings(data){
+    const tb=document.getElementById('standings-body');
+    const drive=data.find(r=>r.team.toLowerCase().includes('drive'));
+    if(drive){
+        document.getElementById('header-record').textContent=drive.w+' - '+drive.l;
+    }
+    tb.innerHTML=data.map((r,i)=>{const dr=r.team.toLowerCase().includes('drive');const w=r.streak.startsWith('W');
+    return`<tr class="${dr?'highlight':''}" style="animation-delay:${i*0.05}s"><td class="rank">${r.rank}</td><td class="team-name"${dr?' style="color:var(--blue-bright);"':''}>${dr?'⚾ ':''}${r.team}</td><td>${r.w}</td><td>${r.l}</td><td class="col-t">${r.t}</td><td class="gb">${r.gb==='--'?'—':r.gb}</td><td class="col-gp">${r.gp}</td><td class="win-pct">${r.pct}</td><td style="color:var(${w?'--win':'--loss'});">${r.streak}</td><td class="col-coach">${r.coach}</td></tr>`;}).join('');
+}
+
+// RENDER SCORES
+function renderScores(schedule){
+    const grid=document.getElementById('scores-grid');
+    const played=schedule.filter(g=>g.homeScore!==undefined&&g.homeScore!==null&&g.home!=='Spring Break');
+    if(!played.length){grid.innerHTML='<div class="empty-state">No scores yet</div>';return;}
+    grid.innerHTML=played.map((g,i)=>{
+        const hw=g.homeScore>g.awayScore;const isDrive=g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive');
+        const driveWon=isDrive&&((g.home.toLowerCase().includes('drive')&&hw)||(!g.home.toLowerCase().includes('drive')&&!hw));
+        const hLogo=g.home.toLowerCase().includes('drive')?'<div class="game-team-logo drive"><img src="logo.png" alt="D"></div>':`<div class="game-team-logo">${g.home.substring(0,2).toUpperCase()}</div>`;
+        const aLogo=g.away.toLowerCase().includes('drive')?'<div class="game-team-logo drive"><img src="logo.png" alt="D"></div>':`<div class="game-team-logo">${g.away.substring(0,2).toUpperCase()}</div>`;
+        return`<div class="game-card" style="animation-delay:${i*0.05}s"><div class="game-card-header"><span>${g.week} — ${g.date}, ${g.time}</span><span>Final</span></div><div class="game-card-body"><div class="game-matchup"><div class="game-team">${hLogo}<span class="game-team-name">${g.home}</span></div><div class="game-score"><span style="color:var(${hw?'--win':'--loss'});">${g.homeScore}</span><span class="dash">-</span><span style="color:var(${!hw?'--win':'--loss'});">${g.awayScore}</span></div><div class="game-team" style="justify-content:flex-end;"><span class="game-team-name">${g.away}</span>${aLogo}</div></div>${isDrive?`<div style="text-align:center;"><span class="game-result ${driveWon?'win':'loss'}">${driveWon?'Win':'Loss'}</span></div>`:''}</div></div>`;
+    }).join('');
+    // Update last result
+    const lastDrive=[...played].reverse().find(g=>g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive'));
+    if(lastDrive){
+        const hw=lastDrive.homeScore>lastDrive.awayScore;const dHome=lastDrive.home.toLowerCase().includes('drive');
+        const won=(dHome&&hw)||(!dHome&&!hw);const opp=dHome?lastDrive.away:lastDrive.home;
+        const ds=dHome?lastDrive.homeScore:lastDrive.awayScore;const os=dHome?lastDrive.awayScore:lastDrive.homeScore;
+        const el=document.getElementById('last-result');
+        el.textContent=`${won?'W':'L'} ${ds}-${os} vs ${opp}`;el.style.color=won?'var(--win)':'var(--loss)';
+    }
+}
+
+// RENDER SCHEDULE
+function renderSchedule(schedule){
+    const tb=document.getElementById('schedule-body');const now=new Date();let currentFound=false;let html='';let lastWeek='';
+    schedule.forEach(g=>{
+        if(g.week!==lastWeek){
+            lastWeek=g.week;const isPlayoff=g.playoff;const isSB=g.home==='Spring Break';
+            if(isPlayoff){html+=`<tr><td colspan="7" class="playoff-header">🏆 ${g.week}</td></tr>`;}
+            else if(isSB){html+=`<tr><td colspan="7" class="week-header">Week 6 — Spring Break</td></tr><tr><td colspan="7" style="text-align:center;padding:16px;color:var(--gray-dark);font-style:italic;">No games</td></tr>`;return;}
+            else{
+                let cls='week-header';
+                if(!currentFound&&g.weekDate){const wd=new Date(g.weekDate+'T00:00:00');const we=new Date(wd);we.setDate(we.getDate()+7);
+                if((now>=wd&&now<we)||wd>now){currentFound=true;cls+=' current';}}
+                html+=`<tr><td colspan="7" class="${cls}" data-week="${g.weekDate||''}">${g.week}</td></tr>`;
+            }
+        }
+        if(g.home==='Spring Break')return;
+        const isDrive=g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive');
+        const hasScore=g.homeScore!==undefined&&g.homeScore!==null;
+        const hw=hasScore&&g.homeScore>g.awayScore;
+        const hName=isDrive&&g.home.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(hw&&hasScore?'<strong>'+g.home+'</strong>':g.home);
+        const aName=isDrive&&g.away.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(!hw&&hasScore?'<strong>'+g.away+'</strong>':g.away);
+        html+=`<tr class="${isDrive?'drive-game':''}"><td class="col-date">${g.date}</td><td>${g.time}</td><td>${hName}</td><td>${hasScore?'<span class="score-val '+(hw?'score-win':'score-loss')+'">'+g.homeScore+'</span>':''}</td><td>${aName}</td><td>${hasScore?'<span class="score-val '+(!hw?'score-win':'score-loss')+'">'+g.awayScore+'</span>':''}</td><td class="col-loc">${g.location}</td></tr>`;
+    });
+    tb.innerHTML=html;
+    highlightWeek();collapsePastWeeks();
+}
+
+// RENDER STATS
+function renderStats(data){
+    const tb=document.getElementById('stats-body');
+    if(!data||!data.length){tb.innerHTML='<tr><td colspan="11" class="empty-state">Player stats coming soon</td></tr>';return;}
+    tb.innerHTML=data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td>${p.gp}</td><td>${p.ab}</td><td>${p.h}</td><td>${p['2b']}</td><td>${p['3b']}</td><td>${p.hr}</td><td>${p.rbi}</td><td>${p.r}</td><td class="${i===0?'stats-leader':'stat-highlight'}">${p.avg}</td></tr>`).join('');
+}
+
+// RENDER ROASTS
+function renderRoasts(data){
+    const feed=document.getElementById('roast-feed');
+    if(!data||!data.length){feed.innerHTML='<div class="empty-state">Roasts coming soon</div>';return;}
+    feed.innerHTML=[...data].reverse().map((r,i)=>`<div class="roast-card" data-roast-week="${r.week}">
+        <div class="roast-badge"><span class="dot"></span> ${r.week} Report</div>
+        <div class="roast-text">${r.content}</div>
+        ${i>0?'<div class="roast-expand-hint"></div>':''}
+        <button class="share-btn" onclick="shareRoast(this)">🔗 Share Roast</button>
+    </div>`).join('');
+    // Expand toggle for older roasts
+    feed.querySelectorAll('.roast-card:not(:first-child)').forEach(c=>c.addEventListener('click',e=>{if(!e.target.closest('.share-btn'))c.classList.toggle('expanded');}));
+}
+
+// COUNTDOWN
+function initCountdown(schedule){
     const now=new Date();
-    for(const g of SCHED){
-        if(g.hs!==undefined)continue;
-        const[h,m]=g.t.replace(/ [AP]M/,'').split(':');
-        let hr=parseInt(h);if(g.t.includes('PM')&&hr!==12)hr+=12;
-        const gd=new Date(g.d+'T00:00:00');gd.setHours(hr,parseInt(m),0);
+    const driveGames=schedule.filter(g=>(g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive'))&&g.homeScore===undefined&&!g.playoff);
+    for(const g of driveGames){
+        if(!g.weekDate)continue;
+        const[h,m]=g.time.replace(/ [AP]M/,'').split(':');let hr=parseInt(h);if(g.time.includes('PM')&&hr!==12)hr+=12;
+        const gd=new Date(g.weekDate+'T00:00:00');gd.setHours(hr,parseInt(m),0);
         if(gd>now){
-            const opp=g.h===TEAM?g.a:g.h;
-            const ha=g.h===TEAM?'vs':'@';
+            const opp=g.home.toLowerCase().includes('drive')?g.away:g.home;const ha=g.home.toLowerCase().includes('drive')?'vs':'@';
             document.getElementById('countdown-bar').style.display='block';
-            document.getElementById('countdown-matchup').textContent=TEAM+' '+ha+' '+opp+' · '+g.t;
-            const tick=()=>{
-                const df=gd-new Date();
-                if(df<=0){document.getElementById('countdown-timer').textContent='GAME TIME!';return;}
-                const d=Math.floor(df/864e5),h=Math.floor(df%864e5/36e5),m=Math.floor(df%36e5/6e4),s=Math.floor(df%6e4/1e3);
-                document.getElementById('countdown-timer').textContent=d>0?d+'d '+h+'h '+m+'m '+s+'s':h+'h '+m+'m '+s+'s';
-            };
+            document.getElementById('countdown-matchup').textContent=TEAM+' '+ha+' '+opp+' · '+g.time;
+            const tick=()=>{const df=gd-new Date();if(df<=0){document.getElementById('countdown-timer').textContent='GAME TIME!';return;}
+            const d=Math.floor(df/864e5),h=Math.floor(df%864e5/36e5),m=Math.floor(df%36e5/6e4),s=Math.floor(df%6e4/1e3);
+            document.getElementById('countdown-timer').textContent=d>0?d+'d '+h+'h '+m+'m '+s+'s':h+'h '+m+'m '+s+'s';};
             tick();setInterval(tick,1000);break;
         }
     }
 }
 
-// Current week highlight
 function highlightWeek(){
     const now=new Date();let found=false;
     document.querySelectorAll('.week-header[data-week]').forEach(wh=>{
-        const wd=new Date(wh.dataset.week+'T00:00:00');
-        const we=new Date(wd);we.setDate(we.getDate()+7);
-        if(!found&&(now>=wd&&now<we||wd>now)){
-            found=true;wh.classList.add('current');
-            let row=wh.closest('tr').nextElementSibling;
-            while(row&&!row.querySelector('.week-header')&&!row.querySelector('.playoff-header')){
-                row.classList.add('current-week');row=row.nextElementSibling;
-            }
-            document.querySelector('[data-sub="schedule-view"]')?.addEventListener('click',()=>{
-                setTimeout(()=>wh.scrollIntoView({behavior:'smooth',block:'start'}),150);
-            });
-        }
+        if(!wh.dataset.week)return;
+        const wd=new Date(wh.dataset.week+'T00:00:00');const we=new Date(wd);we.setDate(we.getDate()+7);
+        if(!found&&(now>=wd&&now<we||wd>now)){found=true;wh.classList.add('current');
+        let row=wh.closest('tr').nextElementSibling;while(row&&!row.querySelector('.week-header')&&!row.querySelector('.playoff-header')){row.classList.add('current-week');row=row.nextElementSibling;}
+        document.querySelector('[data-sub="schedule-view"]')?.addEventListener('click',()=>{setTimeout(()=>wh.scrollIntoView({behavior:'smooth',block:'start'}),150);});}
     });
 }
 
-// Google Sheets
-async function fetchSheet(tab){
-    if(!SHEET_ID)return null;
-    try{const r=await fetch('https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:csv&sheet='+encodeURIComponent(tab));
-    if(!r.ok)return null;return Papa.parse(await r.text(),{header:true,skipEmptyLines:true}).data;}catch(e){return null;}
-}
-function renderStandings(data){
-    if(!data||!data.length)return;
-    const tb=document.querySelector('#standings .standings-table tbody');if(!tb)return;
-    tb.innerHTML=data.map((r,i)=>{const dr=r.Team&&r.Team.toLowerCase().includes('drive');const w=r.Streak&&r.Streak.startsWith('W');
-    return '<tr class="'+(dr?'highlight':'')+'" style="animation-delay:'+i*0.05+'s"><td class="rank">'+(i+1)+'</td><td class="team-name"'+(dr?' style="color:var(--blue-bright);"':'')+'>'+(dr?'⚾ ':'')+r.Team+'</td><td>'+r.W+'</td><td>'+r.L+'</td><td class="col-t">'+(r.T||0)+'</td><td class="gb">'+(r.GB||'—')+'</td><td class="col-gp">'+(r.GP||0)+'</td><td class="win-pct">'+(r.PCT||'.000')+'</td><td style="color:var('+(w?'--win':'--loss')+');">'+(r.Streak||'')+'</td><td class="col-coach">'+(r.Coach||'')+'</td></tr>';}).join('');
-}
-function renderStats(data){
-    if(!data||!data.length)return;const tb=document.querySelector('#stats-view .stats-table tbody');if(!tb)return;
-    const p=data.filter(r=>r.Player&&r.Player.trim());if(!p.length)return;
-    tb.innerHTML=p.map((r,i)=>'<tr style="animation-delay:'+i*0.04+'s"><td>'+(i+1)+'</td><td>'+r.Player+'</td><td>'+(r.GP||0)+'</td><td>'+(r.AB||0)+'</td><td>'+(r.H||0)+'</td><td>'+(r['2B']||0)+'</td><td>'+(r['3B']||0)+'</td><td>'+(r.HR||0)+'</td><td>'+(r.RBI||0)+'</td><td>'+(r.R||0)+'</td><td class="'+(i===0?'stats-leader':'stat-highlight')+'">'+(r.AVG||'.000')+'</td></tr>').join('');
-}
-function renderRoast(data){
-    if(!data||!data.length)return;const l=data[data.length-1];if(!l||!l.Content)return;
-    const b=document.querySelector('#roast-card .roast-badge'),t=document.getElementById('roast-text');
-    if(b&&l.Week)b.innerHTML='<span class="dot"></span> '+l.Week+' Report';
-    if(t&&l.Content)t.innerHTML=l.Content.split('\n').filter(p=>p.trim()).map(p=>'<p>'+p+'</p>').join('');
-}
-function updateRecord(data){
-    if(!data||!data.length)return;const d=data.find(r=>r.Team&&r.Team.toLowerCase().includes('drive'));if(!d)return;
-    const el=document.getElementById('header-record');if(el)el.textContent=(d.W||0)+' - '+(d.L||0);
-}
-
-// Share roast (native share on mobile, clipboard fallback on desktop)
-function shareRoast(btn){
-    const card=btn.closest('.roast-card');
-    const text=card.querySelector('.roast-text').innerText;
-    const week=card.querySelector('.roast-badge')?.innerText?.trim()||'Weekly Roast';
-
-    if(navigator.share){
-        navigator.share({
-            title:'Drive Auto Repair — '+week,
-            text:text,
-            url:'https://pranney82.github.io/menssoftball/'
-        }).catch(()=>{});
-    } else {
-        navigator.clipboard.writeText(text+'\n\nhttps://pranney82.github.io/menssoftball/').then(()=>{
-            btn.classList.add('copied');btn.innerHTML='✅ Copied!';
-            setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='🔗 Share Roast';},2000);
-        }).catch(()=>{
-            const ta=document.createElement('textarea');ta.value=text+'\n\nhttps://pranney82.github.io/menssoftball/';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-            btn.classList.add('copied');btn.innerHTML='✅ Copied!';
-            setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='🔗 Share Roast';},2000);
-        });
-    }
-}
-
-// Tap last result to jump to scores
-function goToScores(){
-    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-    const gamesTab=document.querySelector('[data-tab="games"]');
-    gamesTab.classList.add('active');
-    document.getElementById('games').classList.add('active');
-    // Make sure Scores sub-tab is active
-    const gamesSection=document.getElementById('games');
-    gamesSection.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));
-    gamesSection.querySelectorAll('.sub-content').forEach(s=>s.classList.remove('active'));
-    gamesSection.querySelector('[data-sub="scores-view"]').classList.add('active');
-    document.getElementById('scores-view').classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
-}
-
-// Expand older roasts on click
-function initRoastExpand(){
-    document.querySelectorAll('#roast-feed .roast-card:not(:first-child)').forEach(card=>{
-        card.addEventListener('click',(e)=>{
-            if(e.target.closest('.share-btn'))return;
-            card.classList.toggle('expanded');
-        });
-    });
-}
-
-// Collapse past weeks
 function collapsePastWeeks(){
     const now=new Date();
     document.querySelectorAll('.week-header[data-week]').forEach(wh=>{
-        const wd=new Date(wh.dataset.week+'T00:00:00');
-        const we=new Date(wd);we.setDate(we.getDate()+7);
-        const isPast=we<now;
-        // Check if this week has scores (has .score-val in its rows)
-        let hasScores=false;
-        let row=wh.closest('tr').nextElementSibling;
-        const rows=[];
-        while(row&&!row.querySelector('.week-header')&&!row.querySelector('.playoff-header')){
-            rows.push(row);
-            if(row.querySelector('.score-val'))hasScores=true;
-            row=row.nextElementSibling;
-        }
-        if(isPast&&hasScores){
-            wh.classList.add('week-toggle','collapsed');
-            rows.forEach(r=>r.classList.add('week-games-hidden'));
-            wh.addEventListener('click',()=>{
-                const isCollapsed=wh.classList.toggle('collapsed');
-                rows.forEach(r=>r.classList.toggle('week-games-hidden',isCollapsed));
-            });
-        }
+        if(!wh.dataset.week)return;const we=new Date(wh.dataset.week+'T00:00:00');we.setDate(we.getDate()+7);
+        let hasScores=false;const rows=[];let row=wh.closest('tr').nextElementSibling;
+        while(row&&!row.querySelector('.week-header')&&!row.querySelector('.playoff-header')){rows.push(row);if(row.querySelector('.score-val'))hasScores=true;row=row.nextElementSibling;}
+        if(we<now&&hasScores){wh.classList.add('week-toggle','collapsed');rows.forEach(r=>r.classList.add('week-games-hidden'));
+        wh.addEventListener('click',()=>{const c=wh.classList.toggle('collapsed');rows.forEach(r=>r.classList.toggle('week-games-hidden',c));});}
     });
 }
 
-// Live dot on game day
-function checkGameDay(){
-    const now=new Date();
-    const day=now.getDay(); // 0=Sun,1=Mon
-    if(day===1){ // Monday
-        const gamesTab=document.querySelector('[data-tab="games"]');
-        if(gamesTab&&!gamesTab.querySelector('.live-dot')){
-            gamesTab.innerHTML+='<span class="live-dot"></span>';
-        }
-    }
+function checkGameDay(){if(new Date().getDay()===1){const t=document.getElementById('games-tab');if(t&&!t.querySelector('.live-dot'))t.innerHTML+='<span class="live-dot"></span>';}}
+
+function shareRoast(btn){
+    const card=btn.closest('.roast-card');const text=card.querySelector('.roast-text').innerText;const week=card.querySelector('.roast-badge')?.innerText?.trim()||'Weekly Roast';
+    if(navigator.share){navigator.share({title:'Drive Auto Repair — '+week,text:text,url:'https://pranney82.github.io/menssoftball/'}).catch(()=>{});}
+    else{navigator.clipboard.writeText(text+'\n\nhttps://pranney82.github.io/menssoftball/').then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='🔗 Share Roast';},2000);}).catch(()=>{});}
 }
 
+// INIT
 async function init(){
-    initCountdown();highlightWeek();collapsePastWeeks();checkGameDay();initRoastExpand();
-    if(SHEET_ID){try{
-        const[st,ro,ss]=await Promise.all([fetchSheet('standings'),fetchSheet('roast'),fetchSheet('stats')]);
-        if(st){renderStandings(st);updateRecord(st);}if(ro)renderRoast(ro);if(ss)renderStats(ss);
-    }catch(e){console.warn(e);}}
+    const config=await loadJSON('data/config.json');
+    if(!config)return;
+    const season=config.activeSeason;const base='data/'+config.seasons.find(s=>s.id===season).folder+'/';
+    const label=config.seasons.find(s=>s.id===season).label;
+    document.getElementById('header-league').textContent=config.league+' · '+label;
+
+    const[standings,schedule,stats,roasts]=await Promise.all([loadJSON(base+'standings.json'),loadJSON(base+'schedule.json'),loadJSON(base+'stats.json'),loadJSON(base+'roasts.json')]);
+    if(standings)renderStandings(standings);
+    if(schedule){renderScores(schedule);renderSchedule(schedule);initCountdown(schedule);}
+    if(stats)renderStats(stats);
+    if(roasts)renderRoasts(roasts);
+    checkGameDay();
 }
 init();
 </script>
