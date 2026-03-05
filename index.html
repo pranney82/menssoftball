@@ -216,7 +216,7 @@
             html.chat-open { overflow:hidden; height:100%; }
             .chat-panel { position:fixed; top:var(--vvt,0px); left:0; width:100%; height:var(--vvh,100%); border-radius:0; border:none; box-shadow:none; transform:none; opacity:1; overflow:hidden; }
             .chat-panel.open { display:flex; }
-            .chat-header { padding-top:env(safe-area-inset-top,0px); }
+            .chat-header { padding-top:calc(12px + env(safe-area-inset-top,20px)); }
             .chat-messages { flex:1; padding:16px; min-height:0; overflow-y:auto; }
             .chat-msg { font-size:15px; }
             .chat-bubble { bottom:16px; right:16px; width:56px; height:56px; }
