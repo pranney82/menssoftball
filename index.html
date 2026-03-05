@@ -183,8 +183,9 @@
     </div>
 
     <div class="section" id="players">
-        <div class="sub-tabs"><button class="sub-tab active" data-sub="stats-view">Stats</button><button class="sub-tab" data-sub="roster-view">Roster</button></div>
+        <div class="sub-tabs"><button class="sub-tab active" data-sub="stats-view">Season</button><button class="sub-tab" data-sub="career-view">Career</button><button class="sub-tab" data-sub="roster-view">Roster</button></div>
         <div class="sub-content active" id="stats-view"><div style="overflow-x:auto;"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>GP</th><th>AB</th><th>H</th><th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>R</th><th>AVG</th></tr></thead><tbody id="stats-body"></tbody></table></div></div>
+        <div class="sub-content" id="career-view"><div style="overflow-x:auto;"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>Seasons</th><th>GP</th><th>AB</th><th>H</th><th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>R</th><th>AVG</th></tr></thead><tbody id="career-body"></tbody></table></div></div>
         <div class="sub-content" id="roster-view"><div class="roster-grid"><div class="empty-state">Roster coming soon</div></div></div>
     </div>
 
@@ -285,11 +286,18 @@ function renderSchedule(schedule){
     highlightWeek();collapsePastWeeks();
 }
 
-// RENDER STATS
+// RENDER STATS (season)
 function renderStats(data){
     const tb=document.getElementById('stats-body');
     if(!data||!data.length){tb.innerHTML='<tr><td colspan="11" class="empty-state">Player stats coming soon</td></tr>';return;}
     tb.innerHTML=data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td>${p.gp}</td><td>${p.ab}</td><td>${p.h}</td><td>${p['2b']}</td><td>${p['3b']}</td><td>${p.hr}</td><td>${p.rbi}</td><td>${p.r}</td><td class="${i===0?'stats-leader':'stat-highlight'}">${p.avg}</td></tr>`).join('');
+}
+
+// RENDER CAREER STATS
+function renderCareerStats(data){
+    const tb=document.getElementById('career-body');
+    if(!data||!data.length){tb.innerHTML='<tr><td colspan="12" class="empty-state">Career stats will populate after the first season</td></tr>';return;}
+    tb.innerHTML=data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td>${p.seasons||1}</td><td>${p.gp}</td><td>${p.ab}</td><td>${p.h}</td><td>${p['2b']}</td><td>${p['3b']}</td><td>${p.hr}</td><td>${p.rbi}</td><td>${p.r}</td><td class="${i===0?'stats-leader':'stat-highlight'}">${p.avg}</td></tr>`).join('');
 }
 
 // RENDER ROASTS
@@ -365,9 +373,11 @@ async function init(){
     document.getElementById('header-league').textContent=config.league+' · '+label;
 
     const[standings,schedule,stats,roasts]=await Promise.all([loadJSON(base+'standings.json'),loadJSON(base+'schedule.json'),loadJSON(base+'stats.json'),loadJSON(base+'roasts.json')]);
+    const career=await loadJSON('data/career_stats.json');
     if(standings)renderStandings(standings);
     if(schedule){renderScores(schedule);renderSchedule(schedule);initCountdown(schedule);}
     if(stats)renderStats(stats);
+    if(career)renderCareerStats(career);
     if(roasts)renderRoasts(roasts);
     checkGameDay();
 }
