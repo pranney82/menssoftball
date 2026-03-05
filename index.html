@@ -206,11 +206,11 @@
         .chat-input::placeholder { color:var(--gray-dark); }
         .chat-send { background:var(--blue); color:white; border:none; width:40px; height:40px; border-radius:10px; margin:4px; cursor:pointer; transition:all 0.15s; display:flex; align-items:center; justify-content:center; flex-shrink:0; -webkit-tap-highlight-color:transparent; }
         .chat-send:active { background:var(--blue-bright); transform:scale(0.92); }
-        body.chat-open { overflow:hidden; }
+        body.chat-open { overflow:hidden; position:fixed; width:100%; height:100%; top:0; left:0; }
         @media (max-width:768px) {
-            .chat-panel { top:auto; left:0; right:0; bottom:0; width:100%; height:85vh; height:85dvh; max-height:none; border-radius:20px 20px 0 0; border:none; box-shadow:0 -8px 40px rgba(0,0,0,0.5); display:flex; transform:translateY(100%); opacity:1; transition:transform 0.35s cubic-bezier(0.4,0,0.2,1); pointer-events:none; }
-            .chat-panel.open { transform:translateY(0); pointer-events:auto; }
-            .chat-header { padding-top:12px; }
+            .chat-panel { position:fixed; top:0; left:0; right:0; bottom:0; width:100%; height:100%; max-height:none; border-radius:0; border:none; box-shadow:none; transform:none; opacity:0; pointer-events:none; transition:opacity 0.2s; }
+            .chat-panel.open { opacity:1; pointer-events:auto; }
+            .chat-header { padding-top:env(safe-area-inset-top,0px); }
             .chat-messages { flex:1; padding:16px; }
             .chat-msg { font-size:15px; }
             .chat-bubble { bottom:16px; right:16px; width:56px; height:56px; }
@@ -220,7 +220,6 @@
             .chat-send { width:42px; height:42px; }
             .chat-chips { padding:4px 12px 10px; }
             .chat-chip { font-size:12px; padding:9px 16px; }
-            body.chat-open { position:fixed; width:100%; height:100%; }
         }
         .footer { max-width:1200px; margin:30px auto 0; padding:16px 20px; border-top:1px solid rgba(255,255,255,0.06); text-align:center; font-size:11px; color:var(--gray-dark); letter-spacing:1px; }
         @media (max-width:768px) {
@@ -320,7 +319,7 @@
         <span class="chat-chip" onclick="askChip(this)">HR limit</span>
     </div>
     <div class="chat-input-wrap">
-        <input type="text" id="chat-input" class="chat-input" placeholder="Ask a question..." onkeydown="if(event.key==='Enter')sendChat()">
+        <input type="text" id="chat-input" class="chat-input" placeholder="Ask a question..." enterkeyhint="send" autocomplete="off" onkeydown="if(event.key==='Enter')sendChat()">
         <button class="chat-send" onclick="sendChat()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
     </div>
 </div>
@@ -521,6 +520,7 @@ const CHAT_URL='https://softball-rules-chat.peterranney.workers.dev';
 let CHAT_CONTEXT='';
 let chatHistory=[];
 let lastFailedMsg='';
+let savedScrollY=0;
 
 function isMobile(){return window.innerWidth<=768;}
 
@@ -535,13 +535,17 @@ function toggleChat(){
         bubble.classList.remove('hidden');
         overlay.classList.remove('open');
         document.body.classList.remove('chat-open');
+        document.body.style.top='';
         document.getElementById('chat-input').blur();
+        if(isMobile()) window.scrollTo(0,savedScrollY);
     }else{
+        savedScrollY=window.scrollY;
+        if(isMobile()) document.body.style.top=(-savedScrollY)+'px';
         panel.classList.add('open');
         bubble.classList.add('hidden');
         overlay.classList.add('open');
         document.body.classList.add('chat-open');
-        // Only auto-focus on desktop — on mobile let user tap input themselves
+        if(isMobile()) panel.style.height=window.innerHeight+'px';
         if(!isMobile()) document.getElementById('chat-input').focus();
         scrollChat();
     }
