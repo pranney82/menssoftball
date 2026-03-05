@@ -455,7 +455,7 @@ function collapsePastWeeks(){
 function checkGameDay(){if(new Date().getDay()===1){const t=document.getElementById('games-tab');if(t&&!t.querySelector('.live-dot'))t.innerHTML+='<span class="live-dot"></span>';}}
 
 // FLOATING CHAT
-const CHAT_KEY=''; // Peter's Anthropic API key goes here
+const CHAT_URL='https://softball-rules-chat.peterranney.workers.dev';
 let CHAT_CONTEXT='';
 let chatHistory=[];
 
@@ -471,18 +471,6 @@ function toggleChat(){
 
 function buildChatContext(data){
     let ctx='';
-
-    // Rules
-    if(data.rules&&data.rules.sections){
-        ctx+='LEAGUE RULES:\n';
-        ctx+=data.rules.sections.map(s=>{
-            let t=s.heading+':\n';
-            if(s.rules)t+=s.rules.map(r=>'- '+r).join('\n');
-            if(s.text)t+=s.text;
-            return t;
-        }).join('\n\n');
-        ctx+='\n\n';
-    }
 
     // Standings
     if(data.standings&&data.standings.length){
@@ -556,7 +544,7 @@ function buildChatContext(data){
 async function sendChat(){
     const input=document.getElementById('chat-input');
     const msg=input.value.trim();
-    if(!msg||!CHAT_KEY)return;
+    if(!msg)return;
 
     const messages=document.getElementById('chat-messages');
     messages.innerHTML+=`<div class="chat-msg user">${msg}</div>`;
@@ -568,43 +556,22 @@ async function sendChat(){
     chatHistory.push({role:'user',content:msg});
 
     try{
-        const res=await fetch('https://api.anthropic.com/v1/messages',{
+        const res=await fetch(CHAT_URL,{
             method:'POST',
-            headers:{
-                'Content-Type':'application/json',
-                'x-api-key':CHAT_KEY,
-                'anthropic-version':'2023-06-01',
-                'anthropic-dangerous-direct-browser-access':'true'
-            },
+            headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
-                model:'claude-sonnet-4-20250514',
-                max_tokens:500,
-                system:`You are a helpful assistant for the Drive Auto Repair softball team website (Hobgood Intermediate Softball League, Men's Intermediate division). You can answer questions about:
-- League rules (mercy rule, home run limits, lineup requirements, pitching, equipment, etc.)
-- Current standings and team records
-- Game scores and results (completed games with final scores)
-- Full season schedule (upcoming games, dates, times, opponents)
-- Player batting stats (season and career: AVG, OPS, HR, RBI, etc.)
-- Playoff format and schedule
-- General league info (roster rules, uniform rules, base running, etc.)
-
-Keep answers short — 2-3 sentences max unless the question needs more detail. Be friendly and direct. Use the data below to answer accurately. If something isn't covered in the data, say so.
-
-Our team is Drive Auto Repair, coached by Ranney. Games are every Monday at HP2 (Hobgood Park Field 2).
-
-${CHAT_CONTEXT}`,
-                messages:chatHistory
+                messages:chatHistory,
+                context:CHAT_CONTEXT
             })
         });
         const data=await res.json();
         document.getElementById('chat-loading')?.remove();
-        if(data.content&&data.content[0]){
-            const reply=data.content[0].text;
-            chatHistory.push({role:'assistant',content:reply});
-            messages.innerHTML+=`<div class="chat-msg ai">${reply}</div>`;
+        if(data.reply){
+            chatHistory.push({role:'assistant',content:data.reply});
+            messages.innerHTML+=`<div class="chat-msg ai">${data.reply}</div>`;
         }else if(data.error){
             chatHistory.pop();
-            messages.innerHTML+=`<div class="chat-msg ai" style="color:var(--loss);">Error: ${data.error.message}</div>`;
+            messages.innerHTML+=`<div class="chat-msg ai" style="color:var(--loss);">Error: ${data.error}</div>`;
         }
     }catch(e){
         document.getElementById('chat-loading')?.remove();
