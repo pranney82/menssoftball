@@ -635,6 +635,36 @@ function buildChatContext(data){
             ctx+='\n\n';
         }
 
+        // Box scores from Drive games
+        const driveGames=played.filter(g=>(g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive'))&&g.boxScore&&g.boxScore.length);
+        if(driveGames.length){
+            ctx+='DRIVE GAME BOX SCORES (per-player per-game):\n';
+            driveGames.forEach(g=>{
+                const opp=g.home.toLowerCase().includes('drive')?g.away:g.home;
+                const driveScore=g.home.toLowerCase().includes('drive')?g.homeScore:g.awayScore;
+                const oppScore=g.home.toLowerCase().includes('drive')?g.awayScore:g.homeScore;
+                const won=driveScore>oppScore;
+                ctx+=g.week+' vs '+opp+' ('+( won?'W':'L')+' '+driveScore+'-'+oppScore+'):\n';
+                g.boxScore.forEach(p=>{
+                    const t=p.totals||{};
+                    const h=(t['1b']||0)+(t['2b']||0)+(t['3b']||0)+(t.hr||0);
+                    const ab=h+(t.out||0)+(t.fc||0);
+                    const line=(p.byInning||[]).join(', ');
+                    ctx+='  '+p.player+': '+h+'-for-'+ab;
+                    if(t.hr)ctx+=' '+t.hr+'HR';
+                    if(t['2b'])ctx+=' '+t['2b']+'2B';
+                    if(t['3b'])ctx+=' '+t['3b']+'3B';
+                    if(t.bb)ctx+=' '+t.bb+'BB';
+                    if(t.rbi)ctx+=' '+t.rbi+'RBI';
+                    if(t.r)ctx+=' '+t.r+'R';
+                    if(t.e)ctx+=' '+t.e+'ROE';
+                    if(t.out>=3)ctx+=' ('+t.out+' outs)';
+                    ctx+=' ['+line+']\n';
+                });
+                ctx+='\n';
+            });
+        }
+
         // Upcoming regular season
         const upcoming=data.schedule.filter(g=>g.homeScore===undefined&&g.home!=='Spring Break'&&!g.playoff);
         if(upcoming.length){
@@ -680,6 +710,21 @@ function buildChatContext(data){
         ctx+=data.roasts.map(r=>r.week+': '+r.result).join('\n');
         ctx+='\n\n';
     }
+
+    // Roast instructions
+    ctx+='ROAST MODE INSTRUCTIONS:\n';
+    ctx+='If someone asks you to "roast" a player, the team, Coach Ranney, or anyone on Drive — GO OFF. ';
+    ctx+='Be absolutely ruthless and hilarious. Savage, personal, locker-room trash talk. ';
+    ctx+='Use their ACTUAL stats and game-by-game at-bats to destroy them. ';
+    ctx+='If a guy went 0-for, had multiple outs, or struck out — obliterate him. ';
+    ctx+='If a guy did well, give backhanded compliments ("congrats on your HR, even a broken clock is right twice a day"). ';
+    ctx+='Reference specific at-bat sequences from box scores (e.g. "OUT, OUT, OUT, BB — a walk was your highlight reel"). ';
+    ctx+='Use car/auto repair puns since the team is Drive Auto Repair. ';
+    ctx+='Roast Coach Ranney for bad lineup decisions and general incompetence. ';
+    ctx+='Keep roasts to 3-5 sentences, punchy and brutal. No apologies, no holding back. ';
+    ctx+='These are grown men playing rec softball — they deserve every word. ';
+    ctx+='If asked to roast the whole team, go player by player with a line each. ';
+    ctx+='If there are no stats yet for a player, roast them for being invisible.\n\n';
 
     CHAT_CONTEXT=ctx;
 }
@@ -758,7 +803,9 @@ const CHIP_POOL=[
     'When do rosters lock?','Drive record','Who leads in HRs?',
     'Top hitter?','Schedule this week','Uniform rules',
     'Pickup player rules','What time do games start?',
-    'How many can bat?','Who coaches Rocket Power?'
+    'How many can bat?','Who coaches Rocket Power?',
+    'Roast the whole team','Roast Coach Ranney',
+    'Who had the worst game?','Roast our worst hitter'
 ];
 let usedChips=new Set();
 
