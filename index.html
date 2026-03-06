@@ -687,6 +687,7 @@ async function sendChat(retryMsg){
 
     hideWelcome();
     const messages=document.getElementById('chat-messages');
+    messages.querySelectorAll('.chat-followup-chips').forEach(c=>c.remove());
 
     // Escape HTML to prevent XSS
     const safe=msg.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -720,6 +721,7 @@ async function sendChat(retryMsg){
             formatted=formatted.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
             formatted=formatted.replace(/\n/g,'<br>');
             messages.innerHTML+=`<div class="chat-msg ai">${formatted}</div>`;
+            showFollowUpChips(messages);
         }else if(data.error){
             chatHistory.pop();
             lastFailedMsg=msg;
@@ -743,6 +745,32 @@ function retryChat(){
     const msg=lastFailedMsg;
     lastFailedMsg='';
     sendChat(msg);
+}
+
+const CHIP_POOL=[
+    'Next game?','Standings','Mercy rule','HR limit',
+    'Lineup rules','Courtesy runners?','Pitching screen rules',
+    'Playoff format','How do extra innings work?','Bat rules',
+    'When do rosters lock?','Drive record','Who leads in HRs?',
+    'Top hitter?','Schedule this week','Uniform rules',
+    'Pickup player rules','What time do games start?',
+    'How many can bat?','Who coaches Rocket Power?'
+];
+let lastChipsUsed=[];
+
+function showFollowUpChips(container){
+    // Remove any existing follow-up chips
+    container.querySelectorAll('.chat-followup-chips').forEach(c=>c.remove());
+    // Pick 3 random chips not recently used
+    const available=CHIP_POOL.filter(c=>!lastChipsUsed.includes(c));
+    const pool=available.length>=3?available:CHIP_POOL;
+    const shuffled=[...pool].sort(()=>Math.random()-0.5);
+    const picks=shuffled.slice(0,3);
+    lastChipsUsed=picks;
+    const html=`<div class="chat-chips chat-followup-chips" style="padding:8px 0 4px;">
+        ${picks.map(p=>`<span class="chat-chip" onclick="askChip(this)">${p}</span>`).join('')}
+    </div>`;
+    container.innerHTML+=html;
 }
 
 function shareRoast(btn){
