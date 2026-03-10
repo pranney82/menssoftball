@@ -487,7 +487,7 @@ function collapsePastWeeks(){
 function checkGameDay(){if(new Date().getDay()===1){const t=document.getElementById('games-tab');if(t&&!t.querySelector('.live-dot'))t.innerHTML+='<span class="live-dot"></span>';}}
 
 // FLOATING CHAT
-const CHAT_KEY='';
+const WORKER_URL='https://softball-rules-chat.peterranney.workers.dev';
 let RULES_TEXT='';
 let chatHistory=[];
 
@@ -511,10 +511,18 @@ function loadRulesText(data){
     }).join('\n\n');
 }
 
+function buildChatContext(){
+    let ctx='LEAGUE RULES:\n'+RULES_TEXT+'\n\n';
+    if(DATA.standings){ctx+='STANDINGS:\n'+DATA.standings.map(s=>s.rank+'. '+s.team+' ('+s.w+'-'+s.l+')').join('\n')+'\n\n';}
+    if(DATA.schedule){const played=DATA.schedule.filter(g=>g.homeScore!=null&&g.home!=='Spring Break');if(played.length){ctx+='RECENT SCORES:\n'+played.slice(-6).map(g=>g.week+': '+g.home+' '+g.homeScore+' - '+g.away+' '+g.awayScore).join('\n')+'\n\n';}}
+    if(DATA.stats&&DATA.stats.length){ctx+='DRIVE PLAYER STATS (this season):\n'+DATA.stats.map(p=>p.player+': AVG '+p.avg+', HR '+p.hr+', RBI '+p.rbi).join('\n')+'\n\n';}
+    return ctx;
+}
+
 async function sendChat(){
     const input=document.getElementById('chat-input');
     const msg=input.value.trim();
-    if(!msg||!CHAT_KEY)return;
+    if(!msg)return;
 
     const messages=document.getElementById('chat-messages');
     messages.innerHTML+=`<div class="chat-msg user">${msg}</div>`;
@@ -526,30 +534,19 @@ async function sendChat(){
     chatHistory.push({role:'user',content:msg});
 
     try{
-        const res=await fetch('https://api.anthropic.com/v1/messages',{
+        const res=await fetch(WORKER_URL,{
             method:'POST',
-            headers:{
-                'Content-Type':'application/json',
-                'x-api-key':CHAT_KEY,
-                'anthropic-version':'2023-06-01',
-                'anthropic-dangerous-direct-browser-access':'true'
-            },
-            body:JSON.stringify({
-                model:'claude-sonnet-4-20250514',
-                max_tokens:500,
-                system:`You are a helpful rules assistant for the Hobgood Intermediate Softball League (Men's Intermediate division). Answer questions about the league rules clearly and concisely. Keep answers short — 2-3 sentences max unless the question needs more. Be friendly and direct. If a rule isn't covered, say so.\n\nLEAGUE RULES:\n${RULES_TEXT}`,
-                messages:chatHistory
-            })
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({messages:chatHistory,context:buildChatContext()})
         });
         const data=await res.json();
         document.getElementById('chat-loading')?.remove();
-        if(data.content&&data.content[0]){
-            const reply=data.content[0].text;
-            chatHistory.push({role:'assistant',content:reply});
-            messages.innerHTML+=`<div class="chat-msg ai">${reply}</div>`;
-        }else if(data.error){
+        if(data.reply){
+            chatHistory.push({role:'assistant',content:data.reply});
+            messages.innerHTML+=`<div class="chat-msg ai">${data.reply}</div>`;
+        }else{
             chatHistory.pop();
-            messages.innerHTML+=`<div class="chat-msg ai" style="color:var(--loss);">Error: ${data.error.message}</div>`;
+            messages.innerHTML+=`<div class="chat-msg ai" style="color:var(--loss);">No response received.</div>`;
         }
     }catch(e){
         document.getElementById('chat-loading')?.remove();
@@ -575,6 +572,7 @@ async function init(){
 
     const[standings,schedule,stats,roasts]=await Promise.all([loadJSON(base+'standings.json'),loadJSON(base+'schedule.json'),loadJSON(base+'stats.json'),loadJSON(base+'roasts.json')]);
     const career=await loadJSON('data/career_stats.json');
+    DATA={standings,schedule,stats,roasts,career};
     if(standings)renderStandings(standings);
     if(schedule){renderScores(schedule);renderSchedule(schedule);initCountdown(schedule);}
     if(stats)renderStats(stats);
