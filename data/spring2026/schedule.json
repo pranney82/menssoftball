@@ -83,7 +83,9 @@
     "time": "7:00 PM",
     "home": "Motiv8",
     "away": "Dirt Dawgs",
-    "location": "HP2"
+    "location": "HP2",
+    "homeScore": 0,
+    "awayScore": 14
   },
   {
     "week": "Week 2",
@@ -92,7 +94,9 @@
     "time": "8:00 PM",
     "home": "Rocket Power",
     "away": "HS Legends/MOST",
-    "location": "HP2"
+    "location": "HP2",
+    "homeScore": 19,
+    "awayScore": 9
   },
   {
     "week": "Week 2",
@@ -101,7 +105,8 @@
     "time": "9:00 PM",
     "home": "Flamingos",
     "away": "Drive",
-    "location": "HP2"
+    "location": "HP2",
+    "note": "Postponed - Rain"
   },
   {
     "week": "Week 3",

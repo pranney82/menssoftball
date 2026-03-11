@@ -491,7 +491,8 @@ function renderSchedule(schedule){
         const hw=hasScore&&g.homeScore>g.awayScore;
         const hName=isDrive&&g.home.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(hw&&hasScore?'<strong>'+g.home+'</strong>':g.home);
         const aName=isDrive&&g.away.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(!hw&&hasScore?'<strong>'+g.away+'</strong>':g.away);
-        html+=`<tr class="${isDrive?'drive-game':''}"><td>${g.date}</td><td>${g.time}</td><td>${hName}</td><td>${hasScore?'<span class="score-val '+(hw?'score-win':'score-loss')+'">'+g.homeScore+'</span>':''}</td><td>${aName}</td><td>${hasScore?'<span class="score-val '+(!hw?'score-win':'score-loss')+'">'+g.awayScore+'</span>':''}</td><td>${g.location}</td></tr>`;
+        const ppd=g.note&&g.note.toLowerCase().includes('postpone');
+        html+=`<tr class="${isDrive?'drive-game':''}"><td>${g.date}</td><td>${g.time}</td><td>${hName}</td><td>${ppd?'<span style="font-family:Oswald;font-size:11px;letter-spacing:1px;color:var(--gold);">PPD</span>':(hasScore?'<span class="score-val '+(hw?'score-win':'score-loss')+'">'+g.homeScore+'</span>':'')}</td><td>${aName}</td><td>${ppd?'':(hasScore?'<span class="score-val '+(!hw?'score-win':'score-loss')+'">'+g.awayScore+'</span>':'')}</td><td>${g.location}</td></tr>`;
     });
     tb.innerHTML=html;
     highlightWeek();collapsePastWeeks();
@@ -528,7 +529,7 @@ function renderRoasts(data){
 // COUNTDOWN
 function initCountdown(schedule){
     const now=new Date();
-    const driveGames=schedule.filter(g=>(g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive'))&&g.homeScore===undefined&&!g.playoff);
+    const driveGames=schedule.filter(g=>(g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive'))&&g.homeScore===undefined&&!g.playoff&&!g.note);
     for(const g of driveGames){
         if(!g.weekDate)continue;
         const[h,m]=g.time.replace(/ [AP]M/,'').split(':');let hr=parseInt(h);if(g.time.includes('PM')&&hr!==12)hr+=12;
@@ -561,7 +562,7 @@ function collapsePastWeeks(){
     document.querySelectorAll('.week-header[data-week]').forEach(wh=>{
         if(!wh.dataset.week)return;const we=new Date(wh.dataset.week+'T00:00:00');we.setDate(we.getDate()+7);
         let hasScores=false;const rows=[];let row=wh.closest('tr').nextElementSibling;
-        while(row&&!row.querySelector('.week-header')&&!row.querySelector('.playoff-header')){rows.push(row);if(row.querySelector('.score-val'))hasScores=true;row=row.nextElementSibling;}
+        while(row&&!row.querySelector('.week-header')&&!row.querySelector('.playoff-header')){rows.push(row);if(row.querySelector('.score-val')||row.textContent.includes('PPD'))hasScores=true;row=row.nextElementSibling;}
         if(we<now&&hasScores){wh.classList.add('week-toggle','collapsed');rows.forEach(r=>r.classList.add('week-games-hidden'));
         wh.addEventListener('click',()=>{const c=wh.classList.toggle('collapsed');rows.forEach(r=>r.classList.toggle('week-games-hidden',c));});}
     });
