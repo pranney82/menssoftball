@@ -25,18 +25,6 @@
   },
   {
     "rank": 3,
-    "team": "Dirt Dawgs",
-    "w": 1,
-    "l": 1,
-    "t": 0,
-    "gb": "1",
-    "gp": 2,
-    "pct": ".500",
-    "streak": "W1",
-    "coach": "Stubblefield"
-  },
-  {
-    "rank": 4,
     "team": "HS Legends/MOST",
     "w": 1,
     "l": 1,
@@ -46,6 +34,18 @@
     "pct": ".500",
     "streak": "L1",
     "coach": "Stewart"
+  },
+  {
+    "rank": 4,
+    "team": "Dirt Dawgs",
+    "w": 1,
+    "l": 1,
+    "t": 0,
+    "gb": "1",
+    "gp": 2,
+    "pct": ".500",
+    "streak": "W1",
+    "coach": "Stubblefield"
   },
   {
     "rank": 5,
