@@ -9,6 +9,9 @@
     "gp": 2,
     "pct": "1.000",
     "streak": "W2",
+    "rs": 53,
+    "ra": 22,
+    "rd": 31,
     "coach": "Landry"
   },
   {
@@ -21,6 +24,9 @@
     "gp": 1,
     "pct": "1.000",
     "streak": "W1",
+    "rs": 16,
+    "ra": 5,
+    "rd": 11,
     "coach": "Ranney"
   },
   {
@@ -33,6 +39,9 @@
     "gp": 2,
     "pct": ".500",
     "streak": "L1",
+    "rs": 28,
+    "ra": 28,
+    "rd": 0,
     "coach": "Stewart"
   },
   {
@@ -45,6 +54,9 @@
     "gp": 2,
     "pct": ".500",
     "streak": "W1",
+    "rs": 27,
+    "ra": 34,
+    "rd": -7,
     "coach": "Stubblefield"
   },
   {
@@ -57,6 +69,9 @@
     "gp": 1,
     "pct": ".000",
     "streak": "L1",
+    "rs": 11,
+    "ra": 19,
+    "rd": -8,
     "coach": "Herron"
   },
   {
@@ -69,6 +84,9 @@
     "gp": 2,
     "pct": ".000",
     "streak": "L2",
+    "rs": 5,
+    "ra": 30,
+    "rd": -25,
     "coach": "Harrison"
   }
 ]
