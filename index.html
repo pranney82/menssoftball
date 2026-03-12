@@ -303,7 +303,7 @@
     <div class="section" id="games">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="scores-view">Scores</button><button class="sub-tab" data-sub="schedule-view">Schedule</button></div>
         <div class="sub-content active" id="scores-view"><div class="games-grid" id="scores-grid"></div></div>
-        <div class="sub-content" id="schedule-view"><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="schedule-table"><thead><tr><th>Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th>Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div></div>
+        <div class="sub-content" id="schedule-view"><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="schedule-table"><thead><tr><th>Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th>Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
     </div>
 
     <div class="section" id="players">
@@ -845,6 +845,14 @@ function showFollowUpChips(container){
         ${picks.map(p=>`<span class="chat-chip" onclick="askChip(this)">${p}</span>`).join('')}
     </div>`;
     container.innerHTML+=html;
+}
+
+function shareSchedule(btn){
+    const url='https://pranney82.github.io/menssoftball/';
+    const title='Drive Auto Repair — Hobgood Intermediate Softball';
+    const text='Check out the Drive Auto Repair softball schedule!';
+    if(navigator.share){navigator.share({title:title,text:text,url:url}).catch(()=>{});}
+    else{navigator.clipboard.writeText(url).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='🔗 Share Schedule';},2000);}).catch(()=>{});}
 }
 
 function shareRoast(btn){
