@@ -51,7 +51,7 @@
         .nav-tab { font-family:'Oswald',sans-serif; font-size:16px; text-transform:uppercase; letter-spacing:2px; padding:16px 28px; cursor:pointer; color:var(--gray-dark); border:none; border-bottom:3px solid transparent; background:none; transition:all 0.2s; white-space:nowrap; flex:1; text-align:center; }
         .nav-tab:hover { color:var(--white); } .nav-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
         .nav-tab .live-dot { display:inline-block; width:7px; height:7px; background:var(--win); border-radius:50%; margin-left:6px; animation:livePulse 1.5s infinite; vertical-align:middle; }
-        .main { max-width:1200px; margin:0 auto; padding:24px 20px; }
+        .main { max-width:1200px; margin:0 auto; padding:24px 20px; overflow-x:hidden; }
         .section-header { display:flex; align-items:center; gap:12px; margin-bottom:24px; padding-bottom:14px; border-bottom:2px solid var(--blue); }
         .section-header h2 { font-family:'Oswald',sans-serif; font-size:26px; text-transform:uppercase; letter-spacing:2px; }
         .section-header .accent-bar { width:4px; height:28px; background:var(--blue); border-radius:2px; }
@@ -250,7 +250,7 @@
             .standings-table{font-size:14px} .standings-table thead th{padding:10px 6px;font-size:10px;letter-spacing:1px} .standings-table td{padding:10px 6px}
             .standings-table .team-name{font-size:15px} .standings-table .rank{font-size:16px} .standings-table .win-pct{font-size:16px}
             .sub-tab{padding:10px 16px;font-size:13px}
-            .schedule-table{font-size:14px} .schedule-table thead th{padding:10px 6px;font-size:10px} .schedule-table td{padding:10px 6px}
+            .schedule-table{font-size:14px} .schedule-table thead th{padding:10px 6px;font-size:10px} .schedule-table td{padding:10px 6px;word-break:break-word;}
             .schedule-table .score-val{font-size:18px} .schedule-table .week-header{font-size:13px} .schedule-table .playoff-header{font-size:14px}
             .games-grid{grid-template-columns:1fr} .game-team-name{font-size:15px} .game-score{font-size:26px}
             .game-card-header{font-size:12px} .game-result{font-size:12px}
@@ -266,7 +266,7 @@
             .stats-table{font-size:12px} .stats-table td,.stats-table th{padding:6px 4px} .stats-table thead th{font-size:9px}
             .stats-table td:nth-child(2){font-size:13px} .stats-table td:first-child{font-size:14px}
             .standings-table{font-size:13px} .standings-table .team-name{font-size:14px}
-            .schedule-table{font-size:13px}
+            .schedule-table{font-size:12px} .schedule-table td{padding:8px 4px;}
             .game-team-name{font-size:14px} .game-score{font-size:24px}
         }
         ::-webkit-scrollbar{width:8px;height:8px} ::-webkit-scrollbar-track{background:var(--primary-dark)} ::-webkit-scrollbar-thumb{background:var(--surface-light);border-radius:4px} ::-webkit-scrollbar-thumb:hover{background:var(--blue)}
@@ -303,7 +303,7 @@
     <div class="section" id="games">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="scores-view">Scores</button><button class="sub-tab" data-sub="schedule-view">Schedule</button></div>
         <div class="sub-content active" id="scores-view"><div class="games-grid" id="scores-grid"></div></div>
-        <div class="sub-content" id="schedule-view"><div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="schedule-table"><thead><tr><th>Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th>Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
+        <div class="sub-content" id="schedule-view"><div><table class="schedule-table" style="table-layout:fixed;width:100%;"><thead><tr><th>Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th>Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
     </div>
 
     <div class="section" id="players">
@@ -429,7 +429,7 @@ function renderScores(schedule){
         const hasExpand=isDrive&&(g.innings||g.boxScore);
         let expandHtml='';
         if(hasExpand){
-            expandHtml='<div class="game-expand" style="overflow-x:auto;-webkit-overflow-scrolling:touch;">';
+            expandHtml='<div class="game-expand">';
             // Line score (both teams)
             if(g.innings&&g.innings.home&&g.innings.away){
                 const n=Math.max(g.innings.home.length,g.innings.away.length);
