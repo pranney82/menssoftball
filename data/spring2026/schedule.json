@@ -139,7 +139,17 @@
     "week": "Week 4",
     "date": "Mon 3/23",
     "weekDate": "2026-03-23",
-    "time": "7:00 PM",
+    "time": "6:30 PM",
+    "home": "Flamingos",
+    "away": "Drive",
+    "location": "HP2",
+    "note": "Week 2 Makeup"
+  },
+  {
+    "week": "Week 4",
+    "date": "Mon 3/23",
+    "weekDate": "2026-03-23",
+    "time": "7:30 PM",
     "home": "Drive",
     "away": "HS Legends/MOST",
     "location": "HP2"
@@ -148,7 +158,7 @@
     "week": "Week 4",
     "date": "Mon 3/23",
     "weekDate": "2026-03-23",
-    "time": "8:00 PM",
+    "time": "8:30 PM",
     "home": "Dirt Dawgs",
     "away": "Flamingos",
     "location": "HP2"
@@ -157,7 +167,7 @@
     "week": "Week 4",
     "date": "Mon 3/23",
     "weekDate": "2026-03-23",
-    "time": "9:00 PM",
+    "time": "9:30 PM",
     "home": "Motiv8",
     "away": "Rocket Power",
     "location": "HP2"
