@@ -151,6 +151,15 @@
         .stats-table td:nth-child(2) { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; font-size:16px; }
         .stat-highlight { color:var(--blue-bright); font-weight:700; } .stats-leader { color:var(--gold); font-weight:700; }
         .roster-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
+        .roster-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:16px; transition:border-color 0.2s,transform 0.2s; animation:fadeInUp 0.4s ease-out both; }
+        .roster-card:hover { border-color:var(--blue); transform:translateY(-2px); }
+        .roster-card-name { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:1px; color:var(--white); }
+        .roster-card-line { font-family:'Oswald',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--gray-dark); margin-top:2px; margin-bottom:12px; }
+        .roster-card-stats { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.06); }
+        .roster-card-stats > div { text-align:center; }
+        .rcs-label { font-family:'Oswald',sans-serif; font-size:9px; text-transform:uppercase; letter-spacing:1px; color:var(--gray-dark); }
+        .rcs-val { font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--blue-bright); margin-top:2px; }
+        .rcs-val.gold { color:var(--gold); }
 
         /* ROAST */
         .roast-card { background:linear-gradient(135deg,var(--surface) 0%,rgba(37,99,235,0.06) 100%); border:1px solid rgba(37,99,235,0.15); border-radius:14px; padding:32px; position:relative; overflow:hidden; animation:fadeInUp 0.5s ease-out both; }
@@ -562,6 +571,42 @@ function renderStats(data){
 }
 
 // RENDER CAREER STATS
+// Compute career stats by aggregating all seasons listed in config
+async function computeCareer(seasons){
+    const allStats=await Promise.all(seasons.map(s=>loadJSON('data/'+s.folder+'/stats.json')));
+    const totals={},seasonSets={};
+    seasons.forEach((s,i)=>{
+        const ss=allStats[i];
+        if(!ss||!ss.length)return;
+        ss.forEach(p=>{
+            if(!totals[p.player]){
+                totals[p.player]={player:p.player,gp:0,pa:0,ab:0,h:0,'1b':0,'2b':0,'3b':0,hr:0,bb:0,rbi:0,r:0,tb:0};
+                seasonSets[p.player]=new Set();
+            }
+            seasonSets[p.player].add(s.id);
+            ['gp','pa','ab','h','1b','2b','3b','hr','bb','rbi','r','tb'].forEach(k=>{totals[p.player][k]+=parseInt(p[k])||0;});
+        });
+    });
+    const fmt=x=>{const s=x.toFixed(3);return s.startsWith('0.')?s.slice(1):s;};
+    const career=Object.values(totals).map(t=>{
+        const avg=t.ab?t.h/t.ab:0;
+        const obp=(t.ab+t.bb)?(t.h+t.bb)/(t.ab+t.bb):0;
+        const slg=t.ab?t.tb/t.ab:0;
+        return{...t,seasons:seasonSets[t.player].size,avg:fmt(avg),obp:fmt(obp),slg:fmt(slg),ops:fmt(obp+slg)};
+    });
+    career.sort((a,b)=>parseFloat(b.ops)-parseFloat(a.ops));
+    return career;
+}
+
+// Derive roster from current season's stats
+function renderRoster(stats){
+    const grid=document.querySelector('#roster-view .roster-grid');
+    if(!grid)return;
+    if(!stats||!stats.length){grid.innerHTML='<div class="empty-state">Roster will populate as stats are entered</div>';return;}
+    const players=[...stats].sort((a,b)=>a.player.localeCompare(b.player));
+    grid.innerHTML=players.map((p,i)=>`<div class="roster-card" style="animation-delay:${i*0.04}s"><div class="roster-card-name">${p.player}</div><div class="roster-card-line">${p.gp} GP · ${p.h}-for-${p.ab}</div><div class="roster-card-stats"><div><div class="rcs-label">AVG</div><div class="rcs-val">${p.avg}</div></div><div><div class="rcs-label">OPS</div><div class="rcs-val ${p.player===opsLeaderName?'gold':''}">${p.ops}</div></div><div><div class="rcs-label">HR</div><div class="rcs-val">${p.hr}</div></div><div><div class="rcs-label">RBI</div><div class="rcs-val">${p.rbi}</div></div></div></div>`).join('');
+}
+
 function renderCareerStats(data){
     const tb=document.getElementById('career-body');
     if(!data||!data.length){tb.innerHTML='<tr><td colspan="19" class="empty-state">Career stats will populate after the first season</td></tr>';return;}
@@ -926,11 +971,11 @@ async function init(){
     document.getElementById('header-league').textContent=config.league+' · '+label;
 
     const[standings,schedule,stats,roasts]=await Promise.all([loadJSON(base+'standings.json'),loadJSON(base+'schedule.json'),loadJSON(base+'stats.json'),loadJSON(base+'roasts.json')]);
-    const career=await loadJSON('data/career_stats.json');
+    const career=await computeCareer(config.seasons);
     DATA={standings,schedule,stats,roasts,career};
     if(standings)renderStandings(standings);
     if(schedule){renderScores(schedule);renderSchedule(schedule);initCountdown(schedule);}
-    if(stats)renderStats(stats);
+    if(stats){renderStats(stats);renderRoster(stats);}
     if(career)renderCareerStats(career);
     if(roasts)renderRoasts(roasts);
 
