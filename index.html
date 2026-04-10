@@ -115,6 +115,18 @@
         .player-inning-table td.inn-divider { border-left:1px solid rgba(255,255,255,0.08); }
         .player-inning-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.03); }
         .player-inning-table tbody tr:hover { background:rgba(37,99,235,0.06); }
+        .box-score-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; margin-top:8px; }
+        .box-score-table { width:100%; border-collapse:collapse; font-size:13px; }
+        .box-score-table th { font-family:'Oswald',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--gray-dark); padding:7px 6px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.06); }
+        .box-score-table th:first-child { text-align:left; }
+        .box-score-table td { padding:7px 6px; text-align:center; font-family:'Roboto Condensed',sans-serif; font-size:13px; color:var(--gray); }
+        .box-score-table td:first-child { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; color:var(--white); white-space:nowrap; }
+        .box-score-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.03); }
+        .box-score-table tbody tr:hover { background:rgba(37,99,235,0.06); }
+        .box-score-table td.bs-hit { color:var(--win); font-weight:700; }
+        .box-score-table td.bs-hr { color:var(--gold); font-weight:700; }
+        .box-score-table tr.totals-row { border-top:1px solid rgba(255,255,255,0.12); border-bottom:none; }
+        .box-score-table tr.totals-row td { font-family:'Oswald',sans-serif; font-weight:700; color:var(--blue-bright); padding-top:9px; }
         .ab-hit { color:var(--win); font-weight:700; }
         .ab-hr { color:var(--gold); font-weight:700; }
         .ab-out { color:var(--gray-dark); }
@@ -125,7 +137,8 @@
 
         /* SCHEDULE TABLE */
         .schedule-table { width:100%; border-collapse:collapse; font-size:16px; }
-        .schedule-table thead th { font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:12px; letter-spacing:2px; color:var(--gray-dark); padding:12px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:0; background:var(--primary-dark); z-index:10; }
+        .schedule-table thead th { font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:12px; letter-spacing:2px; color:var(--gray-dark); padding:12px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:43px; background:var(--primary-dark); z-index:50; }
+        .schedule-table .week-header, .schedule-table .playoff-header { scroll-margin-top:90px; }
         .schedule-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 0.15s; }
         .schedule-table tbody tr:hover { background:rgba(37,99,235,0.08); }
         .schedule-table tbody tr.drive-game { background:rgba(37,99,235,0.1); border-left:3px solid var(--blue); }
@@ -259,7 +272,8 @@
             .standings-table{font-size:14px} .standings-table thead th{padding:10px 6px;font-size:10px;letter-spacing:1px} .standings-table td{padding:10px 6px}
             .standings-table .team-name{font-size:15px} .standings-table .rank{font-size:16px} .standings-table .win-pct{font-size:16px}
             .sub-tab{padding:10px 16px;font-size:13px}
-            .schedule-table{font-size:14px} .schedule-table thead th{padding:10px 6px;font-size:10px} .schedule-table td{padding:10px 6px;word-break:break-word;}
+            .schedule-table{font-size:14px} .schedule-table thead th{padding:10px 6px;font-size:10px;top:46px;} .schedule-table td{padding:10px 6px;word-break:break-word;}
+            .schedule-table .week-header,.schedule-table .playoff-header{scroll-margin-top:95px}
             .schedule-table .score-val{font-size:18px} .schedule-table .week-header{font-size:13px} .schedule-table .playoff-header{font-size:14px}
             .games-grid{grid-template-columns:1fr} .game-team-name{font-size:15px} .game-score{font-size:26px}
             .game-card-header{font-size:12px} .game-result{font-size:12px}
@@ -447,22 +461,23 @@ function renderScores(schedule){
                 const aCells=g.innings.away.map(v=>`<td>${v}</td>`).join('');
                 expandHtml+=`<table class="line-score-table"><thead><tr><th></th>${hdr}<th>R</th></tr></thead><tbody><tr class="${hw?'winner':''}"><td>${g.home}</td>${hCells}<td class="total">${g.homeScore}</td></tr><tr class="${!hw?'winner':''}"><td>${g.away}</td>${aCells}<td class="total">${g.awayScore}</td></tr></tbody></table>`;
             }
-            // Player by inning
+            // Full box score from totals
             if(g.boxScore&&g.boxScore.length){
-                const numInn=g.boxScore.reduce((max,p)=>Math.max(max,(p.byInning||[]).length),0);
-                const innHdrs=Array.from({length:numInn},(_,j)=>`<th>${j+1}</th>`).join('');
-                expandHtml+=`<div class="inning-label">Player At-Bats by Inning</div>`;
-                expandHtml+=`<table class="player-inning-table"><thead><tr><th>Player</th>${innHdrs}<th class="inn-divider">H</th><th>R</th><th>RBI</th></tr></thead><tbody>`;
-                expandHtml+=g.boxScore.map(p=>{
-                    const bi=p.byInning||[];
-                    const innCells=Array.from({length:numInn},(_,j)=>{
-                        const v=bi[j]||'-';return`<td class="${abClass(v)}">${v}</td>`;
-                    }).join('');
+                const fmtAvg=x=>{const s=x.toFixed(3);return s.startsWith('0.')?s.slice(1):s;};
+                const rows=g.boxScore.map(p=>{
                     const t=p.totals||{};
-                    const h=(t['1b']||0)+(t['2b']||0)+(t['3b']||0)+(t.hr||0);
-                    return`<tr><td>${p.player}</td>${innCells}<td class="inn-divider${h>0?' ab-hit':''}">${h}</td><td>${t.r||0}</td><td>${t.rbi||0}</td></tr>`;
-                }).join('');
-                expandHtml+=`</tbody></table>`;
+                    const b1=t['1b']||0,b2=t['2b']||0,b3=t['3b']||0,hr=t.hr||0,bb=t.bb||0,sac=t.sac||0,fc=t.fc||0,e=t.e||0,out=t.out||0;
+                    const h=b1+b2+b3+hr;
+                    const ab=b1+b2+b3+hr+out+fc+e;
+                    const avg=ab?fmtAvg(h/ab):'.000';
+                    return{name:p.player,ab,r:t.r||0,h,b2,b3,hr,rbi:t.rbi||0,bb,avg};
+                });
+                const tot=rows.reduce((a,r)=>({ab:a.ab+r.ab,r:a.r+r.r,h:a.h+r.h,b2:a.b2+r.b2,b3:a.b3+r.b3,hr:a.hr+r.hr,rbi:a.rbi+r.rbi,bb:a.bb+r.bb}),{ab:0,r:0,h:0,b2:0,b3:0,hr:0,rbi:0,bb:0});
+                expandHtml+=`<div class="inning-label">Box Score — Drive</div>`;
+                expandHtml+=`<div class="box-score-wrap"><table class="box-score-table"><thead><tr><th>Player</th><th>AB</th><th>R</th><th>H</th><th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>BB</th><th>AVG</th></tr></thead><tbody>`;
+                expandHtml+=rows.map(r=>`<tr><td>${r.name}</td><td>${r.ab}</td><td>${r.r}</td><td class="${r.h>0?'bs-hit':''}">${r.h}</td><td>${r.b2||''}</td><td>${r.b3||''}</td><td class="${r.hr>0?'bs-hr':''}">${r.hr||''}</td><td>${r.rbi||''}</td><td>${r.bb||''}</td><td>${r.avg}</td></tr>`).join('');
+                expandHtml+=`<tr class="totals-row"><td>Totals</td><td>${tot.ab}</td><td>${tot.r}</td><td>${tot.h}</td><td>${tot.b2}</td><td>${tot.b3}</td><td>${tot.hr}</td><td>${tot.rbi}</td><td>${tot.bb}</td><td>${tot.ab?fmtAvg(tot.h/tot.ab):'.000'}</td></tr>`;
+                expandHtml+=`</tbody></table></div>`;
             }
             expandHtml+='</div>';
         }

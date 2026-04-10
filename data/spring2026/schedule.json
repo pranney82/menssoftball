@@ -41,7 +41,6 @@
     "boxScore": [
       {
         "player": "Austin C",
-        "byInning": [],
         "totals": {
           "1b": 3,
           "2b": 0,
@@ -58,7 +57,6 @@
       },
       {
         "player": "Peter",
-        "byInning": [],
         "totals": {
           "1b": 2,
           "2b": 1,
@@ -75,7 +73,6 @@
       },
       {
         "player": "Austin W",
-        "byInning": [],
         "totals": {
           "1b": 2,
           "2b": 0,
@@ -92,7 +89,6 @@
       },
       {
         "player": "Luc",
-        "byInning": [],
         "totals": {
           "1b": 2,
           "2b": 0,
@@ -109,7 +105,6 @@
       },
       {
         "player": "Mitch",
-        "byInning": [],
         "totals": {
           "1b": 3,
           "2b": 0,
@@ -126,7 +121,6 @@
       },
       {
         "player": "Matthew",
-        "byInning": [],
         "totals": {
           "1b": 1,
           "2b": 0,
@@ -143,7 +137,6 @@
       },
       {
         "player": "Doug",
-        "byInning": [],
         "totals": {
           "1b": 0,
           "2b": 0,
@@ -160,7 +153,6 @@
       },
       {
         "player": "Smitty",
-        "byInning": [],
         "totals": {
           "1b": 0,
           "2b": 0,
@@ -177,7 +169,6 @@
       },
       {
         "player": "Max",
-        "byInning": [],
         "totals": {
           "1b": 1,
           "2b": 0,
@@ -194,7 +185,6 @@
       },
       {
         "player": "Brad",
-        "byInning": [],
         "totals": {
           "1b": 0,
           "2b": 1,
@@ -211,7 +201,6 @@
       },
       {
         "player": "Ryan",
-        "byInning": [],
         "totals": {
           "1b": 0,
           "2b": 0,
