@@ -292,7 +292,7 @@
             .schedule-table{font-size:12px} .schedule-table td{padding:8px 4px;}
             .game-team-name{font-size:14px} .game-score{font-size:24px}
         }
-        ::-webkit-scrollbar{width:8px;height:8px} ::-webkit-scrollbar-track{background:var(--primary-dark)} ::-webkit-scrollbar-thumb{background:var(--surface-light);border-radius:4px} ::-webkit-scrollbar-thumb:hover{background:var(--blue)}
+        ::-webkit-scrollbar{display:none} *{scrollbar-width:none;-ms-overflow-style:none}
     </style>
 </head>
 <body>
@@ -442,7 +442,7 @@ function renderStandings(data){
 function abClass(v){if(!v||v==='-')return'ab-out';const u=v.toUpperCase();if(u==='HR')return'ab-hr';if(['1B','2B','3B'].includes(u))return'ab-hit';if(u==='BB')return'ab-bb';if(u==='E')return'ab-err';if(u==='SAC')return'ab-sac';if(u==='FC')return'ab-fc';return'ab-out';}
 function renderScores(schedule){
     const grid=document.getElementById('scores-grid');
-    const played=schedule.filter(g=>g.homeScore!==undefined&&g.homeScore!==null&&g.home!=='Spring Break');
+    const played=schedule.filter(g=>g.homeScore!==undefined&&g.homeScore!==null&&g.home!=='Spring Break'&&(g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive')));
     if(!played.length){grid.innerHTML='<div class="empty-state">No scores yet</div>';return;}
     grid.innerHTML=played.map((g,i)=>{
         const hw=g.homeScore>g.awayScore;const isDrive=g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive');
