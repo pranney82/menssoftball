@@ -500,10 +500,65 @@ function renderSchedule(schedule){
 }
 
 // RENDER STATS (season)
+// SORTABLE SEASON STATS
+const STATS_KEYS=['rank','player','gp','pa','ab','h','1b','2b','3b','hr','bb','rbi','r','tb','avg','obp','slg','ops'];
+let SEASON_STATS=[];
+let statsSortKey='ops';
+let statsSortDir='desc';
+let opsLeaderName='';
+
+function statsSorted(){
+    if(statsSortKey==='rank')return [...SEASON_STATS].sort((a,b)=>parseFloat(b.ops)-parseFloat(a.ops));
+    const arr=[...SEASON_STATS];
+    arr.sort((a,b)=>{
+        let av=a[statsSortKey],bv=b[statsSortKey];
+        const an=parseFloat(av),bn=parseFloat(bv);
+        if(!isNaN(an)&&!isNaN(bn)){return statsSortDir==='asc'?an-bn:bn-an;}
+        return statsSortDir==='asc'?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));
+    });
+    return arr;
+}
+
+function statsRowsHTML(data){
+    return data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td>${p.gp}</td><td>${p.pa}</td><td>${p.ab}</td><td>${p.h}</td><td>${p['1b']}</td><td>${p['2b']}</td><td>${p['3b']}</td><td>${p.hr}</td><td>${p.bb}</td><td>${p.rbi}</td><td>${p.r}</td><td>${p.tb}</td><td class="stat-highlight">${p.avg}</td><td class="stat-highlight">${p.obp}</td><td class="stat-highlight">${p.slg}</td><td class="${p.player===opsLeaderName?'stats-leader':'stat-highlight'}">${p.ops}</td></tr>`).join('');
+}
+
+function updateStatsSortIndicators(){
+    document.querySelectorAll('#stats-view thead th').forEach((th,idx)=>{
+        const key=STATS_KEYS[idx];
+        const base=th.dataset.label||(th.dataset.label=th.textContent);
+        if(key===statsSortKey&&key!=='rank'){
+            th.innerHTML=base+(statsSortDir==='asc'?' ▲':' ▼');
+            th.style.color='var(--blue-bright)';
+        }else{
+            th.innerHTML=base;
+            th.style.color='';
+        }
+    });
+}
+
 function renderStats(data){
     const tb=document.getElementById('stats-body');
     if(!data||!data.length){tb.innerHTML='<tr><td colspan="18" class="empty-state">Player stats coming soon</td></tr>';return;}
-    tb.innerHTML=data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td>${p.gp}</td><td>${p.pa}</td><td>${p.ab}</td><td>${p.h}</td><td>${p['1b']}</td><td>${p['2b']}</td><td>${p['3b']}</td><td>${p.hr}</td><td>${p.bb}</td><td>${p.rbi}</td><td>${p.r}</td><td>${p.tb}</td><td class="stat-highlight">${p.avg}</td><td class="stat-highlight">${p.obp}</td><td class="stat-highlight">${p.slg}</td><td class="${i===0?'stats-leader':'stat-highlight'}">${p.ops}</td></tr>`).join('');
+    SEASON_STATS=data;
+    opsLeaderName=data.reduce((m,p)=>parseFloat(p.ops)>parseFloat(m.ops)?p:m,data[0]).player;
+    if(!renderStats._bound){
+        document.querySelectorAll('#stats-view thead th').forEach((th,idx)=>{
+            th.style.cursor='pointer';
+            th.style.userSelect='none';
+            th.addEventListener('click',()=>{
+                const key=STATS_KEYS[idx];
+                if(key==='rank'){statsSortKey='ops';statsSortDir='desc';}
+                else if(statsSortKey===key){statsSortDir=statsSortDir==='desc'?'asc':'desc';}
+                else{statsSortKey=key;statsSortDir=(key==='player')?'asc':'desc';}
+                document.getElementById('stats-body').innerHTML=statsRowsHTML(statsSorted());
+                updateStatsSortIndicators();
+            });
+        });
+        renderStats._bound=true;
+    }
+    tb.innerHTML=statsRowsHTML(statsSorted());
+    updateStatsSortIndicators();
 }
 
 // RENDER CAREER STATS
