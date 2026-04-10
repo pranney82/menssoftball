@@ -478,6 +478,7 @@ function renderSchedule(schedule){
             lastWeek=g.week;const isPlayoff=g.playoff;const isSB=g.home==='Spring Break';
             if(isPlayoff){html+=`<tr><td colspan="7" class="playoff-header">🏆 ${g.week}</td></tr>`;}
             else if(isSB){html+=`<tr><td colspan="7" class="week-header">Week 6 — Spring Break</td></tr><tr><td colspan="7" style="text-align:center;padding:16px;color:var(--gray-dark);font-style:italic;">No games</td></tr>`;return;}
+            else if(g.home==='Rain Out'){html+=`<tr><td colspan="7" class="week-header">${g.week} — Rain Out</td></tr><tr><td colspan="7" style="text-align:center;padding:16px;color:var(--gray-dark);font-style:italic;">Games rained out</td></tr>`;return;}
             else{
                 let cls='week-header';
                 if(!currentFound&&g.weekDate){const wd=new Date(g.weekDate+'T00:00:00');const we=new Date(wd);we.setDate(we.getDate()+7);
