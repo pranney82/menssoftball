@@ -525,19 +525,21 @@ const STATS_KEYS=['rank','player','gp','pa','ab','h','1b','2b','3b','hr','bb','r
 const STATS_LEADER_KEYS=['gp','pa','ab','h','1b','2b','3b','hr','bb','rbi','r','tb','avg','obp','slg','ops'];
 let SEASON_STATS=[];
 let SEASON_LEADERS={};
-let opsLeaderName='';
 let statsSortKey='obp';
 let statsSortDir='desc';
 
 function computeLeaders(data,keys){
     const leaders={};
     keys.forEach(k=>{
-        let max=-Infinity,name='';
-        data.forEach(p=>{const v=parseFloat(p[k])||0;if(v>max){max=v;name=p.player;}});
-        if(max>0)leaders[k]=name;
+        let max=-Infinity;
+        data.forEach(p=>{const v=parseFloat(p[k])||0;if(v>max)max=v;});
+        if(max>0){
+            leaders[k]=new Set(data.filter(p=>(parseFloat(p[k])||0)===max).map(p=>p.player));
+        }
     });
     return leaders;
 }
+function isLeader(leaders,key,player){return leaders[key]&&leaders[key].has(player);}
 
 function statsSorted(){
     if(statsSortKey==='rank')return [...SEASON_STATS].sort((a,b)=>parseFloat(b.obp)-parseFloat(a.obp));
@@ -551,8 +553,8 @@ function statsSorted(){
     return arr;
 }
 
-function leadCls(key,p){return SEASON_LEADERS[key]===p.player?'stats-leader':'';}
-function rateCls(key,p){return SEASON_LEADERS[key]===p.player?'stats-leader':'stat-highlight';}
+function leadCls(key,p){return isLeader(SEASON_LEADERS,key,p.player)?'stats-leader':'';}
+function rateCls(key,p){return isLeader(SEASON_LEADERS,key,p.player)?'stats-leader':'stat-highlight';}
 
 function statsRowsHTML(data){
     return data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td class="${leadCls('gp',p)}">${p.gp}</td><td class="${leadCls('pa',p)}">${p.pa}</td><td class="${leadCls('ab',p)}">${p.ab}</td><td class="${leadCls('h',p)}">${p.h}</td><td class="${leadCls('1b',p)}">${p['1b']}</td><td class="${leadCls('2b',p)}">${p['2b']}</td><td class="${leadCls('3b',p)}">${p['3b']}</td><td class="${leadCls('hr',p)}">${p.hr}</td><td class="${leadCls('bb',p)}">${p.bb}</td><td class="${leadCls('rbi',p)}">${p.rbi}</td><td class="${leadCls('r',p)}">${p.r}</td><td class="${leadCls('tb',p)}">${p.tb}</td><td class="${rateCls('avg',p)}">${p.avg}</td><td class="${rateCls('obp',p)}">${p.obp}</td><td class="${rateCls('slg',p)}">${p.slg}</td><td class="${rateCls('ops',p)}">${p.ops}</td></tr>`).join('');
@@ -577,7 +579,6 @@ function renderStats(data){
     if(!data||!data.length){tb.innerHTML='<tr><td colspan="18" class="empty-state">Player stats coming soon</td></tr>';return;}
     SEASON_STATS=data;
     SEASON_LEADERS=computeLeaders(data,STATS_LEADER_KEYS);
-    opsLeaderName=SEASON_LEADERS.ops||'';
     if(!renderStats._bound){
         document.querySelectorAll('#stats-view thead th').forEach((th,idx)=>{
             th.style.cursor='pointer';
@@ -632,13 +633,8 @@ function renderRoster(stats){
     if(!stats||!stats.length){grid.innerHTML='<div class="empty-state">Roster will populate as stats are entered</div>';return;}
     const players=[...stats].sort((a,b)=>a.player.localeCompare(b.player));
     const leaderKeys=['avg','obp','slg','ops','pa','ab','h','2b','3b','hr','bb','tb','r','rbi'];
-    const leaders={};
-    leaderKeys.forEach(k=>{
-        let max=-Infinity,name='';
-        stats.forEach(p=>{const v=parseFloat(p[k])||0;if(v>max){max=v;name=p.player;}});
-        if(max>0)leaders[k]=name;
-    });
-    const tile=(label,key,p)=>`<div><div class="rcs-label">${label}</div><div class="rcs-val ${leaders[key]===p.player?'gold':''}">${p[key]}</div></div>`;
+    const leaders=computeLeaders(stats,leaderKeys);
+    const tile=(label,key,p)=>`<div><div class="rcs-label">${label}</div><div class="rcs-val ${isLeader(leaders,key,p.player)?'gold':''}">${p[key]}</div></div>`;
     grid.innerHTML=players.map((p,i)=>`<div class="roster-card" style="animation-delay:${i*0.04}s"><div class="roster-card-name">${p.player}</div><div class="roster-card-line">${p.gp} GP · ${p.h}-for-${p.ab}</div><div class="roster-card-stats">${tile('AVG','avg',p)}${tile('OBP','obp',p)}${tile('SLG','slg',p)}${tile('OPS','ops',p)}${tile('PA','pa',p)}${tile('AB','ab',p)}${tile('H','h',p)}${tile('2B','2b',p)}${tile('3B','3b',p)}${tile('HR','hr',p)}${tile('BB','bb',p)}${tile('TB','tb',p)}${tile('R','r',p)}${tile('RBI','rbi',p)}</div></div>`).join('');
 }
 
@@ -649,7 +645,6 @@ let CAREER_STATS=[];
 let CAREER_LEADERS={};
 let careerSortKey='obp';
 let careerSortDir='desc';
-let careerOpsLeader='';
 
 function careerSorted(){
     if(careerSortKey==='rank')return [...CAREER_STATS].sort((a,b)=>parseFloat(b.obp)-parseFloat(a.obp));
@@ -663,8 +658,8 @@ function careerSorted(){
     return arr;
 }
 
-function cLeadCls(key,p){return CAREER_LEADERS[key]===p.player?'stats-leader':'';}
-function cRateCls(key,p){return CAREER_LEADERS[key]===p.player?'stats-leader':'stat-highlight';}
+function cLeadCls(key,p){return isLeader(CAREER_LEADERS,key,p.player)?'stats-leader':'';}
+function cRateCls(key,p){return isLeader(CAREER_LEADERS,key,p.player)?'stats-leader':'stat-highlight';}
 
 function careerRowsHTML(data){
     return data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td class="${cLeadCls('seasons',p)}">${p.seasons||1}</td><td class="${cLeadCls('gp',p)}">${p.gp}</td><td class="${cLeadCls('pa',p)}">${p.pa}</td><td class="${cLeadCls('ab',p)}">${p.ab}</td><td class="${cLeadCls('h',p)}">${p.h}</td><td class="${cLeadCls('1b',p)}">${p['1b']}</td><td class="${cLeadCls('2b',p)}">${p['2b']}</td><td class="${cLeadCls('3b',p)}">${p['3b']}</td><td class="${cLeadCls('hr',p)}">${p.hr}</td><td class="${cLeadCls('bb',p)}">${p.bb}</td><td class="${cLeadCls('rbi',p)}">${p.rbi}</td><td class="${cLeadCls('r',p)}">${p.r}</td><td class="${cLeadCls('tb',p)}">${p.tb}</td><td class="${cRateCls('avg',p)}">${p.avg}</td><td class="${cRateCls('obp',p)}">${p.obp}</td><td class="${cRateCls('slg',p)}">${p.slg}</td><td class="${cRateCls('ops',p)}">${p.ops}</td></tr>`).join('');
@@ -689,7 +684,6 @@ function renderCareerStats(data){
     if(!data||!data.length){tb.innerHTML='<tr><td colspan="19" class="empty-state">Career stats will populate after the first season</td></tr>';return;}
     CAREER_STATS=data;
     CAREER_LEADERS=computeLeaders(data,CAREER_LEADER_KEYS);
-    careerOpsLeader=CAREER_LEADERS.ops||'';
     if(!renderCareerStats._bound){
         document.querySelectorAll('#career-view thead th').forEach((th,idx)=>{
             th.style.cursor='pointer';
