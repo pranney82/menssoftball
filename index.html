@@ -165,12 +165,12 @@
         .stats-table td:first-child { text-align:left; font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--gray-dark); width:42px; min-width:42px; max-width:42px; position:sticky; left:0; background:var(--primary-dark); z-index:5; }
         .stats-table td:nth-child(2) { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; font-size:16px; min-width:90px; position:sticky; left:42px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,255,255,0.12); }
         .stat-highlight { color:var(--blue-bright); font-weight:700; } .stats-leader { color:var(--gold); font-weight:700; }
-        .roster-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
-        .roster-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:16px; transition:border-color 0.2s,transform 0.2s; animation:fadeInUp 0.4s ease-out both; }
+        .roster-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
+        .roster-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:18px; transition:border-color 0.2s,transform 0.2s; animation:fadeInUp 0.4s ease-out both; }
         .roster-card:hover { border-color:var(--blue); transform:translateY(-2px); }
-        .roster-card-name { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:1px; color:var(--white); }
-        .roster-card-line { font-family:'Oswald',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--gray-dark); margin-top:2px; margin-bottom:12px; }
-        .roster-card-stats { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.06); }
+        .roster-card-name { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:1px; color:var(--white); }
+        .roster-card-line { font-family:'Oswald',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--gray-dark); margin-top:2px; margin-bottom:14px; }
+        .roster-card-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px 8px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06); }
         .roster-card-stats > div { text-align:center; }
         .rcs-label { font-family:'Oswald',sans-serif; font-size:9px; text-transform:uppercase; letter-spacing:1px; color:var(--gray-dark); }
         .rcs-val { font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--blue-bright); margin-top:2px; }
@@ -615,7 +615,7 @@ function renderRoster(stats){
     if(!grid)return;
     if(!stats||!stats.length){grid.innerHTML='<div class="empty-state">Roster will populate as stats are entered</div>';return;}
     const players=[...stats].sort((a,b)=>a.player.localeCompare(b.player));
-    grid.innerHTML=players.map((p,i)=>`<div class="roster-card" style="animation-delay:${i*0.04}s"><div class="roster-card-name">${p.player}</div><div class="roster-card-line">${p.gp} GP · ${p.h}-for-${p.ab}</div><div class="roster-card-stats"><div><div class="rcs-label">AVG</div><div class="rcs-val">${p.avg}</div></div><div><div class="rcs-label">OBP</div><div class="rcs-val">${p.obp}</div></div><div><div class="rcs-label">OPS</div><div class="rcs-val ${p.player===opsLeaderName?'gold':''}">${p.ops}</div></div><div><div class="rcs-label">HR</div><div class="rcs-val">${p.hr}</div></div><div><div class="rcs-label">RBI</div><div class="rcs-val">${p.rbi}</div></div></div></div>`).join('');
+    grid.innerHTML=players.map((p,i)=>`<div class="roster-card" style="animation-delay:${i*0.04}s"><div class="roster-card-name">${p.player}</div><div class="roster-card-line">${p.gp} GP · ${p.h}-for-${p.ab}</div><div class="roster-card-stats"><div><div class="rcs-label">AVG</div><div class="rcs-val">${p.avg}</div></div><div><div class="rcs-label">OBP</div><div class="rcs-val">${p.obp}</div></div><div><div class="rcs-label">SLG</div><div class="rcs-val">${p.slg}</div></div><div><div class="rcs-label">OPS</div><div class="rcs-val ${p.player===opsLeaderName?'gold':''}">${p.ops}</div></div><div><div class="rcs-label">PA</div><div class="rcs-val">${p.pa}</div></div><div><div class="rcs-label">AB</div><div class="rcs-val">${p.ab}</div></div><div><div class="rcs-label">H</div><div class="rcs-val">${p.h}</div></div><div><div class="rcs-label">2B</div><div class="rcs-val">${p['2b']}</div></div><div><div class="rcs-label">3B</div><div class="rcs-val">${p['3b']}</div></div><div><div class="rcs-label">HR</div><div class="rcs-val">${p.hr}</div></div><div><div class="rcs-label">BB</div><div class="rcs-val">${p.bb}</div></div><div><div class="rcs-label">TB</div><div class="rcs-val">${p.tb}</div></div><div><div class="rcs-label">R</div><div class="rcs-val">${p.r}</div></div><div><div class="rcs-label">RBI</div><div class="rcs-val">${p.rbi}</div></div></div></div>`).join('');
 }
 
 // SORTABLE CAREER STATS
