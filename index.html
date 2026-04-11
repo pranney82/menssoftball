@@ -449,18 +449,10 @@ function renderScores(schedule){
         const driveWon=isDrive&&((g.home.toLowerCase().includes('drive')&&hw)||(!g.home.toLowerCase().includes('drive')&&!hw));
         const hLogo=g.home.toLowerCase().includes('drive')?'<div class="game-team-logo drive"><img src="logo.png" alt="D"></div>':`<div class="game-team-logo">${g.home.substring(0,2).toUpperCase()}</div>`;
         const aLogo=g.away.toLowerCase().includes('drive')?'<div class="game-team-logo drive"><img src="logo.png" alt="D"></div>':`<div class="game-team-logo">${g.away.substring(0,2).toUpperCase()}</div>`;
-        const hasExpand=isDrive&&(g.innings||g.boxScore);
+        const hasExpand=isDrive&&g.boxScore;
         let expandHtml='';
         if(hasExpand){
             expandHtml='<div class="game-expand">';
-            // Line score (both teams)
-            if(g.innings&&g.innings.home&&g.innings.away){
-                const n=Math.max(g.innings.home.length,g.innings.away.length);
-                const hdr=Array.from({length:n},(_,j)=>`<th>${j+1}</th>`).join('');
-                const hCells=g.innings.home.map(v=>`<td>${v}</td>`).join('');
-                const aCells=g.innings.away.map(v=>`<td>${v}</td>`).join('');
-                expandHtml+=`<table class="line-score-table"><thead><tr><th></th>${hdr}<th>R</th></tr></thead><tbody><tr class="${hw?'winner':''}"><td>${g.home}</td>${hCells}<td class="total">${g.homeScore}</td></tr><tr class="${!hw?'winner':''}"><td>${g.away}</td>${aCells}<td class="total">${g.awayScore}</td></tr></tbody></table>`;
-            }
             // Full box score from totals
             if(g.boxScore&&g.boxScore.length){
                 const fmtAvg=x=>{const s=x.toFixed(3);return s.startsWith('0.')?s.slice(1):s;};

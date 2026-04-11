@@ -20,24 +20,6 @@
     "away": "Motiv8",
     "awayScore": 5,
     "location": "HP2",
-    "innings": {
-      "home": [
-        3,
-        2,
-        4,
-        0,
-        5,
-        2
-      ],
-      "away": [
-        0,
-        1,
-        2,
-        0,
-        2,
-        0
-      ]
-    },
     "boxScore": [
       {
         "player": "Austin C",
