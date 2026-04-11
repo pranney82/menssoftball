@@ -615,7 +615,15 @@ function renderRoster(stats){
     if(!grid)return;
     if(!stats||!stats.length){grid.innerHTML='<div class="empty-state">Roster will populate as stats are entered</div>';return;}
     const players=[...stats].sort((a,b)=>a.player.localeCompare(b.player));
-    grid.innerHTML=players.map((p,i)=>`<div class="roster-card" style="animation-delay:${i*0.04}s"><div class="roster-card-name">${p.player}</div><div class="roster-card-line">${p.gp} GP · ${p.h}-for-${p.ab}</div><div class="roster-card-stats"><div><div class="rcs-label">AVG</div><div class="rcs-val">${p.avg}</div></div><div><div class="rcs-label">OBP</div><div class="rcs-val">${p.obp}</div></div><div><div class="rcs-label">SLG</div><div class="rcs-val">${p.slg}</div></div><div><div class="rcs-label">OPS</div><div class="rcs-val ${p.player===opsLeaderName?'gold':''}">${p.ops}</div></div><div><div class="rcs-label">PA</div><div class="rcs-val">${p.pa}</div></div><div><div class="rcs-label">AB</div><div class="rcs-val">${p.ab}</div></div><div><div class="rcs-label">H</div><div class="rcs-val">${p.h}</div></div><div><div class="rcs-label">2B</div><div class="rcs-val">${p['2b']}</div></div><div><div class="rcs-label">3B</div><div class="rcs-val">${p['3b']}</div></div><div><div class="rcs-label">HR</div><div class="rcs-val">${p.hr}</div></div><div><div class="rcs-label">BB</div><div class="rcs-val">${p.bb}</div></div><div><div class="rcs-label">TB</div><div class="rcs-val">${p.tb}</div></div><div><div class="rcs-label">R</div><div class="rcs-val">${p.r}</div></div><div><div class="rcs-label">RBI</div><div class="rcs-val">${p.rbi}</div></div></div></div>`).join('');
+    const leaderKeys=['avg','obp','slg','ops','pa','ab','h','2b','3b','hr','bb','tb','r','rbi'];
+    const leaders={};
+    leaderKeys.forEach(k=>{
+        let max=-Infinity,name='';
+        stats.forEach(p=>{const v=parseFloat(p[k])||0;if(v>max){max=v;name=p.player;}});
+        if(max>0)leaders[k]=name;
+    });
+    const tile=(label,key,p)=>`<div><div class="rcs-label">${label}</div><div class="rcs-val ${leaders[key]===p.player?'gold':''}">${p[key]}</div></div>`;
+    grid.innerHTML=players.map((p,i)=>`<div class="roster-card" style="animation-delay:${i*0.04}s"><div class="roster-card-name">${p.player}</div><div class="roster-card-line">${p.gp} GP · ${p.h}-for-${p.ab}</div><div class="roster-card-stats">${tile('AVG','avg',p)}${tile('OBP','obp',p)}${tile('SLG','slg',p)}${tile('OPS','ops',p)}${tile('PA','pa',p)}${tile('AB','ab',p)}${tile('H','h',p)}${tile('2B','2b',p)}${tile('3B','3b',p)}${tile('HR','hr',p)}${tile('BB','bb',p)}${tile('TB','tb',p)}${tile('R','r',p)}${tile('RBI','rbi',p)}</div></div>`).join('');
 }
 
 // SORTABLE CAREER STATS
