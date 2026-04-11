@@ -618,10 +618,65 @@ function renderRoster(stats){
     grid.innerHTML=players.map((p,i)=>`<div class="roster-card" style="animation-delay:${i*0.04}s"><div class="roster-card-name">${p.player}</div><div class="roster-card-line">${p.gp} GP · ${p.h}-for-${p.ab}</div><div class="roster-card-stats"><div><div class="rcs-label">AVG</div><div class="rcs-val">${p.avg}</div></div><div><div class="rcs-label">OPS</div><div class="rcs-val ${p.player===opsLeaderName?'gold':''}">${p.ops}</div></div><div><div class="rcs-label">HR</div><div class="rcs-val">${p.hr}</div></div><div><div class="rcs-label">RBI</div><div class="rcs-val">${p.rbi}</div></div></div></div>`).join('');
 }
 
+// SORTABLE CAREER STATS
+const CAREER_KEYS=['rank','player','seasons','gp','pa','ab','h','1b','2b','3b','hr','bb','rbi','r','tb','avg','obp','slg','ops'];
+let CAREER_STATS=[];
+let careerSortKey='ops';
+let careerSortDir='desc';
+let careerOpsLeader='';
+
+function careerSorted(){
+    if(careerSortKey==='rank')return [...CAREER_STATS].sort((a,b)=>parseFloat(b.ops)-parseFloat(a.ops));
+    const arr=[...CAREER_STATS];
+    arr.sort((a,b)=>{
+        let av=a[careerSortKey],bv=b[careerSortKey];
+        const an=parseFloat(av),bn=parseFloat(bv);
+        if(!isNaN(an)&&!isNaN(bn)){return careerSortDir==='asc'?an-bn:bn-an;}
+        return careerSortDir==='asc'?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));
+    });
+    return arr;
+}
+
+function careerRowsHTML(data){
+    return data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td>${p.seasons||1}</td><td>${p.gp}</td><td>${p.pa}</td><td>${p.ab}</td><td>${p.h}</td><td>${p['1b']}</td><td>${p['2b']}</td><td>${p['3b']}</td><td>${p.hr}</td><td>${p.bb}</td><td>${p.rbi}</td><td>${p.r}</td><td>${p.tb}</td><td class="stat-highlight">${p.avg}</td><td class="stat-highlight">${p.obp}</td><td class="stat-highlight">${p.slg}</td><td class="${p.player===careerOpsLeader?'stats-leader':'stat-highlight'}">${p.ops}</td></tr>`).join('');
+}
+
+function updateCareerSortIndicators(){
+    document.querySelectorAll('#career-view thead th').forEach((th,idx)=>{
+        const key=CAREER_KEYS[idx];
+        const base=th.dataset.label||(th.dataset.label=th.textContent);
+        if(key===careerSortKey&&key!=='rank'){
+            th.innerHTML=base+(careerSortDir==='asc'?' ▲':' ▼');
+            th.style.color='var(--blue-bright)';
+        }else{
+            th.innerHTML=base;
+            th.style.color='';
+        }
+    });
+}
+
 function renderCareerStats(data){
     const tb=document.getElementById('career-body');
     if(!data||!data.length){tb.innerHTML='<tr><td colspan="19" class="empty-state">Career stats will populate after the first season</td></tr>';return;}
-    tb.innerHTML=data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td>${p.seasons||1}</td><td>${p.gp}</td><td>${p.pa}</td><td>${p.ab}</td><td>${p.h}</td><td>${p['1b']}</td><td>${p['2b']}</td><td>${p['3b']}</td><td>${p.hr}</td><td>${p.bb}</td><td>${p.rbi}</td><td>${p.r}</td><td>${p.tb}</td><td class="stat-highlight">${p.avg}</td><td class="stat-highlight">${p.obp}</td><td class="stat-highlight">${p.slg}</td><td class="${i===0?'stats-leader':'stat-highlight'}">${p.ops}</td></tr>`).join('');
+    CAREER_STATS=data;
+    careerOpsLeader=data.reduce((m,p)=>parseFloat(p.ops)>parseFloat(m.ops)?p:m,data[0]).player;
+    if(!renderCareerStats._bound){
+        document.querySelectorAll('#career-view thead th').forEach((th,idx)=>{
+            th.style.cursor='pointer';
+            th.style.userSelect='none';
+            th.addEventListener('click',()=>{
+                const key=CAREER_KEYS[idx];
+                if(key==='rank'){careerSortKey='ops';careerSortDir='desc';}
+                else if(careerSortKey===key){careerSortDir=careerSortDir==='desc'?'asc':'desc';}
+                else{careerSortKey=key;careerSortDir=(key==='player')?'asc':'desc';}
+                document.getElementById('career-body').innerHTML=careerRowsHTML(careerSorted());
+                updateCareerSortIndicators();
+            });
+        });
+        renderCareerStats._bound=true;
+    }
+    tb.innerHTML=careerRowsHTML(careerSorted());
+    updateCareerSortIndicators();
 }
 
 // RENDER ROASTS
