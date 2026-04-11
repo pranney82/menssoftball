@@ -526,7 +526,7 @@ const STATS_LEADER_KEYS=['gp','pa','ab','h','1b','2b','3b','hr','bb','rbi','r','
 let SEASON_STATS=[];
 let SEASON_LEADERS={};
 let opsLeaderName='';
-let statsSortKey='ops';
+let statsSortKey='obp';
 let statsSortDir='desc';
 
 function computeLeaders(data,keys){
@@ -540,7 +540,7 @@ function computeLeaders(data,keys){
 }
 
 function statsSorted(){
-    if(statsSortKey==='rank')return [...SEASON_STATS].sort((a,b)=>parseFloat(b.ops)-parseFloat(a.ops));
+    if(statsSortKey==='rank')return [...SEASON_STATS].sort((a,b)=>parseFloat(b.obp)-parseFloat(a.obp));
     const arr=[...SEASON_STATS];
     arr.sort((a,b)=>{
         let av=a[statsSortKey],bv=b[statsSortKey];
@@ -584,7 +584,7 @@ function renderStats(data){
             th.style.userSelect='none';
             th.addEventListener('click',()=>{
                 const key=STATS_KEYS[idx];
-                if(key==='rank'){statsSortKey='ops';statsSortDir='desc';}
+                if(key==='rank'){statsSortKey='obp';statsSortDir='desc';}
                 else if(statsSortKey===key){statsSortDir=statsSortDir==='desc'?'asc':'desc';}
                 else{statsSortKey=key;statsSortDir=(key==='player')?'asc':'desc';}
                 document.getElementById('stats-body').innerHTML=statsRowsHTML(statsSorted());
@@ -621,7 +621,7 @@ async function computeCareer(seasons){
         const slg=t.ab?t.tb/t.ab:0;
         return{...t,seasons:seasonSets[t.player].size,avg:fmt(avg),obp:fmt(obp),slg:fmt(slg),ops:fmt(obp+slg)};
     });
-    career.sort((a,b)=>parseFloat(b.ops)-parseFloat(a.ops));
+    career.sort((a,b)=>parseFloat(b.obp)-parseFloat(a.obp));
     return career;
 }
 
@@ -647,12 +647,12 @@ const CAREER_KEYS=['rank','player','seasons','gp','pa','ab','h','1b','2b','3b','
 const CAREER_LEADER_KEYS=['seasons','gp','pa','ab','h','1b','2b','3b','hr','bb','rbi','r','tb','avg','obp','slg','ops'];
 let CAREER_STATS=[];
 let CAREER_LEADERS={};
-let careerSortKey='ops';
+let careerSortKey='obp';
 let careerSortDir='desc';
 let careerOpsLeader='';
 
 function careerSorted(){
-    if(careerSortKey==='rank')return [...CAREER_STATS].sort((a,b)=>parseFloat(b.ops)-parseFloat(a.ops));
+    if(careerSortKey==='rank')return [...CAREER_STATS].sort((a,b)=>parseFloat(b.obp)-parseFloat(a.obp));
     const arr=[...CAREER_STATS];
     arr.sort((a,b)=>{
         let av=a[careerSortKey],bv=b[careerSortKey];
@@ -696,7 +696,7 @@ function renderCareerStats(data){
             th.style.userSelect='none';
             th.addEventListener('click',()=>{
                 const key=CAREER_KEYS[idx];
-                if(key==='rank'){careerSortKey='ops';careerSortDir='desc';}
+                if(key==='rank'){careerSortKey='obp';careerSortDir='desc';}
                 else if(careerSortKey===key){careerSortDir=careerSortDir==='desc'?'asc':'desc';}
                 else{careerSortKey=key;careerSortDir=(key==='player')?'asc':'desc';}
                 document.getElementById('career-body').innerHTML=careerRowsHTML(careerSorted());
