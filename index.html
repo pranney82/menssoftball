@@ -154,16 +154,16 @@
         .week-games-hidden { display:none; }
 
         /* STATS TABLE */
-        .stats-table { width:100%; border-collapse:separate; border-spacing:0; font-size:15px; }
-        .stats-table thead th { font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:12px; letter-spacing:1.5px; color:var(--gray-dark); padding:12px 12px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:0; background:var(--primary-dark); z-index:10; }
-        .stats-table thead th:first-child { text-align:left; left:0; z-index:20; width:42px; min-width:42px; max-width:42px; }
-        .stats-table thead th:nth-child(2) { text-align:left; left:42px; z-index:20; min-width:90px; }
+        .stats-table { width:100%; border-collapse:separate; border-spacing:0; font-size:17px; }
+        .stats-table thead th { font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:14px; letter-spacing:1.5px; color:var(--gray); padding:14px 14px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:0; background:var(--primary-dark); z-index:10; }
+        .stats-table thead th:first-child { text-align:left; left:0; z-index:20; width:48px; min-width:48px; max-width:48px; }
+        .stats-table thead th:nth-child(2) { text-align:left; left:48px; z-index:20; min-width:110px; }
         .stats-table tbody tr { transition:background 0.15s; animation:fadeInUp 0.35s ease-out both; }
         .stats-table tbody tr:hover td { background:rgba(37,99,235,0.08); }
         .stats-table tbody tr:hover td:first-child, .stats-table tbody tr:hover td:nth-child(2) { background:#1a1f33; }
-        .stats-table td { padding:12px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.04); }
-        .stats-table td:first-child { text-align:left; font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--gray-dark); width:42px; min-width:42px; max-width:42px; position:sticky; left:0; background:var(--primary-dark); z-index:5; }
-        .stats-table td:nth-child(2) { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; font-size:16px; min-width:90px; position:sticky; left:42px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,255,255,0.12); }
+        .stats-table td { padding:14px 14px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.04); }
+        .stats-table td:first-child { text-align:left; font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--gray); width:48px; min-width:48px; max-width:48px; position:sticky; left:0; background:var(--primary-dark); z-index:5; }
+        .stats-table td:nth-child(2) { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; font-size:18px; min-width:110px; position:sticky; left:48px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,255,255,0.12); }
         .stat-highlight { color:var(--blue-bright); font-weight:700; } .stats-leader { color:var(--gold); font-weight:700; }
         .roster-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
         .roster-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:18px; transition:border-color 0.2s,transform 0.2s; animation:fadeInUp 0.4s ease-out both; }
@@ -279,9 +279,9 @@
             .schedule-table .score-val{font-size:18px} .schedule-table .week-header{font-size:13px} .schedule-table .playoff-header{font-size:14px}
             .games-grid{grid-template-columns:1fr} .game-team-name{font-size:15px} .game-score{font-size:26px}
             .game-card-header{font-size:12px} .game-result{font-size:12px}
-            .stats-table{font-size:13px} .stats-table td,.stats-table th{padding:8px 5px} .stats-table thead th{font-size:10px;letter-spacing:0.5px}
-            .stats-table td:nth-child(2){white-space:nowrap;font-size:14px;left:32px;min-width:80px} .stats-table td:first-child{font-size:15px;width:32px;min-width:32px;max-width:32px}
-            .stats-table thead th:first-child{width:32px;min-width:32px;max-width:32px} .stats-table thead th:nth-child(2){left:32px;min-width:80px}
+            .stats-table{font-size:15px} .stats-table td,.stats-table th{padding:11px 7px} .stats-table thead th{font-size:12px;letter-spacing:0.5px;color:var(--gray)}
+            .stats-table td:nth-child(2){white-space:nowrap;font-size:16px;left:38px;min-width:92px} .stats-table td:first-child{font-size:17px;width:38px;min-width:38px;max-width:38px}
+            .stats-table thead th:first-child{width:38px;min-width:38px;max-width:38px} .stats-table thead th:nth-child(2){left:38px;min-width:92px}
             .section-header h2{font-size:22px}
             .roast-card{padding:24px 18px} .roast-text{font-size:16px;line-height:1.7}
             .roast-badge{font-size:12px} .share-btn{font-size:13px}
@@ -289,9 +289,9 @@
         @media (max-width:420px) {
             .header-text h1{font-size:22px} .header-right .record{font-size:24px}
             .nav-tab{padding:12px 8px;font-size:13px;letter-spacing:0.5px}
-            .stats-table{font-size:12px} .stats-table td,.stats-table th{padding:6px 4px} .stats-table thead th{font-size:9px}
-            .stats-table td:nth-child(2){font-size:13px;left:28px;min-width:72px} .stats-table td:first-child{font-size:14px;width:28px;min-width:28px;max-width:28px}
-            .stats-table thead th:first-child{width:28px;min-width:28px;max-width:28px} .stats-table thead th:nth-child(2){left:28px;min-width:72px}
+            .stats-table{font-size:14px} .stats-table td,.stats-table th{padding:9px 5px} .stats-table thead th{font-size:11px}
+            .stats-table td:nth-child(2){font-size:15px;left:34px;min-width:84px} .stats-table td:first-child{font-size:16px;width:34px;min-width:34px;max-width:34px}
+            .stats-table thead th:first-child{width:34px;min-width:34px;max-width:34px} .stats-table thead th:nth-child(2){left:34px;min-width:84px}
             .standings-table{font-size:13px} .standings-table .team-name{font-size:14px}
             .schedule-table{font-size:12px} .schedule-table td{padding:8px 4px;}
             .game-team-name{font-size:14px} .game-score{font-size:24px}
