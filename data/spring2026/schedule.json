@@ -272,7 +272,7 @@
       {
         "player": "Peter",
         "totals": {
-          "1b": 0,
+          "1b": 2,
           "2b": 1,
           "3b": 0,
           "hr": 0,
@@ -318,7 +318,7 @@
         }
       },
       {
-        "player": "Darren",
+        "player": "Smitty",
         "totals": {
           "1b": 0,
           "2b": 1,
