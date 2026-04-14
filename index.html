@@ -156,25 +156,53 @@
         .ab-sac { color:var(--gray); font-style:italic; }
         .ab-fc { color:var(--gray); }
 
-        /* SCHEDULE TABLE */
-        .schedule-table { border-collapse:collapse; font-size:var(--fs-base); width:100%; }
-        .schedule-table .week-header, .schedule-table .playoff-header { scroll-margin-top:95px; position:sticky; top:0; z-index:50; }
-        .schedule-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background var(--dur) var(--ease-smooth); }
-        .schedule-table tbody tr:hover { background:rgba(37,99,235,0.08); }
-        .schedule-table tbody tr.drive-game { background:rgba(37,99,235,0.1); border-left:3px solid var(--blue); }
-        .schedule-table tbody tr.current-week { background:rgba(251,191,36,0.06); border-left:3px solid var(--gold); }
-        .schedule-table tbody tr.current-week.drive-game { background:rgba(37,99,235,0.12); border-left:3px solid var(--gold); }
-        .schedule-table td { padding:15px 14px; font-weight:500; white-space:nowrap; }
-        .schedule-table .week-header { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-base); text-transform:uppercase; letter-spacing:1.5px; color:var(--blue-bright); background:linear-gradient(rgba(37,99,235,0.18),rgba(37,99,235,0.18)),var(--primary-dark); padding:16px 14px; border-top:1px solid rgba(37,99,235,0.25); border-bottom:1px solid rgba(37,99,235,0.25); }
-        .schedule-table .wh-inner { position:sticky; left:14px; display:inline-block; max-width:calc(100vw - 28px); }
-        .schedule-table .wh-sub { opacity:0.6; font-weight:500; text-transform:none; letter-spacing:0; }
+        /* SCHEDULE — mobile-first: stacked cards; desktop: table */
+        .schedule-table { border-collapse:collapse; font-size:var(--fs-base); width:100%; display:block; }
+        .schedule-table thead { display:none; }
+        .schedule-table tbody { display:block; }
+        .schedule-table tr { display:block; border-bottom:1px solid rgba(255,255,255,0.04); transition:background var(--dur) var(--ease-smooth); }
+        .schedule-table .week-header, .schedule-table .playoff-header { scroll-margin-top:95px; position:sticky; top:0; z-index:50; display:block; padding:14px 16px; font-family:var(--font-sans); font-weight:800; font-size:var(--fs-base); text-transform:uppercase; letter-spacing:1.2px; }
+        .schedule-table .week-header { color:var(--blue-bright); background:linear-gradient(rgba(37,99,235,0.18),rgba(37,99,235,0.18)),var(--primary-dark); border-top:1px solid rgba(37,99,235,0.25); border-bottom:1px solid rgba(37,99,235,0.25); }
         .schedule-table .week-header.current { color:var(--gold); background:linear-gradient(rgba(251,191,36,0.18),rgba(251,191,36,0.18)),var(--primary-dark); border-left:3px solid var(--gold); border-top:1px solid rgba(251,191,36,0.3); border-bottom:1px solid rgba(251,191,36,0.3); }
-        .schedule-table .score-val { font-family:var(--font-num); font-weight:700; font-size:var(--fs-md); min-width:32px; display:inline-block; text-align:center; font-variant-numeric:tabular-nums; }
+        .schedule-table .playoff-header { color:var(--gold); background:linear-gradient(rgba(251,191,36,0.14),rgba(251,191,36,0.14)),var(--primary-dark); border-left:3px solid var(--gold); border-top:1px solid rgba(251,191,36,0.25); border-bottom:1px solid rgba(251,191,36,0.25); }
+        .schedule-table .wh-inner { display:inline-block; max-width:100%; }
+        .schedule-table .wh-sub { opacity:0.6; font-weight:500; text-transform:none; letter-spacing:0; }
+        /* Game row (mobile card): flex layout, inline cells */
+        .schedule-table tr.week-games { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 10px; padding:14px 16px; }
+        .schedule-table tr.week-games td { display:inline; padding:0; white-space:nowrap; border:none; }
+        .schedule-table tr.week-games td:empty { display:none; }
+        .schedule-table tr.week-games td:nth-child(1) { font-size:var(--fs-sm); color:var(--gray); font-weight:600; } /* date */
+        .schedule-table tr.week-games td:nth-child(2) { font-family:var(--font-num); font-size:var(--fs-sm); color:var(--white); font-weight:700; } /* time */
+        .schedule-table tr.week-games td:nth-child(3) { font-size:var(--fs-base); font-weight:600; flex:1 0 100%; order:10; } /* home team — new line */
+        .schedule-table tr.week-games td:nth-child(3)::after { content:' vs'; opacity:0.4; font-weight:400; margin-left:4px; }
+        .schedule-table tr.week-games td:nth-child(4) { font-size:var(--fs-base); font-weight:600; order:11; } /* home score */
+        .schedule-table tr.week-games td:nth-child(5) { font-size:var(--fs-base); font-weight:600; order:12; } /* away team */
+        .schedule-table tr.week-games td:nth-child(6) { font-size:var(--fs-base); font-weight:600; order:13; } /* away score */
+        .schedule-table tr.week-games td:nth-child(7) { margin-left:auto; font-size:var(--fs-xs); font-weight:600; color:var(--gray-dark); text-transform:uppercase; letter-spacing:1px; } /* location */
+        .schedule-table tr.week-games.drive-game { background:rgba(37,99,235,0.1); border-left:3px solid var(--blue); padding-left:13px; }
+        .schedule-table tr.week-games.current-week { background:rgba(251,191,36,0.04); }
+        .schedule-table tr.week-games.current-week.drive-game { background:rgba(37,99,235,0.12); }
+        .schedule-table tr.week-games:active { background:rgba(37,99,235,0.15); }
+        .schedule-table .score-val { font-family:var(--font-num); font-weight:700; font-size:var(--fs-md); display:inline-block; text-align:center; font-variant-numeric:tabular-nums; }
         .schedule-table .score-win { color:var(--win); font-weight:700; } .schedule-table .score-loss { color:var(--loss); }
-        .schedule-table .playoff-header { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-base); text-transform:uppercase; letter-spacing:1.5px; color:var(--gold); background:linear-gradient(rgba(251,191,36,0.14),rgba(251,191,36,0.14)),var(--primary-dark); padding:16px; border-left:3px solid var(--gold); border-top:1px solid rgba(251,191,36,0.25); border-bottom:1px solid rgba(251,191,36,0.25); }
         .week-toggle { cursor:pointer; user-select:none; } .week-toggle::after { content:' ▾'; font-size:var(--fs-sm); opacity:0.5; }
         tbody.week-group.collapsed .week-toggle::after { content:' ▸'; }
         tbody.week-group.collapsed tr.week-games { display:none; }
+        /* Desktop: promote back to real table */
+        @media (min-width:768px) {
+            .schedule-table { display:table; }
+            .schedule-table tbody { display:table-row-group; }
+            .schedule-table tr,
+            .schedule-table tr.week-games { display:table-row; padding:0; gap:0; flex-wrap:nowrap; }
+            .schedule-table tr.week-games td,
+            .schedule-table td { display:table-cell; padding:15px 14px; font-weight:500; white-space:nowrap; font-size:var(--fs-base); color:inherit; text-transform:none; letter-spacing:normal; font-family:inherit; border:none; margin:0; flex:none; order:initial; }
+            .schedule-table tr.week-games td:nth-child(3)::after { content:none; }
+            .schedule-table tr.week-games td:empty { display:table-cell; }
+            .schedule-table tr.week-games.drive-game { padding-left:0; }
+            .schedule-table tr.week-games.drive-game td:first-child { border-left:3px solid var(--blue); }
+            .schedule-table .week-header, .schedule-table .playoff-header { display:table-cell; text-align:left; }
+            .schedule-table .score-val { min-width:32px; }
+        }
 
         /* STATS TABLE */
         .stats-table { width:100%; border-collapse:separate; border-spacing:0; font-size:var(--fs-base); font-variant-numeric:tabular-nums; }
