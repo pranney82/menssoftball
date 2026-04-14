@@ -204,6 +204,70 @@
             .schedule-table .score-val { min-width:32px; }
         }
 
+        /* SCHEDULE CARDS — mobile-first */
+        #schedule-wrap { display:flex; flex-direction:column; gap:20px; }
+        .sched-week { display:flex; flex-direction:column; gap:10px; scroll-margin-top:60px; }
+        .sched-week-header { display:flex; align-items:center; justify-content:space-between; padding:10px 4px 8px; border-bottom:1px solid rgba(37,99,235,0.2); cursor:default; user-select:none; }
+        .sched-week-label { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-base); letter-spacing:1px; text-transform:uppercase; color:var(--blue-bright); }
+        .sched-week-current .sched-week-label { color:var(--gold); }
+        .sched-week-current .sched-week-header { border-bottom-color:rgba(251,191,36,0.35); }
+        .sched-week-playoff .sched-week-label { color:var(--gold); }
+        .sched-week-playoff .sched-week-header { border-bottom-color:rgba(251,191,36,0.35); }
+        .sched-week-collapsible .sched-week-header { cursor:pointer; }
+        .sched-week-collapsible .sched-week-header:active { opacity:0.7; }
+        .sched-week-chevron { width:12px; height:12px; border-right:2px solid var(--gray-dark); border-bottom:2px solid var(--gray-dark); transform:rotate(45deg); transition:transform var(--dur) var(--ease-smooth); margin-bottom:4px; }
+        .sched-week.collapsed .sched-week-chevron { transform:rotate(-45deg); margin-bottom:0; margin-top:4px; }
+        .sched-week.collapsed .sched-week-games { display:none; }
+        .sched-week-games { display:flex; flex-direction:column; gap:10px; }
+
+        /* Game card */
+        .sched-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:14px 16px; transition:transform var(--dur) var(--ease-smooth),border-color var(--dur) var(--ease-smooth),box-shadow var(--dur) var(--ease-smooth); animation:fadeInUp 0.4s var(--ease-sport) both; }
+        .sched-card:active { transform:scale(0.985); }
+        .sched-card-drive { border-color:rgba(37,99,235,0.5); background:linear-gradient(135deg,rgba(37,99,235,0.12) 0%,var(--surface) 60%); box-shadow:inset 3px 0 0 0 var(--blue); }
+        .sched-week-current .sched-card { border-color:rgba(251,191,36,0.25); }
+        .sched-week-current .sched-card-drive { border-color:rgba(37,99,235,0.6); box-shadow:inset 3px 0 0 0 var(--blue),0 0 0 1px rgba(251,191,36,0.25); }
+
+        .sched-card-meta { display:flex; align-items:center; gap:10px; font-family:var(--font-sans); font-size:var(--fs-xs); font-weight:600; letter-spacing:0.8px; text-transform:uppercase; color:var(--gray-dark); margin-bottom:10px; }
+        .sched-card-time { color:var(--gray); font-weight:700; }
+        .sched-card-loc { color:var(--gray-dark); }
+        .sched-card-loc::before { content:'· '; color:var(--gray-dark); }
+
+        .sched-result { margin-left:auto; font-family:var(--font-sans); font-size:var(--fs-xs); font-weight:800; padding:3px 9px; border-radius:100px; letter-spacing:0.5px; }
+        .sched-result-win { background:rgba(34,197,94,0.15); color:var(--win); border:1px solid rgba(34,197,94,0.35); }
+        .sched-result-loss { background:rgba(239,68,68,0.15); color:var(--loss); border:1px solid rgba(239,68,68,0.35); }
+
+        .sched-card-teams { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; }
+        .sched-team { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-base); color:var(--white); letter-spacing:-0.2px; line-height:1.2; }
+        .sched-team:first-child { text-align:right; }
+        .sched-team:last-child { text-align:left; }
+        .sched-team-drive { color:var(--blue-bright); font-weight:800; }
+        .sched-team-winner { color:var(--white); font-weight:700; }
+
+        .sched-card-score { display:flex; align-items:center; gap:6px; font-family:var(--font-num); font-weight:700; font-size:var(--fs-xl); font-variant-numeric:tabular-nums; letter-spacing:-1px; padding:0 4px; }
+        .sched-score { min-width:26px; text-align:center; }
+        .sched-score-win { color:var(--win); }
+        .sched-score-loss { color:var(--loss); }
+        .sched-score-dash { color:var(--gray-dark); font-weight:500; font-size:var(--fs-md); }
+        .sched-card-score-vs { font-family:var(--font-sans); font-size:var(--fs-sm); font-weight:600; color:var(--gray-dark); letter-spacing:1px; text-transform:uppercase; padding:0 10px; }
+        .sched-vs-label { display:inline-block; }
+        .sched-card-score-ppd { font-size:var(--fs-sm); font-weight:800; color:var(--gold); letter-spacing:1px; padding:0 10px; }
+
+        /* Banner weeks (Spring Break, Rain Out) */
+        .sched-week-banner .sched-banner { display:flex; flex-direction:column; align-items:center; gap:4px; padding:22px 20px; background:linear-gradient(135deg,rgba(37,99,235,0.08),var(--surface)); border:1px dashed rgba(37,99,235,0.3); border-radius:12px; text-align:center; }
+        .sched-banner-title { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-md); letter-spacing:1px; text-transform:uppercase; color:var(--blue-bright); }
+        .sched-banner-sub { font-family:var(--font-sans); font-weight:500; font-size:var(--fs-sm); color:var(--gray-dark); font-style:italic; }
+
+        /* Tablet and up: multi-column games grid per week */
+        @media (min-width:768px) {
+            .sched-week-games { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+            .sched-card { padding:16px 18px; }
+            .sched-week-label { font-size:var(--fs-md); }
+        }
+        @media (min-width:1024px) {
+            #schedule-wrap { gap:28px; }
+            .sched-week-games { gap:16px; }
+        }
+
         /* STATS TABLE */
         .stats-table { width:100%; border-collapse:separate; border-spacing:0; font-size:var(--fs-base); font-variant-numeric:tabular-nums; }
         .stats-table thead th { font-family:var(--font-sans); font-weight:700; text-transform:uppercase; font-size:var(--fs-xs); letter-spacing:1.2px; color:var(--gray-dark); padding:14px 12px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:0; background:var(--primary-dark); z-index:10; }
@@ -412,7 +476,7 @@
     <div class="section" id="games">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="scores-view">Scores</button><button class="sub-tab" data-sub="schedule-view">Schedule</button></div>
         <div class="sub-content active" id="scores-view"><div class="games-grid" id="scores-grid"></div></div>
-        <div class="sub-content" id="schedule-view"><div class="table-scroll" role="region" aria-label="Season schedule" tabindex="0"><table class="schedule-table" id="schedule-table-el"></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">📅 Share This Week</button></div></div>
+        <div class="sub-content" id="schedule-view"><div id="schedule-wrap" role="region" aria-label="Season schedule"></div><div style="text-align:center;margin-top:20px;"><button class="share-btn" onclick="shareSchedule(this)">📅 Share This Week</button></div></div>
     </div>
 
     <div class="section" id="players">
@@ -625,18 +689,19 @@ function renderScores(schedule){
     }
 }
 
-// RENDER SCHEDULE
+// RENDER SCHEDULE — mobile-first cards, auto-becomes grid on tablet/desktop
 function renderSchedule(schedule){
-    const tbl=document.getElementById('schedule-table-el');const now=new Date();let currentFound=false;
-    // Group games by week
+    const wrap=document.getElementById('schedule-wrap');
+    if(!wrap)return;
+    const now=new Date();let currentFound=false;
+    // Group by week
     const groups=[];let current=null;
     schedule.forEach(g=>{
         if(!current||current.week!==g.week){current={week:g.week,weekDate:g.weekDate,games:[],isPlayoff:g.playoff,isSB:g.home==='Spring Break',isRainOut:g.home==='Rain Out'};groups.push(current);}
         current.games.push(g);
     });
-    let html='<colgroup><col style="width:18%"><col style="width:14%"><col style="width:24%"><col style="width:9%"><col style="width:24%"><col style="width:9%"><col style="width:12%"></colgroup>';
+    let html='';
     groups.forEach(grp=>{
-        const first=grp.games[0];
         let isCurrent=false;
         if(!currentFound&&grp.weekDate&&!grp.isPlayoff){
             const wd=new Date(grp.weekDate+'T00:00:00');const we=new Date(wd);we.setDate(we.getDate()+7);
@@ -645,43 +710,80 @@ function renderSchedule(schedule){
         const isPast=grp.weekDate?(()=>{const we=new Date(grp.weekDate+'T00:00:00');we.setDate(we.getDate()+7);return we<now;})():false;
         const hasScores=grp.games.some(g=>(g.homeScore!==undefined&&g.homeScore!==null)||(g.note&&g.note.toLowerCase().includes('postpone')));
         const collapsible=isPast&&hasScores&&!grp.isPlayoff;
-        html+=`<tbody class="week-group${isCurrent?' current-group':''}" data-week="${grp.weekDate||''}"${collapsible?' data-collapsible="1"':''}>`;
-        // Week header row
-        if(grp.isPlayoff){
-            html+=`<tr><td colspan="7" class="playoff-header"><span class="wh-inner">🏆 ${grp.week}</span></td></tr>`;
-        } else if(grp.isSB){
-            html+=`<tr><td colspan="7" class="week-header"><span class="wh-inner">Week 6 &nbsp;·&nbsp; Spring Break<span class="wh-sub"> &nbsp;·&nbsp; No games this week</span></span></td></tr></tbody>`;return;
-        } else if(grp.isRainOut){
-            html+=`<tr><td colspan="7" class="week-header"><span class="wh-inner">${grp.week} &nbsp;·&nbsp; Rain Out<span class="wh-sub"> &nbsp;·&nbsp; Games rained out</span></span></td></tr></tbody>`;return;
-        } else {
-            html+=`<tr><td colspan="7" class="week-header${isCurrent?' current':''}${collapsible?' week-toggle':''}"><span class="wh-inner">${grp.week}</span></td></tr>`;
+        // Special weeks (banners)
+        if(grp.isSB){
+            html+=`<section class="sched-week sched-week-banner"><div class="sched-banner"><span class="sched-banner-title">${grp.week} · Spring Break</span><span class="sched-banner-sub">No games this week</span></div></section>`;
+            return;
         }
-        // Game rows
+        if(grp.isRainOut){
+            html+=`<section class="sched-week sched-week-banner"><div class="sched-banner"><span class="sched-banner-title">${grp.week} · Rain Out</span><span class="sched-banner-sub">Games rained out</span></div></section>`;
+            return;
+        }
+        // Week section
+        const weekCls=['sched-week'];
+        if(isCurrent)weekCls.push('sched-week-current');
+        if(grp.isPlayoff)weekCls.push('sched-week-playoff');
+        if(collapsible)weekCls.push('sched-week-collapsible');
+        html+=`<section class="${weekCls.join(' ')}" data-week="${grp.weekDate||''}">`;
+        const headerLabel=grp.isPlayoff?`🏆 ${grp.week}`:grp.week;
+        html+=`<header class="sched-week-header"><span class="sched-week-label">${headerLabel}</span>${collapsible?'<span class="sched-week-chevron"></span>':''}</header>`;
+        html+='<div class="sched-week-games">';
         grp.games.forEach(g=>{
-            if(g.home==='Spring Break')return;
-            const isDrive=g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive');
+            if(g.home==='Spring Break'||g.home==='Rain Out')return;
+            const homeIsDrive=g.home.toLowerCase().includes('drive');
+            const awayIsDrive=g.away.toLowerCase().includes('drive');
+            const isDrive=homeIsDrive||awayIsDrive;
             const hasScore=g.homeScore!==undefined&&g.homeScore!==null;
             const hw=hasScore&&g.homeScore>g.awayScore;
-            const hName=isDrive&&g.home.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(hw&&hasScore?'<strong>'+g.home+'</strong>':g.home);
-            const aName=isDrive&&g.away.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(!hw&&hasScore?'<strong>'+g.away+'</strong>':g.away);
+            const driveWon=isDrive&&hasScore&&((homeIsDrive&&hw)||(awayIsDrive&&!hw));
             const ppd=g.note&&g.note.toLowerCase().includes('postpone');
-            const rowCls=['week-games'];if(isDrive)rowCls.push('drive-game');if(isCurrent)rowCls.push('current-week');
-            html+=`<tr class="${rowCls.join(' ')}"><td>${g.date}</td><td>${g.time}</td><td>${hName}</td><td>${ppd?'<span style="font-size:var(--fs-xs);font-weight:700;letter-spacing:1px;color:var(--gold);">PPD</span>':(hasScore?'<span class="score-val '+(hw?'score-win':'score-loss')+'">'+g.homeScore+'</span>':'')}</td><td>${aName}</td><td>${ppd?'':(hasScore?'<span class="score-val '+(!hw?'score-win':'score-loss')+'">'+g.awayScore+'</span>':'')}</td><td>${g.location}</td></tr>`;
+            const cardCls=['sched-card'];
+            if(isDrive)cardCls.push('sched-card-drive');
+            if(hasScore)cardCls.push('sched-card-final');
+            if(ppd)cardCls.push('sched-card-ppd');
+            // Team name formatter
+            const teamHtml=(name,isDriveSide,isWinner)=>{
+                const classes=['sched-team'];
+                if(isDriveSide)classes.push('sched-team-drive');
+                if(isWinner)classes.push('sched-team-winner');
+                return`<span class="${classes.join(' ')}">${name}</span>`;
+            };
+            // Score block
+            let scoreBlock='';
+            if(ppd){
+                scoreBlock='<div class="sched-card-score sched-card-score-ppd">PPD</div>';
+            } else if(hasScore){
+                scoreBlock=`<div class="sched-card-score"><span class="sched-score ${hw?'sched-score-win':'sched-score-loss'}">${g.homeScore}</span><span class="sched-score-dash">–</span><span class="sched-score ${!hw?'sched-score-win':'sched-score-loss'}">${g.awayScore}</span></div>`;
+            } else {
+                scoreBlock=`<div class="sched-card-score sched-card-score-vs"><span class="sched-vs-label">vs</span></div>`;
+            }
+            // Result badge for drive games (final only)
+            const resultBadge=(isDrive&&hasScore&&!ppd)?`<span class="sched-result ${driveWon?'sched-result-win':'sched-result-loss'}">${driveWon?'W':'L'}</span>`:'';
+            html+=`<article class="${cardCls.join(' ')}">
+              <div class="sched-card-meta"><span class="sched-card-time">${g.time}</span><span class="sched-card-loc">${g.location}</span>${resultBadge}</div>
+              <div class="sched-card-teams">
+                ${teamHtml(g.home,homeIsDrive,hasScore&&hw)}
+                ${scoreBlock}
+                ${teamHtml(g.away,awayIsDrive,hasScore&&!hw)}
+              </div>
+            </article>`;
         });
-        html+='</tbody>';
+        html+='</div></section>';
     });
-    tbl.innerHTML=html;
-    // Collapse past weeks that have scores
-    tbl.querySelectorAll('tbody[data-collapsible="1"]').forEach(tb=>{
-        tb.classList.add('collapsed');
-        const wh=tb.querySelector('.week-header');
-        wh&&wh.addEventListener('click',()=>tb.classList.toggle('collapsed'));
+    wrap.innerHTML=html;
+    // Collapse past weeks (click the header to toggle)
+    wrap.querySelectorAll('.sched-week-collapsible').forEach(sec=>{
+        sec.classList.add('collapsed');
+        const h=sec.querySelector('.sched-week-header');
+        h&&h.addEventListener('click',()=>sec.classList.toggle('collapsed'));
     });
-    // Scroll to current week on first schedule-view click
-    const currentGroup=tbl.querySelector('tbody.current-group');
-    if(currentGroup){
+    // Scroll to current week when first opening Schedule sub-tab
+    const currentSection=wrap.querySelector('.sched-week-current');
+    if(currentSection){
         const st=document.querySelector('[data-sub="schedule-view"]');
-        st&&st.addEventListener('click',()=>setTimeout(()=>{currentGroup.querySelector('.week-header')?.scrollIntoView({behavior:'smooth',block:'start'});},150),{once:true});
+        st&&st.addEventListener('click',()=>setTimeout(()=>{
+            currentSection.scrollIntoView({behavior:'smooth',block:'start'});
+        },200),{once:true});
     }
 }
 
@@ -1257,39 +1359,24 @@ function showFollowUpChips(container){
 function shareSchedule(btn){
     const schedule=(window.DATA&&window.DATA.schedule)||[];
     if(!schedule.length){return;}
-    // Find the current week: either the week containing today, or the next upcoming week
+    // Find Drive's next game: earliest upcoming Drive game (includes today)
     const now=new Date();
-    const withDates=schedule.filter(g=>g.weekDate&&g.home!=='Spring Break'&&g.home!=='Rain Out');
-    const weeks={};
-    withDates.forEach(g=>{(weeks[g.week]=weeks[g.week]||{name:g.week,date:g.date,weekDate:g.weekDate,games:[]}).games.push(g);});
-    const weekList=Object.values(weeks).sort((a,b)=>a.weekDate.localeCompare(b.weekDate));
-    let current=null;
-    for(const w of weekList){
-        const wd=new Date(w.weekDate+'T00:00:00');
-        const we=new Date(wd);we.setDate(we.getDate()+1); // through end of game day
-        we.setHours(23,59,59);
-        if(now<=we){current=w;break;}
-    }
-    if(!current){current=weekList[weekList.length-1];}
-    // Format shareable text
+    const todayKey=now.toISOString().slice(0,10);
+    const driveGames=schedule
+        .filter(g=>g.weekDate&&g.home!=='Spring Break'&&g.home!=='Rain Out'&&(g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive')))
+        .sort((a,b)=>a.weekDate.localeCompare(b.weekDate));
+    let target=driveGames.find(g=>g.weekDate>=todayKey);
+    if(!target){target=driveGames[driveGames.length-1];}
+    if(!target){return;}
+    const opponent=target.home.toLowerCase().includes('drive')?target.away:target.home;
+    // Format: Roll Call as the header, essential info only
     const lines=[];
-    lines.push('⚾ DRIVE — '+current.name.toUpperCase()+' · '+current.date.toUpperCase());
-    lines.push('');
-    current.games.sort((a,b)=>{
-        const t=s=>{const[h,m]=s.replace(/ [AP]M/,'').split(':');let hr=parseInt(h);if(s.includes('PM')&&hr!==12)hr+=12;return hr*60+parseInt(m);};
-        return t(a.time)-t(b.time);
-    });
-    current.games.forEach(g=>{
-        const isDrive=g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive');
-        const marker=isDrive?' ← OUR GAME':'';
-        const t=g.time.replace(' PM','p').replace(' AM','a');
-        lines.push(t+'  '+g.home+' vs '+g.away+marker);
-    });
-    lines.push('');
-    lines.push('📍 HP2');
-    lines.push('🔗 pranney82.github.io/menssoftball');
+    lines.push('⚾ Roll Call:');
+    lines.push('Drive vs '+opponent);
+    lines.push(target.date+' · '+target.time);
+    lines.push('📍 '+(target.location||'HP2'));
     const text=lines.join('\n');
-    const title='Drive Softball — '+current.name;
+    const title='Drive Softball — Roll Call';
     if(navigator.share){navigator.share({title:title,text:text}).catch(()=>{});}
     else{navigator.clipboard.writeText(text).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📅 Share This Week';},2000);}).catch(()=>{});}
 }
