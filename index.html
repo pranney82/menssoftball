@@ -761,6 +761,22 @@ function collapsePastWeeks(){
 
 function checkGameDay(){if(new Date().getDay()===1){const t=document.getElementById('games-tab');if(t&&!t.querySelector('.live-dot'))t.innerHTML+='<span class="live-dot"></span>';}}
 
+// JS-driven sticky table headers (works inside overflow-x:auto wrappers)
+function updateTableStickyHeaders(){
+    const nav=document.querySelector('.nav-wrap');
+    const navBottom=nav?nav.getBoundingClientRect().bottom:0;
+    document.querySelectorAll('.section.active table.stats-table, .section.active table.schedule-table').forEach(table=>{
+        const thead=table.querySelector('thead');if(!thead)return;
+        const rect=table.getBoundingClientRect();const hH=thead.offsetHeight;
+        const shouldStick=rect.top<navBottom&&rect.bottom>navBottom+hH;
+        const offset=shouldStick?(navBottom-rect.top):0;
+        thead.querySelectorAll('th').forEach(th=>{th.style.transform=offset?`translateY(${offset}px)`:'';});
+    });
+}
+window.addEventListener('scroll',updateTableStickyHeaders,{passive:true});
+window.addEventListener('resize',updateTableStickyHeaders);
+document.querySelectorAll('.nav-tab,.sub-tab').forEach(t=>t.addEventListener('click',()=>setTimeout(updateTableStickyHeaders,50)));
+
 // FLOATING CHAT
 const CHAT_URL='https://softball-rules-chat.peterranney.workers.dev';
 let CHAT_CONTEXT='';
