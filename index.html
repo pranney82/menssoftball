@@ -166,6 +166,8 @@
         .schedule-table tbody tr.current-week.drive-game { background:rgba(37,99,235,0.12); border-left:3px solid var(--gold); }
         .schedule-table td { padding:15px 14px; font-weight:500; white-space:nowrap; }
         .schedule-table .week-header { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-base); text-transform:uppercase; letter-spacing:1.5px; color:var(--blue-bright); background:linear-gradient(rgba(37,99,235,0.18),rgba(37,99,235,0.18)),var(--primary-dark); padding:16px 14px; border-top:1px solid rgba(37,99,235,0.25); border-bottom:1px solid rgba(37,99,235,0.25); }
+        .schedule-table .wh-inner { position:sticky; left:14px; display:inline-block; max-width:calc(100vw - 28px); }
+        .schedule-table .wh-sub { opacity:0.6; font-weight:500; text-transform:none; letter-spacing:0; }
         .schedule-table .week-header.current { color:var(--gold); background:linear-gradient(rgba(251,191,36,0.18),rgba(251,191,36,0.18)),var(--primary-dark); border-left:3px solid var(--gold); border-top:1px solid rgba(251,191,36,0.3); border-bottom:1px solid rgba(251,191,36,0.3); }
         .schedule-table .score-val { font-family:var(--font-num); font-weight:700; font-size:var(--fs-md); min-width:32px; display:inline-block; text-align:center; font-variant-numeric:tabular-nums; }
         .schedule-table .score-win { color:var(--win); font-weight:700; } .schedule-table .score-loss { color:var(--loss); }
@@ -233,6 +235,7 @@
         .chat-bubble { position:fixed; bottom:24px; right:24px; width:60px; height:60px; background:linear-gradient(135deg,var(--blue) 0%,#1d4ed8 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:1000; box-shadow:0 4px 24px rgba(37,99,235,0.5),0 0 0 0 rgba(37,99,235,0.4); transition:all 0.3s cubic-bezier(0.4,0,0.2,1); border:none; }
         .chat-bubble:hover { transform:scale(1.08); box-shadow:0 6px 32px rgba(37,99,235,0.6); }
         .chat-bubble:active { transform:scale(0.95); }
+        .chat-bubble:active { transform:scale(0.95); }
         .chat-bubble.hidden { transform:scale(0); opacity:0; pointer-events:none; }
         .chat-bubble svg { width:30px; height:30px; }
         .chat-panel { position:fixed; bottom:24px; right:24px; width:400px; height:540px; background:var(--primary-dark); border:1px solid rgba(37,99,235,0.2); border-radius:20px; z-index:1001; display:none; flex-direction:column; overflow:hidden; box-shadow:0 12px 48px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.03); transform:scale(0.9) translateY(20px); opacity:0; transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),opacity 0.2s; }
@@ -272,6 +275,8 @@
         .chat-input { flex:1; padding:14px 16px; background:transparent; border:none; color:var(--white); font-size:16px;  outline:none; }
         .chat-input::placeholder { color:var(--gray-dark); }
         .chat-send { background:var(--blue); color:white; border:none; width:40px; height:40px; border-radius:10px; margin:4px; cursor:pointer; transition:all 0.15s; display:flex; align-items:center; justify-content:center; flex-shrink:0; -webkit-tap-highlight-color:transparent; }
+        .chat-send:hover { background:var(--blue-bright); }
+        .chat-send:active { transform:scale(0.94); }
         .chat-send:active { background:var(--blue-bright); transform:scale(0.92); }
         body.chat-open { overflow:hidden; }
         @media (max-width:768px) {
@@ -325,6 +330,7 @@
             .standings-table .col-t { display:none; }
             .standings-table td { padding:14px 5px; }
             .standings-table thead th { padding:12px 5px; }
+            .schedule-table .wh-sub { display:none; }
         }
         ::-webkit-scrollbar{display:none} *{scrollbar-width:none;-ms-overflow-style:none}
         @media (prefers-reduced-motion: reduce) {
@@ -614,13 +620,13 @@ function renderSchedule(schedule){
         html+=`<tbody class="week-group${isCurrent?' current-group':''}" data-week="${grp.weekDate||''}"${collapsible?' data-collapsible="1"':''}>`;
         // Week header row
         if(grp.isPlayoff){
-            html+=`<tr><td colspan="7" class="playoff-header">🏆 ${grp.week}</td></tr>`;
+            html+=`<tr><td colspan="7" class="playoff-header"><span class="wh-inner">🏆 ${grp.week}</span></td></tr>`;
         } else if(grp.isSB){
-            html+=`<tr><td colspan="7" class="week-header">Week 6 &nbsp;·&nbsp; Spring Break &nbsp;·&nbsp; <span style="opacity:0.6;font-weight:500;text-transform:none;letter-spacing:0;">No games this week</span></td></tr></tbody>`;return;
+            html+=`<tr><td colspan="7" class="week-header"><span class="wh-inner">Week 6 &nbsp;·&nbsp; Spring Break<span class="wh-sub"> &nbsp;·&nbsp; No games this week</span></span></td></tr></tbody>`;return;
         } else if(grp.isRainOut){
-            html+=`<tr><td colspan="7" class="week-header">${grp.week} &nbsp;·&nbsp; Rain Out &nbsp;·&nbsp; <span style="opacity:0.6;font-weight:500;text-transform:none;letter-spacing:0;">Games rained out</span></td></tr></tbody>`;return;
+            html+=`<tr><td colspan="7" class="week-header"><span class="wh-inner">${grp.week} &nbsp;·&nbsp; Rain Out<span class="wh-sub"> &nbsp;·&nbsp; Games rained out</span></span></td></tr></tbody>`;return;
         } else {
-            html+=`<tr><td colspan="7" class="week-header${isCurrent?' current':''}${collapsible?' week-toggle':''}">${grp.week}</td></tr>`;
+            html+=`<tr><td colspan="7" class="week-header${isCurrent?' current':''}${collapsible?' week-toggle':''}"><span class="wh-inner">${grp.week}</span></td></tr>`;
         }
         // Game rows
         grp.games.forEach(g=>{
