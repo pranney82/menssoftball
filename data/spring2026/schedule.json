@@ -837,7 +837,9 @@
     "time": "7:00 PM",
     "home": "Motiv8",
     "away": "Drive",
-    "location": "HP2"
+    "location": "HP2",
+    "homeScore": 15,
+    "awayScore": 16
   },
   {
     "week": "Week 7",
