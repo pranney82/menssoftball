@@ -1,6 +1,7 @@
 [
   {
     "player": "Peter",
+    "seasons": 1,
     "gp": 5,
     "pa": 18,
     "ab": 16,
@@ -20,6 +21,7 @@
   },
   {
     "player": "Austin W",
+    "seasons": 1,
     "gp": 3,
     "pa": 12,
     "ab": 11,
@@ -39,6 +41,7 @@
   },
   {
     "player": "Jackson",
+    "seasons": 1,
     "gp": 2,
     "pa": 5,
     "ab": 5,
@@ -58,6 +61,7 @@
   },
   {
     "player": "Smitty",
+    "seasons": 1,
     "gp": 4,
     "pa": 14,
     "ab": 11,
@@ -77,6 +81,7 @@
   },
   {
     "player": "Ryan",
+    "seasons": 1,
     "gp": 5,
     "pa": 14,
     "ab": 11,
@@ -96,6 +101,7 @@
   },
   {
     "player": "Austin C",
+    "seasons": 1,
     "gp": 3,
     "pa": 12,
     "ab": 11,
@@ -115,6 +121,7 @@
   },
   {
     "player": "Max",
+    "seasons": 1,
     "gp": 5,
     "pa": 14,
     "ab": 12,
@@ -134,6 +141,7 @@
   },
   {
     "player": "Brad",
+    "seasons": 1,
     "gp": 5,
     "pa": 14,
     "ab": 14,
@@ -153,6 +161,7 @@
   },
   {
     "player": "Armando",
+    "seasons": 1,
     "gp": 2,
     "pa": 6,
     "ab": 5,
@@ -172,6 +181,7 @@
   },
   {
     "player": "Jason",
+    "seasons": 1,
     "gp": 1,
     "pa": 3,
     "ab": 2,
@@ -191,6 +201,7 @@
   },
   {
     "player": "Luc",
+    "seasons": 1,
     "gp": 5,
     "pa": 18,
     "ab": 18,
@@ -210,6 +221,7 @@
   },
   {
     "player": "Mitch",
+    "seasons": 1,
     "gp": 3,
     "pa": 10,
     "ab": 9,
@@ -229,6 +241,7 @@
   },
   {
     "player": "Doug",
+    "seasons": 1,
     "gp": 5,
     "pa": 16,
     "ab": 13,
@@ -248,6 +261,7 @@
   },
   {
     "player": "Matthew",
+    "seasons": 1,
     "gp": 5,
     "pa": 14,
     "ab": 13,
