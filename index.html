@@ -591,17 +591,9 @@ document.querySelectorAll('.nav-tab').forEach(t=>t.addEventListener('click',()=>
     document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
     t.classList.add('active');const s=document.getElementById(t.dataset.tab);s.classList.add('active');s.style.animation='none';s.offsetHeight;s.style.animation='';
     requestAnimationFrame(()=>{
-        // Check the currently-active sub-content (or the section itself if no sub-tabs)
-        const activeSub=s.querySelector('.sub-content.active');
-        const scope=activeSub||s;
-        const hasTable=scope.querySelector('.table-scroll');
-        if(hasTable){
-            const nav=document.querySelector('.nav-wrap');
-            const target=window.scrollY+nav.getBoundingClientRect().top;
-            if(target>10)window.scrollTo({top:target,behavior:'smooth'});
-        } else {
-            if(window.scrollY>10)window.scrollTo({top:0,behavior:'smooth'});
-        }
+        const nav=document.querySelector('.nav-wrap');
+        const target=window.scrollY+nav.getBoundingClientRect().top;
+        if(target>10)window.scrollTo({top:target,behavior:'smooth'});
     });
 }));
 document.querySelectorAll('.sub-tab').forEach(t=>t.addEventListener('click',()=>{
