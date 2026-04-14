@@ -254,6 +254,11 @@
         .sched-result { margin-left:auto; font-family:var(--font-sans); font-size:var(--fs-xs); font-weight:800; padding:3px 9px; border-radius:100px; letter-spacing:0.5px; }
         .sched-result-win { background:rgba(34,197,94,0.15); color:var(--win); border:1px solid rgba(34,197,94,0.35); }
         .sched-result-loss { background:rgba(239,68,68,0.15); color:var(--loss); border:1px solid rgba(239,68,68,0.35); }
+        .sched-share-btn { margin-left:auto; display:inline-flex; align-items:center; gap:5px; font-family:var(--font-sans); font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--blue-bright); background:rgba(37,99,235,0.15); border:1px solid rgba(37,99,235,0.4); border-radius:100px; padding:5px 11px 5px 9px; cursor:pointer; transition:all var(--dur) var(--ease-smooth); -webkit-tap-highlight-color:transparent; }
+        .sched-share-btn:hover { background:rgba(37,99,235,0.28); border-color:rgba(37,99,235,0.6); }
+        .sched-share-btn:active { transform:scale(0.94); }
+        .sched-share-btn.copied { background:rgba(34,197,94,0.2); color:var(--win); border-color:rgba(34,197,94,0.5); }
+        .sched-share-btn svg { flex-shrink:0; }
 
         .sched-card-teams { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; }
         .sched-team { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-base); color:var(--white); letter-spacing:-0.2px; line-height:1.2; }
@@ -477,14 +482,13 @@
 
 <div class="main">
     <div class="section active" id="standings">
-        <div class="section-header"><div class="accent-bar"></div><h2>League Standings</h2></div>
         <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="standings-table"><thead><tr><th></th><th>Team</th><th>W</th><th>L</th><th class="col-t">T</th><th>GB</th><th>GP</th><th>PCT</th><th>STRK</th></tr></thead><tbody id="standings-body"></tbody></table></div>
     </div>
 
     <div class="section" id="games">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="scores-view">Scores</button><button class="sub-tab" data-sub="schedule-view">Schedule</button></div>
         <div class="sub-content active" id="scores-view"><div class="games-grid" id="scores-grid"></div></div>
-        <div class="sub-content" id="schedule-view"><div id="schedule-wrap" role="region" aria-label="Season schedule"></div><div style="text-align:center;margin-top:20px;"><button class="share-btn" onclick="shareSchedule(this)">📅 Share This Week</button></div></div>
+        <div class="sub-content" id="schedule-view"><div id="schedule-wrap" role="region" aria-label="Season schedule"></div></div>
     </div>
 
     <div class="section" id="players">
@@ -698,10 +702,21 @@ function renderScores(schedule){
 }
 
 // RENDER SCHEDULE — mobile-first cards, auto-becomes grid on tablet/desktop
+function getNextDriveGame(schedule){
+    if(!schedule||!schedule.length)return null;
+    const todayKey=new Date().toISOString().slice(0,10);
+    const driveGames=schedule
+        .filter(g=>g.weekDate&&g.home!=='Spring Break'&&g.home!=='Rain Out'&&(g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive'))&&(g.homeScore===undefined||g.homeScore===null))
+        .sort((a,b)=>a.weekDate.localeCompare(b.weekDate));
+    return driveGames.find(g=>g.weekDate>=todayKey)||null;
+}
+
 function renderSchedule(schedule){
     const wrap=document.getElementById('schedule-wrap');
     if(!wrap)return;
     const now=new Date();let currentFound=false;
+    const nextDrive=getNextDriveGame(schedule);
+    const nextDriveKey=nextDrive?(nextDrive.weekDate+'|'+nextDrive.time+'|'+nextDrive.home+'|'+nextDrive.away):null;
     // Group by week
     const groups=[];let current=null;
     schedule.forEach(g=>{
@@ -767,8 +782,11 @@ function renderSchedule(schedule){
             }
             // Result badge for drive games (final only)
             const resultBadge=(isDrive&&hasScore&&!ppd)?`<span class="sched-result ${driveWon?'sched-result-win':'sched-result-loss'}">${driveWon?'W':'L'}</span>`:'';
+            // Share button for the next upcoming Drive game (roll call target)
+            const gKey=(g.weekDate||'')+'|'+g.time+'|'+g.home+'|'+g.away;
+            const shareBtn=(nextDriveKey&&gKey===nextDriveKey)?`<button class="sched-share-btn" onclick="shareSchedule(this);event.stopPropagation();" aria-label="Share roll call"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Roll Call</button>`:'';
             html+=`<article class="${cardCls.join(' ')}">
-              <div class="sched-card-meta"><span class="sched-card-time">${g.time}</span><span class="sched-card-loc">${g.location}</span>${resultBadge}</div>
+              <div class="sched-card-meta"><span class="sched-card-time">${g.time}</span><span class="sched-card-loc">${g.location}</span>${resultBadge}${shareBtn}</div>
               <div class="sched-card-teams">
                 ${teamHtml(g.home,homeIsDrive,hasScore&&hw)}
                 ${scoreBlock}
@@ -1386,7 +1404,10 @@ function shareSchedule(btn){
     const text=lines.join('\n');
     const title='Drive Softball — Roll Call';
     if(navigator.share){navigator.share({title:title,text:text}).catch(()=>{});}
-    else{navigator.clipboard.writeText(text).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📅 Share This Week';},2000);}).catch(()=>{});}
+    else{
+        const orig=btn.innerHTML;
+        navigator.clipboard.writeText(text).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=orig;},2000);}).catch(()=>{});
+    }
 }
 
 function shareRoast(btn){
