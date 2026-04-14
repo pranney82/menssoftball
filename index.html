@@ -54,60 +54,67 @@
         @keyframes livePulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.6)} 50%{box-shadow:0 0 0 6px rgba(34,197,94,0)} }
         @keyframes slideInRight { from{opacity:0;transform:translateX(12px)} to{opacity:1;transform:translateX(0)} }
         .section { display:none; } .section.active { display:block; animation:slideInRight 0.35s var(--ease-sport); }
-        .header { background:linear-gradient(135deg,var(--primary) 0%,var(--surface) 50%,var(--primary) 100%); border-bottom:3px solid var(--blue); position:relative; overflow:hidden; }
-        .header::before { content:''; position:absolute; top:0;left:0;right:0;bottom:0; background:repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(37,99,235,0.03) 40px,rgba(37,99,235,0.03) 41px); }
-        /* Header — mobile-first: stacked record row, small logo, tight padding */
-        .header-inner { max-width:1200px; margin:0 auto; padding:16px; display:flex; align-items:center; gap:12px 14px; flex-wrap:wrap; position:relative; z-index:1; }
-        .team-logo { width:48px; height:48px; border-radius:50%; overflow:hidden; flex-shrink:0; box-shadow:0 4px 20px rgba(37,99,235,0.25); }
-        .team-logo img { width:100%; height:100%; object-fit:cover; }
-        .header-text { flex:1; min-width:0; }
-        .header-text h1 { font-family:var(--font-sans); font-weight:900; font-size:var(--fs-2xl); letter-spacing:-1px; line-height:1.05; background:linear-gradient(180deg,var(--white) 0%,var(--blue-glow) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .header-text .league-name { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-xs); color:var(--blue-bright); text-transform:uppercase; letter-spacing:1.5px; margin-top:8px; opacity:0.85; }
-        .header-right { margin-left:0; text-align:left; display:flex; align-items:center; gap:12px; flex-basis:100%; padding-top:12px; border-top:1px solid rgba(37,99,235,0.15); }
-        .header-right .record { font-family:var(--font-num); font-weight:700; font-size:var(--fs-lg); letter-spacing:-1px; line-height:1; color:var(--white); font-variant-numeric:tabular-nums; white-space:nowrap; }
-        .header-right .record-label { display:none; font-size:var(--fs-xs); font-weight:600; color:var(--gray-dark); text-transform:uppercase; letter-spacing:2px; margin-top:4px; }
-        .header-right .last-result { margin-left:auto; font-size:var(--fs-sm); font-weight:500; cursor:pointer; opacity:0.9; transition:opacity var(--dur) var(--ease-smooth); white-space:nowrap; }
-        .header-right .last-result:hover { opacity:1; }
-        /* Header — desktop (≥768px): horizontal row, larger logo, right-aligned record block */
+        /* TOPBAR — compact brand strip (~48px mobile) */
+        .topbar { background:linear-gradient(135deg,var(--primary) 0%,var(--surface) 50%,var(--primary) 100%); border-bottom:1px solid rgba(37,99,235,0.2); position:relative; overflow:hidden; }
+        .topbar::before { content:''; position:absolute; top:0;left:0;right:0;bottom:0; background:repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(37,99,235,0.03) 40px,rgba(37,99,235,0.03) 41px); pointer-events:none; }
+        .topbar-inner { max-width:1200px; margin:0 auto; padding:10px 14px; display:flex; align-items:center; gap:10px; position:relative; z-index:1; }
+        .topbar-logo { width:34px; height:34px; border-radius:50%; overflow:hidden; flex-shrink:0; box-shadow:0 2px 10px rgba(37,99,235,0.3); }
+        .topbar-logo img { width:100%; height:100%; object-fit:cover; }
+        .topbar-text { flex:1; min-width:0; display:flex; flex-direction:column; gap:1px; }
+        .topbar-name { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-base); letter-spacing:-0.3px; line-height:1.1; color:var(--white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .topbar-meta { font-family:var(--font-sans); font-weight:500; font-size:10px; color:var(--gray-dark); letter-spacing:0.3px; line-height:1.2; display:flex; gap:4px; flex-wrap:wrap; }
+        .topbar-record { font-family:var(--font-num); font-weight:700; color:var(--white); font-variant-numeric:tabular-nums; }
+        .topbar-last { cursor:pointer; font-weight:600; }
+        .topbar-last:empty { display:none; }
         @media (min-width:768px) {
-            .header-inner { padding:20px; gap:18px; flex-wrap:nowrap; }
-            .team-logo { width:64px; height:64px; }
-            .header-text h1 { letter-spacing:-1.5px; line-height:0.95; }
-            .header-right { margin-left:auto; text-align:right; display:block; flex-basis:auto; padding-top:0; border-top:none; }
-            .header-right .record { font-size:var(--fs-xl); }
-            .header-right .record-label { display:block; }
-            .header-right .last-result { margin-left:0; margin-top:6px; }
+            .topbar-inner { padding:14px 20px; gap:14px; }
+            .topbar-logo { width:48px; height:48px; }
+            .topbar-name { font-size:var(--fs-lg); letter-spacing:-0.5px; }
+            .topbar-meta { font-size:var(--fs-xs); }
         }
-        .countdown-bar { background:linear-gradient(90deg,var(--surface) 0%,rgba(37,99,235,0.12) 50%,var(--surface) 100%); border-bottom:1px solid rgba(37,99,235,0.15); padding:14px 20px; display:none; }
-        .countdown-inner { max-width:1200px; margin:0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap; }
-        .countdown-label { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:2.5px; color:var(--gray-dark); }
-        .countdown-matchup { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-base); color:var(--blue-bright); }
-        .countdown-timer { font-family:var(--font-num); font-weight:700; font-size:var(--fs-md); color:var(--white); background:rgba(37,99,235,0.15); padding:6px 14px; border-radius:8px; border:1px solid rgba(37,99,235,0.25); letter-spacing:0.5px; font-variant-numeric:tabular-nums; }
+
+        /* HERO NEXT-GAME CARD — the landing focal point */
+        .hero-nextgame { background:linear-gradient(180deg,rgba(37,99,235,0.18) 0%,rgba(37,99,235,0.06) 100%); border-bottom:1px solid rgba(37,99,235,0.25); display:none; }
+        .hero-nextgame.visible { display:block; }
+        .hero-inner { max-width:1200px; margin:0 auto; padding:14px 18px 16px; display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; position:relative; }
+        .hero-label { font-family:var(--font-sans); font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--blue-bright); opacity:0.85; }
+        .hero-matchup { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-xl); line-height:1.1; letter-spacing:-0.5px; color:var(--white); }
+        .hero-matchup .vs { color:var(--gray-dark); font-weight:500; margin:0 8px; }
+        .hero-matchup .drive { color:var(--blue-bright); }
+        .hero-meta { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-sm); color:var(--gray); letter-spacing:0.3px; }
+        .hero-countdown { font-family:var(--font-num); font-weight:700; font-size:var(--fs-base); color:var(--white); background:rgba(37,99,235,0.18); padding:5px 12px; border-radius:8px; border:1px solid rgba(37,99,235,0.35); letter-spacing:0.3px; font-variant-numeric:tabular-nums; margin-top:2px; }
+        @media (min-width:768px) {
+            .hero-inner { padding:20px 24px 22px; gap:8px; }
+            .hero-matchup { font-size:var(--fs-2xl); }
+            .hero-meta { font-size:var(--fs-base); }
+            .hero-countdown { font-size:var(--fs-md); padding:7px 16px; }
+        }
+
         .nav-wrap { background:var(--primary); position:sticky; top:0; z-index:100; }
         .nav-tabs { max-width:1200px; margin:0 auto; display:flex; border-bottom:1px solid rgba(37,99,235,0.15); }
-        .nav-tab { font-family:var(--font-sans); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:0.8px; padding:15px 6px; cursor:pointer; color:var(--gray-dark); border:none; border-bottom:3px solid transparent; background:none; transition:color var(--dur) var(--ease-smooth),border-color var(--dur) var(--ease-smooth); white-space:nowrap; flex:1; text-align:center; position:relative; }
+        .nav-tab { font-family:var(--font-sans); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:0.8px; padding:13px 6px; cursor:pointer; color:var(--gray-dark); border:none; border-bottom:3px solid transparent; background:none; transition:color var(--dur) var(--ease-smooth),border-color var(--dur) var(--ease-smooth); white-space:nowrap; flex:1; text-align:center; position:relative; }
         .nav-tab:hover { color:var(--white); } .nav-tab:active { transform:scale(0.96); } .nav-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
         .nav-tab .live-dot { display:inline-block; width:7px; height:7px; background:var(--win); border-radius:50%; margin-left:6px; animation:livePulse 1.5s infinite; vertical-align:middle; }
-        .main { max-width:1200px; margin:0 auto; padding:20px 14px; }
-        .section-header { display:flex; align-items:center; gap:14px; margin-bottom:24px; padding-bottom:14px; border-bottom:1px solid rgba(37,99,235,0.25); }
+        .main { max-width:1200px; margin:0 auto; padding:12px 14px 20px; }
+        .section-header { display:flex; align-items:center; gap:14px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid rgba(37,99,235,0.25); }
         .section-header h2 { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-lg); letter-spacing:-0.5px; }
         .section-header .accent-bar { width:4px; height:28px; background:var(--blue); border-radius:2px; }
-        .sub-tabs { display:flex; gap:0; margin-bottom:24px; border-bottom:1px solid rgba(255,255,255,0.08); }
+        .sub-tabs { display:flex; gap:0; margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.08); }
         .sub-tab { font-family:var(--font-sans); font-weight:700; font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:1.5px; padding:14px 24px; cursor:pointer; color:var(--gray-dark); background:none; border:none; border-bottom:2px solid transparent; transition:color var(--dur) var(--ease-smooth),border-color var(--dur) var(--ease-smooth); }
         .sub-tab:hover { color:var(--white); } .sub-tab:active { transform:scale(0.96); } .sub-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
         .sub-content { display:none; } .sub-content.active { display:block; animation:slideInRight 0.3s var(--ease-sport); }
 
         /* STANDINGS TABLE */
-        .standings-table { width:100%; border-collapse:collapse; font-size:var(--fs-base); font-variant-numeric:tabular-nums; }
-        .standings-table thead th { font-family:var(--font-sans); font-weight:700; text-transform:uppercase; font-size:var(--fs-xs); letter-spacing:1.5px; color:var(--gray-dark); padding:12px 5px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.08); }
+        .standings-table { width:100%; border-collapse:collapse; font-size:var(--fs-sm); font-variant-numeric:tabular-nums; }
+        .standings-table thead th { font-family:var(--font-sans); font-weight:700; text-transform:uppercase; font-size:var(--fs-xs); letter-spacing:1px; color:var(--gray-dark); padding:8px 4px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.08); }
         .standings-table thead th:not(:first-child):not(:nth-child(2)) { text-align:center; }
         .standings-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background var(--dur) var(--ease-smooth); animation:fadeInUp 0.5s var(--ease-sport) both; }
         .standings-table tbody tr:hover { background:rgba(37,99,235,0.08); }
         .standings-table tbody tr.highlight { background:rgba(37,99,235,0.1); border-left:3px solid var(--blue); }
-        .standings-table td { padding:14px 5px; } .standings-table td:not(:first-child):not(:nth-child(2)) { text-align:center; }
+        .standings-table td { padding:10px 4px; } .standings-table td:not(:first-child):not(:nth-child(2)) { text-align:center; }
         .standings-table .col-t { display:none; }
-        .standings-table .rank { font-family:var(--font-num); font-weight:700; font-size:var(--fs-md); color:var(--gray-dark); width:32px; }
-        .standings-table .team-name { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-base); letter-spacing:-0.2px; }
+        .standings-table .rank { font-family:var(--font-num); font-weight:700; font-size:var(--fs-base); color:var(--gray-dark); width:26px; }
+        .standings-table .team-name { font-family:var(--font-sans); font-weight:700; font-size:var(--fs-sm); letter-spacing:-0.2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:110px; }
         .standings-table .win-pct { font-family:var(--font-num); font-weight:700; font-size:var(--fs-base); color:var(--blue-bright); }
         .gb { color:var(--gray-dark); font-family:var(--font-num); }
 
@@ -463,16 +470,19 @@
 <body>
 
 <div id="site-content">
-<div class="header"><div class="header-inner">
-    <div class="team-logo"><img src="logo.png" alt="Drive Auto Repair"></div>
-    <div class="header-text"><h1>Drive Auto Repair</h1><div class="league-name" id="header-league">Hobgood Intermediate · Spring 2026</div></div>
-    <div class="header-right"><div class="record" id="header-record">0 - 0</div><div class="record-label">Record</div><div class="last-result" id="last-result" onclick="goToScores()"></div></div>
+<div class="topbar"><div class="topbar-inner">
+    <div class="topbar-logo"><img src="logo.png" alt="Drive"></div>
+    <div class="topbar-text">
+        <div class="topbar-name">Drive Auto Repair</div>
+        <div class="topbar-meta"><span id="topbar-league">Hobgood Intermediate</span> · <span id="topbar-record" class="topbar-record">0-0</span> · <span id="topbar-last" class="topbar-last" onclick="goToScores()"></span></div>
+    </div>
 </div></div>
 
-<div class="countdown-bar" id="countdown-bar"><div class="countdown-inner">
-    <span class="countdown-label">Next Game</span>
-    <span class="countdown-matchup" id="countdown-matchup"></span>
-    <span class="countdown-timer" id="countdown-timer"></span>
+<div class="hero-nextgame" id="hero-nextgame"><div class="hero-inner">
+    <div class="hero-label">⚾ Next Game</div>
+    <div class="hero-matchup" id="hero-matchup"></div>
+    <div class="hero-meta" id="hero-meta"></div>
+    <div class="hero-countdown" id="hero-countdown"></div>
 </div></div>
 
 <div class="nav-wrap"><div class="nav-tabs">
@@ -620,7 +630,8 @@ function renderStandings(data){
     const tb=document.getElementById('standings-body');
     const drive=data.find(r=>r.team.toLowerCase().includes('drive'));
     if(drive){
-        document.getElementById('header-record').textContent=drive.w+' - '+drive.l;
+        const rec=document.getElementById('topbar-record');
+        if(rec)rec.textContent=drive.w+'-'+drive.l;
     }
     tb.innerHTML=data.map((r,i)=>{const dr=r.team.toLowerCase().includes('drive');const w=r.streak.startsWith('W');
     return`<tr class="${dr?'highlight':''}" style="animation-delay:${i*0.05}s"><td class="rank">${r.rank}</td><td class="team-name"${dr?' style="color:var(--blue-bright);"':''}>${dr?'⚾ ':''}${r.team}</td><td data-count="${r.w}">${r.w}</td><td data-count="${r.l}">${r.l}</td><td class="col-t" data-count="${r.t}">${r.t}</td><td class="gb">${r.gb==='--'?'—':r.gb}</td><td data-count="${r.gp}">${r.gp}</td><td class="win-pct" data-count="${r.pct}">${r.pct}</td><td style="color:var(${w?'--win':'--loss'});">${r.streak}</td></tr>`;}).join('');
@@ -698,8 +709,8 @@ function renderScores(schedule){
         const hw=lastDrive.homeScore>lastDrive.awayScore;const dHome=lastDrive.home.toLowerCase().includes('drive');
         const won=(dHome&&hw)||(!dHome&&!hw);const opp=dHome?lastDrive.away:lastDrive.home;
         const ds=dHome?lastDrive.homeScore:lastDrive.awayScore;const os=dHome?lastDrive.awayScore:lastDrive.homeScore;
-        const el=document.getElementById('last-result');
-        el.textContent=`${won?'W':'L'} ${ds}-${os} vs ${opp}`;el.style.color=won?'var(--win)':'var(--loss)';
+        const el=document.getElementById('topbar-last');
+        if(el){el.textContent=`${won?'W':'L'} ${ds}-${os} vs ${opp}`;el.style.color=won?'var(--win)':'var(--loss)';}
     }
 }
 
@@ -1076,7 +1087,7 @@ function renderRoasts(data){
     feed.querySelectorAll('.roast-card:not(:first-child)').forEach(c=>c.addEventListener('click',e=>{if(!e.target.closest('.share-btn'))c.classList.toggle('expanded');}));
 }
 
-// COUNTDOWN
+// HERO NEXT-GAME CARD + COUNTDOWN
 function initCountdown(schedule){
     const now=new Date();
     const driveGames=schedule.filter(g=>(g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive'))&&g.homeScore===undefined&&!g.playoff&&!g.note);
@@ -1085,12 +1096,20 @@ function initCountdown(schedule){
         const[h,m]=g.time.replace(/ [AP]M/,'').split(':');let hr=parseInt(h);if(g.time.includes('PM')&&hr!==12)hr+=12;
         const gd=new Date(g.weekDate+'T00:00:00');gd.setHours(hr,parseInt(m),0);
         if(gd>now){
-            const opp=g.home.toLowerCase().includes('drive')?g.away:g.home;const ha=g.home.toLowerCase().includes('drive')?'vs':'@';
-            document.getElementById('countdown-bar').style.display='block';
-            document.getElementById('countdown-matchup').textContent=TEAM+' '+ha+' '+opp+' · '+g.time;
-            const tick=()=>{const df=gd-new Date();if(df<=0){document.getElementById('countdown-timer').textContent='GAME TIME!';return;}
+            const dHome=g.home.toLowerCase().includes('drive');
+            const opp=dHome?g.away:g.home;
+            const hero=document.getElementById('hero-nextgame');
+            const matchup=document.getElementById('hero-matchup');
+            const meta=document.getElementById('hero-meta');
+            const cd=document.getElementById('hero-countdown');
+            if(!hero)return;
+            hero.classList.add('visible');
+            // Always "Drive vs Opponent" regardless of home/away (reads natural in text)
+            matchup.innerHTML='<span class="drive">Drive</span><span class="vs">vs</span>'+opp;
+            meta.textContent=g.date+' · '+g.time+' · '+(g.location||'HP2');
+            const tick=()=>{const df=gd-new Date();if(df<=0){cd.textContent='GAME TIME!';return;}
             const d=Math.floor(df/864e5),h=Math.floor(df%864e5/36e5),m=Math.floor(df%36e5/6e4),s=Math.floor(df%6e4/1e3);
-            document.getElementById('countdown-timer').textContent=d>0?d+'d '+h+'h '+m+'m '+s+'s':h+'h '+m+'m '+s+'s';};
+            cd.textContent=d>0?d+'d '+h+'h '+m+'m '+s+'s':h+'h '+m+'m '+s+'s';};
             tick();setInterval(tick,1000);break;
         }
     }
@@ -1425,7 +1444,8 @@ async function init(){
     if(!config)return;
     const season=config.activeSeason;const base='data/'+config.seasons.find(s=>s.id===season).folder+'/';
     const label=config.seasons.find(s=>s.id===season).label;
-    document.getElementById('header-league').textContent=config.league+' · '+label;
+    const el=document.getElementById('topbar-league');
+    if(el)el.textContent=config.league;
 
     const[standings,schedule,stats,roasts]=await Promise.all([loadJSON(base+'standings.json'),loadJSON(base+'schedule.json'),loadJSON(base+'stats.json'),loadJSON(base+'roasts.json')]);
     const career=await computeCareer(config.seasons);
