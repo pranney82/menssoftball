@@ -21,7 +21,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
-        :root { --primary:#1a1a2e; --primary-dark:#0f0f1a; --surface:#16213e; --surface-light:#1c2a4a; --blue:#2563eb; --blue-bright:#3b82f6; --blue-glow:#60a5fa; --white:#f1f5f9; --gray:#94a3b8; --gray-dark:#64748b; --win:#22c55e; --loss:#ef4444; --gold:#fbbf24; }
+        :root { --primary:#1a1a2e; --primary-dark:#0f0f1a; --surface:#16213e; --surface-light:#1c2a4a; --blue:#2563eb; --blue-bright:#3b82f6; --blue-glow:#60a5fa; --white:#f1f5f9; --gray:#94a3b8; --gray-dark:#64748b; --win:#22c55e; --loss:#ef4444; --gold:#fbbf24; --chrome-height:140px; }
         * { margin:0; padding:0; box-sizing:border-box; }
         body { background:var(--primary-dark); color:var(--white); font-family:'Roboto Condensed',sans-serif; min-height:100vh; overflow-x:hidden; font-size:17px; line-height:1.55; }
         @keyframes fadeInUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
@@ -163,7 +163,8 @@
         .stats-table tbody tr:hover td:first-child, .stats-table tbody tr:hover td:nth-child(2) { background:#1a1f33; }
         .stats-table td { padding:15px 14px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.04); }
         .stats-table td:first-child { text-align:left; font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--gray); width:50px; min-width:50px; max-width:50px; position:sticky; left:0; background:var(--primary-dark); z-index:5; }
-        .stats-table td:nth-child(2) { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; font-size:19px; min-width:116px; position:sticky; left:50px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,255,255,0.12); }
+        .stats-table td:nth-child(2) { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; font-size:19px; min-width:116px; position:sticky; left:50px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,255,255,0.12); box-shadow:6px 0 10px -6px rgba(0,0,0,0.7); }
+        .stats-table thead th:nth-child(2) { box-shadow:6px 0 10px -6px rgba(0,0,0,0.7); }
         .stat-highlight { color:var(--blue-bright); font-weight:700; } .stats-leader { color:var(--gold); font-weight:700; }
         .roster-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
         .roster-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:18px; transition:border-color 0.2s,transform 0.2s; animation:fadeInUp 0.4s ease-out both; }
@@ -297,7 +298,25 @@
             .game-team-name{font-size:16px} .game-score{font-size:27px}
         }
         ::-webkit-scrollbar{display:none} *{scrollbar-width:none;-ms-overflow-style:none}
-        .table-scroll { max-height:calc(100vh - 140px); max-height:calc(100dvh - 140px); overflow:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
+        @media (prefers-reduced-motion: reduce) {
+            *,*::before,*::after { animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+        }
+        .table-scroll {
+            max-height:calc(100vh - var(--chrome-height));
+            max-height:calc(100dvh - var(--chrome-height));
+            overflow:auto;
+            -webkit-overflow-scrolling:touch;
+            background:
+                linear-gradient(90deg, var(--primary-dark) 20%, rgba(15,15,26,0) 100%) left center,
+                linear-gradient(90deg, rgba(15,15,26,0) 0%, var(--primary-dark) 80%) right center,
+                radial-gradient(ellipse at 0% 50%, rgba(0,0,0,0.55), rgba(0,0,0,0) 72%) left center,
+                radial-gradient(ellipse at 100% 50%, rgba(0,0,0,0.55), rgba(0,0,0,0) 72%) right center;
+            background-repeat:no-repeat;
+            background-size:44px 100%, 44px 100%, 18px 100%, 18px 100%;
+            background-attachment:local, local, scroll, scroll;
+            scrollbar-gutter:stable;
+        }
+        .table-scroll:focus-visible { outline:2px solid var(--blue-bright); outline-offset:-2px; }
     </style>
 </head>
 <body>
@@ -331,13 +350,13 @@
     <div class="section" id="games">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="scores-view">Scores</button><button class="sub-tab" data-sub="schedule-view">Schedule</button></div>
         <div class="sub-content active" id="scores-view"><div class="games-grid" id="scores-grid"></div></div>
-        <div class="sub-content" id="schedule-view"><div class="table-scroll"><table class="schedule-table" style="table-layout:fixed;width:100%;"><thead><tr><th>Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th>Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
+        <div class="sub-content" id="schedule-view"><div class="table-scroll" role="region" aria-label="Season schedule" tabindex="0"><table class="schedule-table" style="table-layout:fixed;width:100%;"><thead><tr><th>Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th>Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
     </div>
 
     <div class="section" id="players">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="stats-view">Season</button><button class="sub-tab" data-sub="career-view">Career</button><button class="sub-tab" data-sub="roster-view">Roster</button></div>
-        <div class="sub-content active" id="stats-view"><div class="table-scroll"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="stats-body"></tbody></table></div></div>
-        <div class="sub-content" id="career-view"><div class="table-scroll"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>SZN</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="career-body"></tbody></table></div></div>
+        <div class="sub-content active" id="stats-view"><div class="table-scroll" role="region" aria-label="Season batting statistics, scroll horizontally for more columns" tabindex="0"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="stats-body"></tbody></table></div></div>
+        <div class="sub-content" id="career-view"><div class="table-scroll" role="region" aria-label="Career batting statistics, scroll horizontally for more columns" tabindex="0"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>SZN</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="career-body"></tbody></table></div></div>
         <div class="sub-content" id="roster-view"><div class="roster-grid"><div class="empty-state">Roster coming soon</div></div></div>
     </div>
 
@@ -762,6 +781,15 @@ function collapsePastWeeks(){
 
 function checkGameDay(){if(new Date().getDay()===1){const t=document.getElementById('games-tab');if(t&&!t.querySelector('.live-dot'))t.innerHTML+='<span class="live-dot"></span>';}}
 
+// Measure nav height so table-scroll max-height is accurate (not a magic number)
+function updateChromeHeight(){
+    const nav=document.querySelector('.nav-wrap');
+    const h=(nav?nav.offsetHeight:47)+40;
+    document.documentElement.style.setProperty('--chrome-height',h+'px');
+}
+window.addEventListener('resize',updateChromeHeight);
+window.addEventListener('orientationchange',()=>setTimeout(updateChromeHeight,100));
+
 // FLOATING CHAT
 const CHAT_URL='https://softball-rules-chat.peterranney.workers.dev';
 let CHAT_CONTEXT='';
@@ -1075,6 +1103,7 @@ async function init(){
     buildChatContext({standings,schedule,stats,career,roasts,rules});
 
     checkGameDay();
+    updateChromeHeight();
 }
 init();
 </script>
