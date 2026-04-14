@@ -68,7 +68,7 @@
         .nav-wrap { background:var(--primary); position:sticky; top:0; z-index:100; }
         .nav-tabs { max-width:1200px; margin:0 auto; display:flex; border-bottom:1px solid rgba(37,99,235,0.15); }
         .nav-tab { font-family:var(--font-sans); font-weight:700; font-size:var(--fs-sm); text-transform:uppercase; letter-spacing:1.5px; padding:18px 28px; cursor:pointer; color:var(--gray-dark); border:none; border-bottom:3px solid transparent; background:none; transition:color var(--dur) var(--ease-smooth),border-color var(--dur) var(--ease-smooth); white-space:nowrap; flex:1; text-align:center; position:relative; }
-        .nav-tab:hover { color:var(--white); } .nav-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
+        .nav-tab:hover { color:var(--white); } .nav-tab:active { transform:scale(0.96); } .nav-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
         .nav-tab .live-dot { display:inline-block; width:7px; height:7px; background:var(--win); border-radius:50%; margin-left:6px; animation:livePulse 1.5s infinite; vertical-align:middle; }
         .main { max-width:1200px; margin:0 auto; padding:28px 20px; }
         .section-header { display:flex; align-items:center; gap:14px; margin-bottom:24px; padding-bottom:14px; border-bottom:1px solid rgba(37,99,235,0.25); }
@@ -76,8 +76,8 @@
         .section-header .accent-bar { width:4px; height:28px; background:var(--blue); border-radius:2px; }
         .sub-tabs { display:flex; gap:0; margin-bottom:24px; border-bottom:1px solid rgba(255,255,255,0.08); }
         .sub-tab { font-family:var(--font-sans); font-weight:700; font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:1.5px; padding:14px 24px; cursor:pointer; color:var(--gray-dark); background:none; border:none; border-bottom:2px solid transparent; transition:color var(--dur) var(--ease-smooth),border-color var(--dur) var(--ease-smooth); }
-        .sub-tab:hover { color:var(--white); } .sub-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
-        .sub-content { display:none; animation:fadeIn 0.25s ease-out; } .sub-content.active { display:block; }
+        .sub-tab:hover { color:var(--white); } .sub-tab:active { transform:scale(0.96); } .sub-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
+        .sub-content { display:none; } .sub-content.active { display:block; animation:slideInRight 0.3s var(--ease-sport); }
 
         /* STANDINGS TABLE */
         .standings-table { width:100%; border-collapse:collapse; font-size:var(--fs-base); font-variant-numeric:tabular-nums; }
@@ -187,6 +187,8 @@
         .stats-table td:nth-child(2) { text-align:left; font-family:var(--font-sans); font-weight:600; font-size:var(--fs-base); color:var(--white); min-width:112px; position:sticky; left:46px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,255,255,0.18); box-shadow:10px 0 14px -6px rgba(37,99,235,0.45); letter-spacing:-0.2px; }
         .stats-table thead th:nth-child(2) { box-shadow:10px 0 14px -6px rgba(37,99,235,0.45); }
         .stat-highlight { color:var(--blue-bright); font-weight:700; } .stats-leader { color:var(--gold); font-weight:700; }
+        .stats-table td.stats-leader { color:var(--gold); }
+        .stats-table td.stat-highlight { color:var(--blue-bright); }
         .stats-table td.sort-col { background:rgba(37,99,235,0.05); }
 
         /* ROSTER */
@@ -221,6 +223,7 @@
         .roast-expand-hint::after { content:' ▸ tap to expand'; } .expanded .roast-expand-hint { display:none; }
         .share-btn { display:inline-flex; align-items:center; gap:6px; background:rgba(37,99,235,0.12); color:var(--blue-bright); border:1px solid rgba(37,99,235,0.25); padding:11px 22px; border-radius:8px; font-family:var(--font-sans); font-weight:600; font-size:15px; text-transform:uppercase; letter-spacing:2px; cursor:pointer; transition:all 0.2s; margin-top:20px; }
         .share-btn:hover { background:rgba(37,99,235,0.25); transform:translateY(-1px); }
+        .share-btn:active { transform:translateY(0) scale(0.97); }
         .share-btn.copied { background:rgba(34,197,94,0.15); color:var(--win); border-color:rgba(34,197,94,0.3); }
         .empty-state { text-align:center; padding:48px; color:var(--gray-dark); font-family:var(--font-sans); font-weight:600; font-size:17px; letter-spacing:2px; text-transform:uppercase; }
 
@@ -367,7 +370,7 @@
     <div class="section" id="games">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="scores-view">Scores</button><button class="sub-tab" data-sub="schedule-view">Schedule</button></div>
         <div class="sub-content active" id="scores-view"><div class="games-grid" id="scores-grid"></div></div>
-        <div class="sub-content" id="schedule-view"><div class="table-scroll" role="region" aria-label="Season schedule" tabindex="0"><table class="schedule-table" id="schedule-table-el"></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
+        <div class="sub-content" id="schedule-view"><div class="table-scroll" role="region" aria-label="Season schedule" tabindex="0"><table class="schedule-table" id="schedule-table-el"></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">📅 Share This Week</button></div></div>
     </div>
 
     <div class="section" id="players">
@@ -443,6 +446,7 @@
 
 const TEAM='Drive';
 let DATA={};
+window.DATA=DATA;
 
 // Fetch JSON
 async function loadJSON(path){
@@ -1209,11 +1213,43 @@ function showFollowUpChips(container){
 }
 
 function shareSchedule(btn){
-    const url='https://pranney82.github.io/menssoftball/';
-    const title='Drive Auto Repair — Hobgood Intermediate Softball';
-    const text='Check out the Drive Auto Repair softball schedule!';
-    if(navigator.share){navigator.share({title:title,text:text,url:url}).catch(()=>{});}
-    else{navigator.clipboard.writeText(url).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='🔗 Share Schedule';},2000);}).catch(()=>{});}
+    const schedule=(window.DATA&&window.DATA.schedule)||[];
+    if(!schedule.length){return;}
+    // Find the current week: either the week containing today, or the next upcoming week
+    const now=new Date();
+    const withDates=schedule.filter(g=>g.weekDate&&g.home!=='Spring Break'&&g.home!=='Rain Out');
+    const weeks={};
+    withDates.forEach(g=>{(weeks[g.week]=weeks[g.week]||{name:g.week,date:g.date,weekDate:g.weekDate,games:[]}).games.push(g);});
+    const weekList=Object.values(weeks).sort((a,b)=>a.weekDate.localeCompare(b.weekDate));
+    let current=null;
+    for(const w of weekList){
+        const wd=new Date(w.weekDate+'T00:00:00');
+        const we=new Date(wd);we.setDate(we.getDate()+1); // through end of game day
+        we.setHours(23,59,59);
+        if(now<=we){current=w;break;}
+    }
+    if(!current){current=weekList[weekList.length-1];}
+    // Format shareable text
+    const lines=[];
+    lines.push('⚾ DRIVE — '+current.name.toUpperCase()+' · '+current.date.toUpperCase());
+    lines.push('');
+    current.games.sort((a,b)=>{
+        const t=s=>{const[h,m]=s.replace(/ [AP]M/,'').split(':');let hr=parseInt(h);if(s.includes('PM')&&hr!==12)hr+=12;return hr*60+parseInt(m);};
+        return t(a.time)-t(b.time);
+    });
+    current.games.forEach(g=>{
+        const isDrive=g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive');
+        const marker=isDrive?' ← OUR GAME':'';
+        const t=g.time.replace(' PM','p').replace(' AM','a');
+        lines.push(t+'  '+g.home+' vs '+g.away+marker);
+    });
+    lines.push('');
+    lines.push('📍 HP2');
+    lines.push('🔗 pranney82.github.io/menssoftball');
+    const text=lines.join('\n');
+    const title='Drive Softball — '+current.name;
+    if(navigator.share){navigator.share({title:title,text:text}).catch(()=>{});}
+    else{navigator.clipboard.writeText(text).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📅 Share This Week';},2000);}).catch(()=>{});}
 }
 
 function shareRoast(btn){
@@ -1233,6 +1269,7 @@ async function init(){
     const[standings,schedule,stats,roasts]=await Promise.all([loadJSON(base+'standings.json'),loadJSON(base+'schedule.json'),loadJSON(base+'stats.json'),loadJSON(base+'roasts.json')]);
     const career=await computeCareer(config.seasons);
     DATA={standings,schedule,stats,roasts,career};
+    window.DATA=DATA;
     if(standings)renderStandings(standings);
     if(schedule){renderScores(schedule);renderSchedule(schedule);initCountdown(schedule);}
     if(stats){renderStats(stats);renderRoster(stats);}
