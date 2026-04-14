@@ -157,7 +157,7 @@
         .ab-fc { color:var(--gray); }
 
         /* SCHEDULE TABLE */
-        .schedule-table { border-collapse:collapse; font-size:var(--fs-base); min-width:100%; }
+        .schedule-table { border-collapse:collapse; font-size:var(--fs-base); width:100%; }
         .schedule-table .week-header, .schedule-table .playoff-header { scroll-margin-top:95px; position:sticky; top:0; z-index:50; }
         .schedule-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background var(--dur) var(--ease-smooth); }
         .schedule-table tbody tr:hover { background:rgba(37,99,235,0.08); }
@@ -319,6 +319,9 @@
             .nav-tab { padding:15px 6px; font-size:12px; letter-spacing:0.8px; }
             .stats-table thead th:first-child, .stats-table td:first-child { width:38px; min-width:38px; max-width:38px; }
             .stats-table thead th:nth-child(2), .stats-table td:nth-child(2) { left:38px; min-width:92px; }
+            .standings-table .col-t { display:none; }
+            .standings-table td { padding:14px 5px; }
+            .standings-table thead th { padding:12px 5px; }
         }
         ::-webkit-scrollbar{display:none} *{scrollbar-width:none;-ms-overflow-style:none}
         @media (prefers-reduced-motion: reduce) {
@@ -358,7 +361,7 @@
 <div class="main">
     <div class="section active" id="standings">
         <div class="section-header"><div class="accent-bar"></div><h2>League Standings</h2></div>
-        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="standings-table"><thead><tr><th></th><th>Team</th><th>W</th><th>L</th><th>T</th><th>GB</th><th>GP</th><th>PCT</th><th>STRK</th></tr></thead><tbody id="standings-body"></tbody></table></div>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="standings-table"><thead><tr><th></th><th>Team</th><th>W</th><th>L</th><th class="col-t">T</th><th>GB</th><th>GP</th><th>PCT</th><th>STRK</th></tr></thead><tbody id="standings-body"></tbody></table></div>
     </div>
 
     <div class="section" id="games">
@@ -496,7 +499,36 @@ function renderStandings(data){
         document.getElementById('header-record').textContent=drive.w+' - '+drive.l;
     }
     tb.innerHTML=data.map((r,i)=>{const dr=r.team.toLowerCase().includes('drive');const w=r.streak.startsWith('W');
-    return`<tr class="${dr?'highlight':''}" style="animation-delay:${i*0.05}s"><td class="rank">${r.rank}</td><td class="team-name"${dr?' style="color:var(--blue-bright);"':''}>${dr?'⚾ ':''}${r.team}</td><td>${r.w}</td><td>${r.l}</td><td>${r.t}</td><td class="gb">${r.gb==='--'?'—':r.gb}</td><td>${r.gp}</td><td class="win-pct">${r.pct}</td><td style="color:var(${w?'--win':'--loss'});">${r.streak}</td></tr>`;}).join('');
+    return`<tr class="${dr?'highlight':''}" style="animation-delay:${i*0.05}s"><td class="rank">${r.rank}</td><td class="team-name"${dr?' style="color:var(--blue-bright);"':''}>${dr?'⚾ ':''}${r.team}</td><td data-count="${r.w}">${r.w}</td><td data-count="${r.l}">${r.l}</td><td class="col-t" data-count="${r.t}">${r.t}</td><td class="gb">${r.gb==='--'?'—':r.gb}</td><td data-count="${r.gp}">${r.gp}</td><td class="win-pct" data-count="${r.pct}">${r.pct}</td><td style="color:var(${w?'--win':'--loss'});">${r.streak}</td></tr>`;}).join('');
+    countUpStandings();
+}
+
+// Subtle count-up on standings numbers — premium feel without being distracting
+function countUpStandings(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    const cells=[...document.querySelectorAll('#standings-body [data-count]')];
+    const duration=600;
+    cells.forEach((cell,idx)=>{
+        const target=cell.dataset.count;
+        const isDecimal=target.includes('.');
+        const targetNum=parseFloat(target);
+        if(isNaN(targetNum)||targetNum===0){return;}
+        const start=performance.now()+idx*20;
+        const tick=(now)=>{
+            if(now<start){requestAnimationFrame(tick);return;}
+            const p=Math.min(1,(now-start)/duration);
+            const eased=1-Math.pow(1-p,3); // cubic ease-out
+            const val=targetNum*eased;
+            if(isDecimal){
+                cell.textContent=val.toFixed(3).replace(/^0\./,'.');
+            } else {
+                cell.textContent=Math.round(val);
+            }
+            if(p<1)requestAnimationFrame(tick);
+            else cell.textContent=target; // snap to exact
+        };
+        requestAnimationFrame(tick);
+    });
 }
 
 // RENDER SCORES
@@ -556,7 +588,7 @@ function renderSchedule(schedule){
         if(!current||current.week!==g.week){current={week:g.week,weekDate:g.weekDate,games:[],isPlayoff:g.playoff,isSB:g.home==='Spring Break',isRainOut:g.home==='Rain Out'};groups.push(current);}
         current.games.push(g);
     });
-    let html='';
+    let html='<colgroup><col style="width:18%"><col style="width:14%"><col style="width:24%"><col style="width:9%"><col style="width:24%"><col style="width:9%"><col style="width:12%"></colgroup>';
     groups.forEach(grp=>{
         const first=grp.games[0];
         let isCurrent=false;
@@ -572,9 +604,9 @@ function renderSchedule(schedule){
         if(grp.isPlayoff){
             html+=`<tr><td colspan="7" class="playoff-header">🏆 ${grp.week}</td></tr>`;
         } else if(grp.isSB){
-            html+=`<tr><td colspan="7" class="week-header">Week 6 — Spring Break</td></tr><tr class="week-games"><td colspan="7" style="text-align:center;padding:16px;color:var(--gray-dark);font-style:italic;">No games</td></tr></tbody>`;return;
+            html+=`<tr><td colspan="7" class="week-header">Week 6 &nbsp;·&nbsp; Spring Break &nbsp;·&nbsp; <span style="opacity:0.6;font-weight:500;text-transform:none;letter-spacing:0;">No games this week</span></td></tr></tbody>`;return;
         } else if(grp.isRainOut){
-            html+=`<tr><td colspan="7" class="week-header">${grp.week} — Rain Out</td></tr><tr class="week-games"><td colspan="7" style="text-align:center;padding:16px;color:var(--gray-dark);font-style:italic;">Games rained out</td></tr></tbody>`;return;
+            html+=`<tr><td colspan="7" class="week-header">${grp.week} &nbsp;·&nbsp; Rain Out &nbsp;·&nbsp; <span style="opacity:0.6;font-weight:500;text-transform:none;letter-spacing:0;">Games rained out</span></td></tr></tbody>`;return;
         } else {
             html+=`<tr><td colspan="7" class="week-header${isCurrent?' current':''}${collapsible?' week-toggle':''}">${grp.week}</td></tr>`;
         }
