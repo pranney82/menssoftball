@@ -21,7 +21,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
-        :root { --primary:#1a1a2e; --primary-dark:#0f0f1a; --surface:#16213e; --surface-light:#1c2a4a; --blue:#2563eb; --blue-bright:#3b82f6; --blue-glow:#60a5fa; --white:#f1f5f9; --gray:#94a3b8; --gray-dark:#64748b; --win:#22c55e; --loss:#ef4444; --gold:#fbbf24; --chrome-height:140px; }
+        :root { --primary:#1a1a2e; --primary-dark:#0f0f1a; --surface:#16213e; --surface-light:#1c2a4a; --blue:#2563eb; --blue-bright:#3b82f6; --blue-glow:#60a5fa; --white:#f1f5f9; --gray:#94a3b8; --gray-dark:#64748b; --win:#22c55e; --loss:#ef4444; --gold:#fbbf24; }
         * { margin:0; padding:0; box-sizing:border-box; }
         body { background:var(--primary-dark); color:var(--white); font-family:'Roboto Condensed',sans-serif; min-height:100vh; overflow-x:hidden; font-size:17px; line-height:1.55; }
         @keyframes fadeInUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
@@ -137,21 +137,21 @@
 
         /* SCHEDULE TABLE */
         .schedule-table { width:100%; border-collapse:collapse; font-size:17px; }
-        .schedule-table thead th { font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:13px; letter-spacing:2px; color:var(--gray); padding:13px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:0; background:var(--primary-dark); z-index:50; }
-        .schedule-table .week-header, .schedule-table .playoff-header { scroll-margin-top:95px; }
+        .schedule-table .week-header, .schedule-table .playoff-header { scroll-margin-top:95px; position:sticky; top:0; z-index:50; }
         .schedule-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 0.15s; }
         .schedule-table tbody tr:hover { background:rgba(37,99,235,0.08); }
         .schedule-table tbody tr.drive-game { background:rgba(37,99,235,0.1); border-left:3px solid var(--blue); }
         .schedule-table tbody tr.current-week { background:rgba(251,191,36,0.06); border-left:3px solid var(--gold); }
         .schedule-table tbody tr.current-week.drive-game { background:rgba(37,99,235,0.12); border-left:3px solid var(--gold); }
         .schedule-table td { padding:13px 14px; }
-        .schedule-table .week-header { font-family:'Oswald',sans-serif; font-size:16px; text-transform:uppercase; letter-spacing:2px; color:var(--blue-bright); background:rgba(37,99,235,0.06); padding:13px 14px; }
-        .schedule-table .week-header.current { color:var(--gold); background:rgba(251,191,36,0.08); border-left:3px solid var(--gold); }
+        .schedule-table .week-header { font-family:'Oswald',sans-serif; font-size:16px; text-transform:uppercase; letter-spacing:2px; color:var(--blue-bright); background:linear-gradient(rgba(37,99,235,0.18),rgba(37,99,235,0.18)),var(--primary-dark); padding:13px 14px; border-top:1px solid rgba(37,99,235,0.25); border-bottom:1px solid rgba(37,99,235,0.25); }
+        .schedule-table .week-header.current { color:var(--gold); background:linear-gradient(rgba(251,191,36,0.18),rgba(251,191,36,0.18)),var(--primary-dark); border-left:3px solid var(--gold); border-top:1px solid rgba(251,191,36,0.3); border-bottom:1px solid rgba(251,191,36,0.3); }
         .schedule-table .score-val { font-family:'Bebas Neue',sans-serif; font-size:22px; min-width:32px; display:inline-block; text-align:center; }
         .schedule-table .score-win { color:var(--win); font-weight:700; } .schedule-table .score-loss { color:var(--loss); }
-        .schedule-table .playoff-header { font-family:'Oswald',sans-serif; font-size:19px; text-transform:uppercase; letter-spacing:2px; color:var(--gold); background:rgba(251,191,36,0.06); padding:14px; border-left:3px solid var(--gold); }
-        .week-toggle { cursor:pointer; user-select:none; } .week-toggle::after { content:' ▾'; font-size:12px; opacity:0.5; } .week-toggle.collapsed::after { content:' ▸'; }
-        .week-games-hidden { display:none; }
+        .schedule-table .playoff-header { font-family:'Oswald',sans-serif; font-size:19px; text-transform:uppercase; letter-spacing:2px; color:var(--gold); background:linear-gradient(rgba(251,191,36,0.14),rgba(251,191,36,0.14)),var(--primary-dark); padding:14px; border-left:3px solid var(--gold); border-top:1px solid rgba(251,191,36,0.25); border-bottom:1px solid rgba(251,191,36,0.25); }
+        .week-toggle { cursor:pointer; user-select:none; } .week-toggle::after { content:' ▾'; font-size:12px; opacity:0.5; }
+        tbody.week-group.collapsed .week-toggle::after { content:' ▸'; }
+        tbody.week-group.collapsed tr.week-games { display:none; }
 
         /* STATS TABLE */
         .stats-table { width:100%; border-collapse:separate; border-spacing:0; font-size:18px; }
@@ -163,8 +163,8 @@
         .stats-table tbody tr:hover td:first-child, .stats-table tbody tr:hover td:nth-child(2) { background:#1a1f33; }
         .stats-table td { padding:15px 14px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.04); }
         .stats-table td:first-child { text-align:left; font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--gray); width:50px; min-width:50px; max-width:50px; position:sticky; left:0; background:var(--primary-dark); z-index:5; }
-        .stats-table td:nth-child(2) { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; font-size:19px; min-width:116px; position:sticky; left:50px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,255,255,0.12); box-shadow:8px 0 14px -6px rgba(37,99,235,0.22); }
-        .stats-table thead th:nth-child(2) { box-shadow:8px 0 14px -6px rgba(37,99,235,0.22); }
+        .stats-table td:nth-child(2) { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; font-size:19px; min-width:116px; position:sticky; left:50px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,255,255,0.18); box-shadow:10px 0 14px -6px rgba(37,99,235,0.45); }
+        .stats-table thead th:nth-child(2) { box-shadow:10px 0 14px -6px rgba(37,99,235,0.45); }
         .stat-highlight { color:var(--blue-bright); font-weight:700; } .stats-leader { color:var(--gold); font-weight:700; }
         .roster-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
         .roster-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:18px; transition:border-color 0.2s,transform 0.2s; animation:fadeInUp 0.4s ease-out both; }
@@ -275,7 +275,7 @@
             .standings-table{font-size:16px} .standings-table thead th{padding:11px 6px;font-size:11px;letter-spacing:1px} .standings-table td{padding:12px 6px}
             .standings-table .team-name{font-size:17px} .standings-table .rank{font-size:18px} .standings-table .win-pct{font-size:18px}
             .sub-tab{padding:11px 18px;font-size:14px}
-            .schedule-table{font-size:16px} .schedule-table thead th{padding:11px 6px;font-size:11px;top:0;} .schedule-table td{padding:11px 6px;word-break:break-word;}
+            .schedule-table{font-size:16px} .schedule-table td{padding:11px 6px;word-break:break-word;}
             .schedule-table .week-header,.schedule-table .playoff-header{scroll-margin-top:100px}
             .schedule-table .score-val{font-size:20px} .schedule-table .week-header{font-size:15px} .schedule-table .playoff-header{font-size:16px}
             .games-grid{grid-template-columns:1fr} .game-team-name{font-size:17px} .game-score{font-size:29px}
@@ -302,18 +302,10 @@
             *,*::before,*::after { animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
         }
         .table-scroll {
-            max-height:calc(100vh - var(--chrome-height));
-            max-height:calc(100dvh - var(--chrome-height));
+            max-height:calc(100vh - 200px);
+            max-height:calc(100dvh - 200px);
             overflow:auto;
             -webkit-overflow-scrolling:touch;
-            background:
-                linear-gradient(90deg, var(--primary-dark) 20%, rgba(15,15,26,0) 100%) left center,
-                linear-gradient(90deg, rgba(15,15,26,0) 0%, var(--primary-dark) 80%) right center,
-                radial-gradient(ellipse at 0% 50%, rgba(0,0,0,0.55), rgba(0,0,0,0) 72%) left center,
-                radial-gradient(ellipse at 100% 50%, rgba(0,0,0,0.55), rgba(0,0,0,0) 72%) right center;
-            background-repeat:no-repeat;
-            background-size:44px 100%, 44px 100%, 18px 100%, 18px 100%;
-            background-attachment:local, local, scroll, scroll;
             scrollbar-gutter:stable;
         }
         .table-scroll:focus-visible { outline:2px solid var(--blue-bright); outline-offset:-2px; }
@@ -350,7 +342,7 @@
     <div class="section" id="games">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="scores-view">Scores</button><button class="sub-tab" data-sub="schedule-view">Schedule</button></div>
         <div class="sub-content active" id="scores-view"><div class="games-grid" id="scores-grid"></div></div>
-        <div class="sub-content" id="schedule-view"><div class="table-scroll" role="region" aria-label="Season schedule" tabindex="0"><table class="schedule-table" style="table-layout:fixed;width:100%;"><thead><tr><th>Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th>Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
+        <div class="sub-content" id="schedule-view"><div class="table-scroll" role="region" aria-label="Season schedule" tabindex="0"><table class="schedule-table" id="schedule-table-el" style="table-layout:fixed;width:100%;"></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
     </div>
 
     <div class="section" id="players">
@@ -512,31 +504,62 @@ function renderScores(schedule){
 
 // RENDER SCHEDULE
 function renderSchedule(schedule){
-    const tb=document.getElementById('schedule-body');const now=new Date();let currentFound=false;let html='';let lastWeek='';
+    const tbl=document.getElementById('schedule-table-el');const now=new Date();let currentFound=false;
+    // Group games by week
+    const groups=[];let current=null;
     schedule.forEach(g=>{
-        if(g.week!==lastWeek){
-            lastWeek=g.week;const isPlayoff=g.playoff;const isSB=g.home==='Spring Break';
-            if(isPlayoff){html+=`<tr><td colspan="7" class="playoff-header">🏆 ${g.week}</td></tr>`;}
-            else if(isSB){html+=`<tr><td colspan="7" class="week-header">Week 6 — Spring Break</td></tr><tr><td colspan="7" style="text-align:center;padding:16px;color:var(--gray-dark);font-style:italic;">No games</td></tr>`;return;}
-            else if(g.home==='Rain Out'){html+=`<tr><td colspan="7" class="week-header">${g.week} — Rain Out</td></tr><tr><td colspan="7" style="text-align:center;padding:16px;color:var(--gray-dark);font-style:italic;">Games rained out</td></tr>`;return;}
-            else{
-                let cls='week-header';
-                if(!currentFound&&g.weekDate){const wd=new Date(g.weekDate+'T00:00:00');const we=new Date(wd);we.setDate(we.getDate()+7);
-                if((now>=wd&&now<we)||wd>now){currentFound=true;cls+=' current';}}
-                html+=`<tr><td colspan="7" class="${cls}" data-week="${g.weekDate||''}">${g.week}</td></tr>`;
-            }
-        }
-        if(g.home==='Spring Break')return;
-        const isDrive=g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive');
-        const hasScore=g.homeScore!==undefined&&g.homeScore!==null;
-        const hw=hasScore&&g.homeScore>g.awayScore;
-        const hName=isDrive&&g.home.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(hw&&hasScore?'<strong>'+g.home+'</strong>':g.home);
-        const aName=isDrive&&g.away.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(!hw&&hasScore?'<strong>'+g.away+'</strong>':g.away);
-        const ppd=g.note&&g.note.toLowerCase().includes('postpone');
-        html+=`<tr class="${isDrive?'drive-game':''}"><td>${g.date}</td><td>${g.time}</td><td>${hName}</td><td>${ppd?'<span style="font-family:Oswald;font-size:11px;letter-spacing:1px;color:var(--gold);">PPD</span>':(hasScore?'<span class="score-val '+(hw?'score-win':'score-loss')+'">'+g.homeScore+'</span>':'')}</td><td>${aName}</td><td>${ppd?'':(hasScore?'<span class="score-val '+(!hw?'score-win':'score-loss')+'">'+g.awayScore+'</span>':'')}</td><td>${g.location}</td></tr>`;
+        if(!current||current.week!==g.week){current={week:g.week,weekDate:g.weekDate,games:[],isPlayoff:g.playoff,isSB:g.home==='Spring Break',isRainOut:g.home==='Rain Out'};groups.push(current);}
+        current.games.push(g);
     });
-    tb.innerHTML=html;
-    highlightWeek();collapsePastWeeks();
+    let html='';
+    groups.forEach(grp=>{
+        const first=grp.games[0];
+        let isCurrent=false;
+        if(!currentFound&&grp.weekDate&&!grp.isPlayoff){
+            const wd=new Date(grp.weekDate+'T00:00:00');const we=new Date(wd);we.setDate(we.getDate()+7);
+            if((now>=wd&&now<we)||wd>now){currentFound=true;isCurrent=true;}
+        }
+        const isPast=grp.weekDate?(()=>{const we=new Date(grp.weekDate+'T00:00:00');we.setDate(we.getDate()+7);return we<now;})():false;
+        const hasScores=grp.games.some(g=>(g.homeScore!==undefined&&g.homeScore!==null)||(g.note&&g.note.toLowerCase().includes('postpone')));
+        const collapsible=isPast&&hasScores&&!grp.isPlayoff;
+        html+=`<tbody class="week-group${isCurrent?' current-group':''}" data-week="${grp.weekDate||''}"${collapsible?' data-collapsible="1"':''}>`;
+        // Week header row
+        if(grp.isPlayoff){
+            html+=`<tr><td colspan="7" class="playoff-header">🏆 ${grp.week}</td></tr>`;
+        } else if(grp.isSB){
+            html+=`<tr><td colspan="7" class="week-header">Week 6 — Spring Break</td></tr><tr class="week-games"><td colspan="7" style="text-align:center;padding:16px;color:var(--gray-dark);font-style:italic;">No games</td></tr></tbody>`;return;
+        } else if(grp.isRainOut){
+            html+=`<tr><td colspan="7" class="week-header">${grp.week} — Rain Out</td></tr><tr class="week-games"><td colspan="7" style="text-align:center;padding:16px;color:var(--gray-dark);font-style:italic;">Games rained out</td></tr></tbody>`;return;
+        } else {
+            html+=`<tr><td colspan="7" class="week-header${isCurrent?' current':''}${collapsible?' week-toggle':''}">${grp.week}</td></tr>`;
+        }
+        // Game rows
+        grp.games.forEach(g=>{
+            if(g.home==='Spring Break')return;
+            const isDrive=g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive');
+            const hasScore=g.homeScore!==undefined&&g.homeScore!==null;
+            const hw=hasScore&&g.homeScore>g.awayScore;
+            const hName=isDrive&&g.home.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(hw&&hasScore?'<strong>'+g.home+'</strong>':g.home);
+            const aName=isDrive&&g.away.toLowerCase().includes('drive')?'<strong style="color:var(--blue-bright);">Drive</strong>':(!hw&&hasScore?'<strong>'+g.away+'</strong>':g.away);
+            const ppd=g.note&&g.note.toLowerCase().includes('postpone');
+            const rowCls=['week-games'];if(isDrive)rowCls.push('drive-game');if(isCurrent)rowCls.push('current-week');
+            html+=`<tr class="${rowCls.join(' ')}"><td>${g.date}</td><td>${g.time}</td><td>${hName}</td><td>${ppd?'<span style="font-family:Oswald;font-size:11px;letter-spacing:1px;color:var(--gold);">PPD</span>':(hasScore?'<span class="score-val '+(hw?'score-win':'score-loss')+'">'+g.homeScore+'</span>':'')}</td><td>${aName}</td><td>${ppd?'':(hasScore?'<span class="score-val '+(!hw?'score-win':'score-loss')+'">'+g.awayScore+'</span>':'')}</td><td>${g.location}</td></tr>`;
+        });
+        html+='</tbody>';
+    });
+    tbl.innerHTML=html;
+    // Collapse past weeks that have scores
+    tbl.querySelectorAll('tbody[data-collapsible="1"]').forEach(tb=>{
+        tb.classList.add('collapsed');
+        const wh=tb.querySelector('.week-header');
+        wh&&wh.addEventListener('click',()=>tb.classList.toggle('collapsed'));
+    });
+    // Scroll to current week on first schedule-view click
+    const currentGroup=tbl.querySelector('tbody.current-group');
+    if(currentGroup){
+        const st=document.querySelector('[data-sub="schedule-view"]');
+        st&&st.addEventListener('click',()=>setTimeout(()=>{currentGroup.querySelector('.week-header')?.scrollIntoView({behavior:'smooth',block:'start'});},150),{once:true});
+    }
 }
 
 // RENDER STATS (season)
@@ -757,40 +780,7 @@ function initCountdown(schedule){
     }
 }
 
-function highlightWeek(){
-    const now=new Date();let found=false;
-    document.querySelectorAll('.week-header[data-week]').forEach(wh=>{
-        if(!wh.dataset.week)return;
-        const wd=new Date(wh.dataset.week+'T00:00:00');const we=new Date(wd);we.setDate(we.getDate()+7);
-        if(!found&&(now>=wd&&now<we||wd>now)){found=true;wh.classList.add('current');
-        let row=wh.closest('tr').nextElementSibling;while(row&&!row.querySelector('.week-header')&&!row.querySelector('.playoff-header')){row.classList.add('current-week');row=row.nextElementSibling;}
-        document.querySelector('[data-sub="schedule-view"]')?.addEventListener('click',()=>{setTimeout(()=>wh.scrollIntoView({behavior:'smooth',block:'start'}),150);});}
-    });
-}
-
-function collapsePastWeeks(){
-    const now=new Date();
-    document.querySelectorAll('.week-header[data-week]').forEach(wh=>{
-        if(!wh.dataset.week)return;const we=new Date(wh.dataset.week+'T00:00:00');we.setDate(we.getDate()+7);
-        let hasScores=false;const rows=[];let row=wh.closest('tr').nextElementSibling;
-        while(row&&!row.querySelector('.week-header')&&!row.querySelector('.playoff-header')){rows.push(row);if(row.querySelector('.score-val')||row.textContent.includes('PPD'))hasScores=true;row=row.nextElementSibling;}
-        if(we<now&&hasScores){wh.classList.add('week-toggle','collapsed');rows.forEach(r=>r.classList.add('week-games-hidden'));
-        wh.addEventListener('click',()=>{const c=wh.classList.toggle('collapsed');rows.forEach(r=>r.classList.toggle('week-games-hidden',c));});}
-    });
-}
-
 function checkGameDay(){if(new Date().getDay()===1){const t=document.getElementById('games-tab');if(t&&!t.querySelector('.live-dot'))t.innerHTML+='<span class="live-dot"></span>';}}
-
-// Measure nav height so table-scroll max-height is accurate (not a magic number)
-function updateChromeHeight(){
-    const nav=document.querySelector('.nav-wrap');
-    const h=(nav?nav.offsetHeight:47)+40;
-    document.documentElement.style.setProperty('--chrome-height',h+'px');
-}
-window.addEventListener('resize',updateChromeHeight);
-window.addEventListener('orientationchange',()=>setTimeout(updateChromeHeight,100));
-updateChromeHeight();
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(updateChromeHeight);
 
 // FLOATING CHAT
 const CHAT_URL='https://softball-rules-chat.peterranney.workers.dev';
