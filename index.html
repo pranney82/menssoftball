@@ -789,6 +789,7 @@ function updateChromeHeight(){
 }
 window.addEventListener('resize',updateChromeHeight);
 window.addEventListener('orientationchange',()=>setTimeout(updateChromeHeight,100));
+updateChromeHeight();
 
 // FLOATING CHAT
 const CHAT_URL='https://softball-rules-chat.peterranney.workers.dev';
@@ -1103,7 +1104,6 @@ async function init(){
     buildChatContext({standings,schedule,stats,career,roasts,rules});
 
     checkGameDay();
-    updateChromeHeight();
 }
 init();
 </script>
