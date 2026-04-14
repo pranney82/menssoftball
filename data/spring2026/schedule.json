@@ -839,7 +839,21 @@
     "away": "Drive",
     "location": "HP2",
     "homeScore": 15,
-    "awayScore": 16
+    "awayScore": 16,
+    "innings": {
+      "home": [
+        4,
+        6,
+        1,
+        4
+      ],
+      "away": [
+        0,
+        1,
+        5,
+        10
+      ]
+    }
   },
   {
     "week": "Week 7",
