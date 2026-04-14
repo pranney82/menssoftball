@@ -608,14 +608,9 @@ document.querySelectorAll('.sub-tab').forEach(t=>t.addEventListener('click',()=>
     const p=t.closest('.section');p.querySelectorAll('.sub-tab').forEach(x=>x.classList.remove('active'));p.querySelectorAll('.sub-content').forEach(x=>x.classList.remove('active'));
     t.classList.add('active');const s=document.getElementById(t.dataset.sub);s.classList.add('active');s.style.animation='none';s.offsetHeight;s.style.animation='';
     requestAnimationFrame(()=>{
-        const hasTable=s.querySelector('.table-scroll');
-        if(hasTable){
-            const nav=document.querySelector('.nav-wrap');
-            const target=window.scrollY+nav.getBoundingClientRect().top;
-            if(target>10)window.scrollTo({top:target,behavior:'smooth'});
-        } else {
-            if(window.scrollY>10)window.scrollTo({top:0,behavior:'smooth'});
-        }
+        const nav=document.querySelector('.nav-wrap');
+        const target=window.scrollY+nav.getBoundingClientRect().top;
+        if(target>10)window.scrollTo({top:target,behavior:'smooth'});
     });
 }));
 
