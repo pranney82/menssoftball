@@ -163,8 +163,8 @@
         .stats-table tbody tr:hover td:first-child, .stats-table tbody tr:hover td:nth-child(2) { background:#1a1f33; }
         .stats-table td { padding:15px 14px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.04); }
         .stats-table td:first-child { text-align:left; font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--gray); width:50px; min-width:50px; max-width:50px; position:sticky; left:0; background:var(--primary-dark); z-index:5; }
-        .stats-table td:nth-child(2) { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; font-size:19px; min-width:116px; position:sticky; left:50px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,255,255,0.12); box-shadow:6px 0 10px -6px rgba(0,0,0,0.7); }
-        .stats-table thead th:nth-child(2) { box-shadow:6px 0 10px -6px rgba(0,0,0,0.7); }
+        .stats-table td:nth-child(2) { text-align:left; font-family:'Oswald',sans-serif; font-weight:500; font-size:19px; min-width:116px; position:sticky; left:50px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,255,255,0.12); box-shadow:8px 0 14px -6px rgba(37,99,235,0.22); }
+        .stats-table thead th:nth-child(2) { box-shadow:8px 0 14px -6px rgba(37,99,235,0.22); }
         .stat-highlight { color:var(--blue-bright); font-weight:700; } .stats-leader { color:var(--gold); font-weight:700; }
         .roster-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
         .roster-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:18px; transition:border-color 0.2s,transform 0.2s; animation:fadeInUp 0.4s ease-out both; }
@@ -790,6 +790,7 @@ function updateChromeHeight(){
 window.addEventListener('resize',updateChromeHeight);
 window.addEventListener('orientationchange',()=>setTimeout(updateChromeHeight,100));
 updateChromeHeight();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(updateChromeHeight);
 
 // FLOATING CHAT
 const CHAT_URL='https://softball-rules-chat.peterranney.workers.dev';
