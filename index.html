@@ -813,14 +813,6 @@ function renderSchedule(schedule){
         const h=sec.querySelector('.sched-week-header');
         h&&h.addEventListener('click',()=>sec.classList.toggle('collapsed'));
     });
-    // Scroll to current week when first opening Schedule sub-tab
-    const currentSection=wrap.querySelector('.sched-week-current');
-    if(currentSection){
-        const st=document.querySelector('[data-sub="schedule-view"]');
-        st&&st.addEventListener('click',()=>setTimeout(()=>{
-            currentSection.scrollIntoView({behavior:'smooth',block:'start'});
-        },200),{once:true});
-    }
 }
 
 // RENDER STATS (season)
