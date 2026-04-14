@@ -137,7 +137,7 @@
 
         /* SCHEDULE TABLE */
         .schedule-table { width:100%; border-collapse:collapse; font-size:17px; }
-        .schedule-table thead th { font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:13px; letter-spacing:2px; color:var(--gray); padding:13px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:47px; background:var(--primary-dark); z-index:50; }
+        .schedule-table thead th { font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:13px; letter-spacing:2px; color:var(--gray); padding:13px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:0; background:var(--primary-dark); z-index:50; }
         .schedule-table .week-header, .schedule-table .playoff-header { scroll-margin-top:95px; }
         .schedule-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 0.15s; }
         .schedule-table tbody tr:hover { background:rgba(37,99,235,0.08); }
@@ -274,7 +274,7 @@
             .standings-table{font-size:16px} .standings-table thead th{padding:11px 6px;font-size:11px;letter-spacing:1px} .standings-table td{padding:12px 6px}
             .standings-table .team-name{font-size:17px} .standings-table .rank{font-size:18px} .standings-table .win-pct{font-size:18px}
             .sub-tab{padding:11px 18px;font-size:14px}
-            .schedule-table{font-size:16px} .schedule-table thead th{padding:11px 6px;font-size:11px;top:50px;} .schedule-table td{padding:11px 6px;word-break:break-word;}
+            .schedule-table{font-size:16px} .schedule-table thead th{padding:11px 6px;font-size:11px;top:0;} .schedule-table td{padding:11px 6px;word-break:break-word;}
             .schedule-table .week-header,.schedule-table .playoff-header{scroll-margin-top:100px}
             .schedule-table .score-val{font-size:20px} .schedule-table .week-header{font-size:15px} .schedule-table .playoff-header{font-size:16px}
             .games-grid{grid-template-columns:1fr} .game-team-name{font-size:17px} .game-score{font-size:29px}
@@ -297,6 +297,7 @@
             .game-team-name{font-size:16px} .game-score{font-size:27px}
         }
         ::-webkit-scrollbar{display:none} *{scrollbar-width:none;-ms-overflow-style:none}
+        .table-scroll { max-height:calc(100vh - 140px); max-height:calc(100dvh - 140px); overflow:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
     </style>
 </head>
 <body>
@@ -330,13 +331,13 @@
     <div class="section" id="games">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="scores-view">Scores</button><button class="sub-tab" data-sub="schedule-view">Schedule</button></div>
         <div class="sub-content active" id="scores-view"><div class="games-grid" id="scores-grid"></div></div>
-        <div class="sub-content" id="schedule-view"><div><table class="schedule-table" style="table-layout:fixed;width:100%;"><thead><tr><th>Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th>Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
+        <div class="sub-content" id="schedule-view"><div class="table-scroll"><table class="schedule-table" style="table-layout:fixed;width:100%;"><thead><tr><th>Date</th><th>Time</th><th>Home</th><th></th><th>Away</th><th></th><th>Loc</th></tr></thead><tbody id="schedule-body"></tbody></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
     </div>
 
     <div class="section" id="players">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="stats-view">Season</button><button class="sub-tab" data-sub="career-view">Career</button><button class="sub-tab" data-sub="roster-view">Roster</button></div>
-        <div class="sub-content active" id="stats-view"><div style="overflow-x:auto;overflow-y:clip;-webkit-overflow-scrolling:touch;"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="stats-body"></tbody></table></div></div>
-        <div class="sub-content" id="career-view"><div style="overflow-x:auto;overflow-y:clip;-webkit-overflow-scrolling:touch;"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>SZN</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="career-body"></tbody></table></div></div>
+        <div class="sub-content active" id="stats-view"><div class="table-scroll"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="stats-body"></tbody></table></div></div>
+        <div class="sub-content" id="career-view"><div class="table-scroll"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>SZN</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="career-body"></tbody></table></div></div>
         <div class="sub-content" id="roster-view"><div class="roster-grid"><div class="empty-state">Roster coming soon</div></div></div>
     </div>
 
@@ -760,22 +761,6 @@ function collapsePastWeeks(){
 }
 
 function checkGameDay(){if(new Date().getDay()===1){const t=document.getElementById('games-tab');if(t&&!t.querySelector('.live-dot'))t.innerHTML+='<span class="live-dot"></span>';}}
-
-// JS-driven sticky table headers (works inside overflow-x:auto wrappers)
-function updateTableStickyHeaders(){
-    const nav=document.querySelector('.nav-wrap');
-    const navBottom=nav?nav.getBoundingClientRect().bottom:0;
-    document.querySelectorAll('.section.active table.stats-table, .section.active table.schedule-table').forEach(table=>{
-        const thead=table.querySelector('thead');if(!thead)return;
-        const rect=table.getBoundingClientRect();const hH=thead.offsetHeight;
-        const shouldStick=rect.top<navBottom&&rect.bottom>navBottom+hH;
-        const offset=shouldStick?(navBottom-rect.top):0;
-        thead.querySelectorAll('th').forEach(th=>{th.style.transform=offset?`translateY(${offset}px)`:'';});
-    });
-}
-window.addEventListener('scroll',updateTableStickyHeaders,{passive:true});
-window.addEventListener('resize',updateTableStickyHeaders);
-document.querySelectorAll('.nav-tab,.sub-tab').forEach(t=>t.addEventListener('click',()=>setTimeout(updateTableStickyHeaders,50)));
 
 // FLOATING CHAT
 const CHAT_URL='https://softball-rules-chat.peterranney.workers.dev';
