@@ -54,7 +54,7 @@
         .team-logo { width:64px; height:64px; border-radius:50%; overflow:hidden; flex-shrink:0; box-shadow:0 4px 20px rgba(37,99,235,0.25); }
         .team-logo img { width:100%; height:100%; object-fit:cover; }
         .header-text h1 { font-family:var(--font-sans); font-weight:900; font-size:var(--fs-2xl); letter-spacing:-1.5px; line-height:0.95; background:linear-gradient(180deg,var(--white) 0%,var(--blue-glow) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .header-text .league-name { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-xs); color:var(--blue-bright); text-transform:uppercase; letter-spacing:1.5px; margin-top:8px; opacity:0.85; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .header-text .league-name { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-xs); color:var(--blue-bright); text-transform:uppercase; letter-spacing:1.5px; margin-top:8px; opacity:0.85; }
         .header-right { margin-left:auto; text-align:right; }
         .header-right .record { font-family:var(--font-num); font-weight:700; font-size:var(--fs-xl); letter-spacing:-1px; line-height:1; color:var(--white); font-variant-numeric:tabular-nums; white-space:nowrap; }
         .header-right .record-label { font-size:var(--fs-xs); font-weight:600; color:var(--gray-dark); text-transform:uppercase; letter-spacing:2px; margin-top:4px; }
@@ -157,14 +157,14 @@
         .ab-fc { color:var(--gray); }
 
         /* SCHEDULE TABLE */
-        .schedule-table { width:100%; border-collapse:collapse; font-size:var(--fs-base); }
+        .schedule-table { border-collapse:collapse; font-size:var(--fs-base); min-width:100%; }
         .schedule-table .week-header, .schedule-table .playoff-header { scroll-margin-top:95px; position:sticky; top:0; z-index:50; }
         .schedule-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background var(--dur) var(--ease-smooth); }
         .schedule-table tbody tr:hover { background:rgba(37,99,235,0.08); }
         .schedule-table tbody tr.drive-game { background:rgba(37,99,235,0.1); border-left:3px solid var(--blue); }
         .schedule-table tbody tr.current-week { background:rgba(251,191,36,0.06); border-left:3px solid var(--gold); }
         .schedule-table tbody tr.current-week.drive-game { background:rgba(37,99,235,0.12); border-left:3px solid var(--gold); }
-        .schedule-table td { padding:15px 14px; font-weight:500; }
+        .schedule-table td { padding:15px 14px; font-weight:500; white-space:nowrap; }
         .schedule-table .week-header { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-base); text-transform:uppercase; letter-spacing:1.5px; color:var(--blue-bright); background:linear-gradient(rgba(37,99,235,0.18),rgba(37,99,235,0.18)),var(--primary-dark); padding:16px 14px; border-top:1px solid rgba(37,99,235,0.25); border-bottom:1px solid rgba(37,99,235,0.25); }
         .schedule-table .week-header.current { color:var(--gold); background:linear-gradient(rgba(251,191,36,0.18),rgba(251,191,36,0.18)),var(--primary-dark); border-left:3px solid var(--gold); border-top:1px solid rgba(251,191,36,0.3); border-bottom:1px solid rgba(251,191,36,0.3); }
         .schedule-table .score-val { font-family:var(--font-num); font-weight:700; font-size:var(--fs-md); min-width:32px; display:inline-block; text-align:center; font-variant-numeric:tabular-nums; }
@@ -193,6 +193,7 @@
         .roster-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
         .roster-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:20px; transition:border-color var(--dur) var(--ease-smooth),transform var(--dur) var(--ease-smooth),box-shadow var(--dur) var(--ease-smooth); animation:fadeInUp 0.5s var(--ease-sport) both; }
         .roster-card:hover { border-color:rgba(37,99,235,0.4); transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,0.3); }
+        .roster-card:active { transform:translateY(-1px) scale(0.99); }
         .roster-card-name { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-lg); letter-spacing:-0.5px; color:var(--white); line-height:1.1; }
         .roster-card-line { font-family:var(--font-sans); font-weight:700; font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:1.2px; color:var(--gray-dark); margin-top:4px; margin-bottom:14px; }
         .roster-card-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px 8px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.06); }
@@ -292,12 +293,15 @@
         }
         .footer { max-width:1200px; margin:36px auto 0; padding:20px; border-top:1px solid rgba(255,255,255,0.06); text-align:center; font-size:13px; color:var(--gray-dark); letter-spacing:1px; line-height:1.6; }
         @media (max-width:768px) {
-            :root { --fs-2xl:32px; --fs-xl:26px; --fs-lg:22px; --fs-md:18px; --fs-base:15px; --fs-sm:13px; --fs-xs:11px; }
-            .header-inner { gap:14px; padding:16px; align-items:flex-start; }
-            .team-logo { width:52px; height:52px; }
+            :root { --fs-2xl:30px; --fs-xl:24px; --fs-lg:22px; --fs-md:18px; --fs-base:15px; --fs-sm:13px; --fs-xs:11px; }
+            .header-inner { flex-wrap:wrap; gap:12px 14px; padding:16px; align-items:center; }
+            .team-logo { width:48px; height:48px; }
             .header-text { flex:1; min-width:0; }
-            .header-text h1 { letter-spacing:-1px; }
-            .header-right { text-align:right; flex-shrink:0; }
+            .header-text h1 { letter-spacing:-1px; line-height:1.05; }
+            .header-right { margin-left:0; text-align:left; display:flex; align-items:center; gap:12px; flex-basis:100%; padding-top:12px; border-top:1px solid rgba(37,99,235,0.15); }
+            .header-right .record { font-size:var(--fs-lg); }
+            .header-right .record-label { display:none; }
+            .header-right .last-result { margin-top:0; margin-left:auto; font-size:var(--fs-sm); }
             .nav-tab { padding:16px 8px; }
             .main { padding:20px 14px; }
             .countdown-inner { flex-direction:column; gap:6px; }
@@ -305,12 +309,12 @@
             .standings-table thead th { padding:12px 8px; }
             .stats-table td, .stats-table th { padding:13px 8px; }
             .stats-table td:nth-child(2) { white-space:nowrap; left:46px; }
-            .schedule-table td { padding:13px 8px; word-break:break-word; }
+            .schedule-table td { padding:13px 10px; white-space:nowrap; }
             .games-grid { grid-template-columns:1fr; }
             .roast-card { padding:26px 20px; }
         }
         @media (max-width:420px) {
-            :root { --fs-2xl:28px; --fs-xl:22px; --fs-lg:20px; }
+            :root { --fs-2xl:26px; --fs-xl:22px; --fs-lg:20px; }
             .header-text h1 { letter-spacing:-1.2px; }
             .nav-tab { padding:15px 6px; font-size:12px; letter-spacing:0.8px; }
             .stats-table thead th:first-child, .stats-table td:first-child { width:38px; min-width:38px; max-width:38px; }
@@ -354,13 +358,13 @@
 <div class="main">
     <div class="section active" id="standings">
         <div class="section-header"><div class="accent-bar"></div><h2>League Standings</h2></div>
-        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="standings-table"><thead><tr><th></th><th>Team</th><th>W</th><th>L</th><th>T</th><th>GB</th><th>GP</th><th>PCT</th><th>STRK</th><th>Coach</th></tr></thead><tbody id="standings-body"></tbody></table></div>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><table class="standings-table"><thead><tr><th></th><th>Team</th><th>W</th><th>L</th><th>T</th><th>GB</th><th>GP</th><th>PCT</th><th>STRK</th></tr></thead><tbody id="standings-body"></tbody></table></div>
     </div>
 
     <div class="section" id="games">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="scores-view">Scores</button><button class="sub-tab" data-sub="schedule-view">Schedule</button></div>
         <div class="sub-content active" id="scores-view"><div class="games-grid" id="scores-grid"></div></div>
-        <div class="sub-content" id="schedule-view"><div class="table-scroll" role="region" aria-label="Season schedule" tabindex="0"><table class="schedule-table" id="schedule-table-el" style="table-layout:fixed;width:100%;"></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
+        <div class="sub-content" id="schedule-view"><div class="table-scroll" role="region" aria-label="Season schedule" tabindex="0"><table class="schedule-table" id="schedule-table-el"></table></div><div style="text-align:center;margin-top:16px;"><button class="share-btn" onclick="shareSchedule(this)">🔗 Share Schedule</button></div></div>
     </div>
 
     <div class="section" id="players">
@@ -448,14 +452,15 @@ document.querySelectorAll('.nav-tab').forEach(t=>t.addEventListener('click',()=>
     document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
     t.classList.add('active');const s=document.getElementById(t.dataset.tab);s.classList.add('active');s.style.animation='none';s.offsetHeight;s.style.animation='';
     requestAnimationFrame(()=>{
-        const hasTable=s.querySelector('.table-scroll');
+        // Check the currently-active sub-content (or the section itself if no sub-tabs)
+        const activeSub=s.querySelector('.sub-content.active');
+        const scope=activeSub||s;
+        const hasTable=scope.querySelector('.table-scroll');
         if(hasTable){
-            // Data tab: scroll down so chrome is minimized, nav pinned to top
             const nav=document.querySelector('.nav-wrap');
             const target=window.scrollY+nav.getBoundingClientRect().top;
             if(target>10)window.scrollTo({top:target,behavior:'smooth'});
         } else {
-            // Non-data tab: scroll back up to reveal chrome
             if(window.scrollY>10)window.scrollTo({top:0,behavior:'smooth'});
         }
     });
@@ -491,7 +496,7 @@ function renderStandings(data){
         document.getElementById('header-record').textContent=drive.w+' - '+drive.l;
     }
     tb.innerHTML=data.map((r,i)=>{const dr=r.team.toLowerCase().includes('drive');const w=r.streak.startsWith('W');
-    return`<tr class="${dr?'highlight':''}" style="animation-delay:${i*0.05}s"><td class="rank">${r.rank}</td><td class="team-name"${dr?' style="color:var(--blue-bright);"':''}>${dr?'⚾ ':''}${r.team}</td><td>${r.w}</td><td>${r.l}</td><td>${r.t}</td><td class="gb">${r.gb==='--'?'—':r.gb}</td><td>${r.gp}</td><td class="win-pct">${r.pct}</td><td style="color:var(${w?'--win':'--loss'});">${r.streak}</td><td>${r.coach}</td></tr>`;}).join('');
+    return`<tr class="${dr?'highlight':''}" style="animation-delay:${i*0.05}s"><td class="rank">${r.rank}</td><td class="team-name"${dr?' style="color:var(--blue-bright);"':''}>${dr?'⚾ ':''}${r.team}</td><td>${r.w}</td><td>${r.l}</td><td>${r.t}</td><td class="gb">${r.gb==='--'?'—':r.gb}</td><td>${r.gp}</td><td class="win-pct">${r.pct}</td><td style="color:var(${w?'--win':'--loss'});">${r.streak}</td></tr>`;}).join('');
 }
 
 // RENDER SCORES
@@ -713,11 +718,13 @@ function flipReorderStats(sortedData){
             const td=tds[kidx];if(!td)return;
             td.classList.remove('stats-leader','stat-highlight','sort-col');
             if(key===statsSortKey)td.classList.add('sort-col');
-            if(SEASON_LEADERS[key]&&parseFloat(p[key])===SEASON_LEADERS[key])td.classList.add('stats-leader');
+            if(SEASON_LEADERS[key]&&SEASON_LEADERS[key].has(p.player))td.classList.add('stats-leader');
             else if(['avg','obp','slg','ops'].includes(key))td.classList.add('stat-highlight');
         });
     });
     // INVERT: compute deltas and apply inverse transform
+    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduceMotion)return; // DOM already in sorted order, skip animation
     const lastRects={};
     Object.keys(rows).forEach(name=>{lastRects[name]=rows[name].getBoundingClientRect();});
     Object.keys(rows).forEach(name=>{
