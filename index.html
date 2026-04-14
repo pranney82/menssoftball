@@ -87,6 +87,10 @@
         .hero-matchup .drive { color:var(--blue-bright); }
         .hero-meta { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-sm); color:var(--gray); letter-spacing:0.3px; }
         .hero-countdown { font-family:var(--font-num); font-weight:700; font-size:var(--fs-base); color:var(--white); background:rgba(37,99,235,0.18); padding:5px 12px; border-radius:8px; border:1px solid rgba(37,99,235,0.35); letter-spacing:0.3px; font-variant-numeric:tabular-nums; margin-top:2px; }
+        .hero-share-btn { position:absolute; top:12px; right:14px; display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; color:var(--blue-bright); background:rgba(37,99,235,0.2); border:1px solid rgba(37,99,235,0.5); border-radius:100px; padding:0; cursor:pointer; transition:all var(--dur) var(--ease-smooth); -webkit-tap-highlight-color:transparent; z-index:2; }
+        .hero-share-btn:hover { background:rgba(37,99,235,0.32); border-color:rgba(37,99,235,0.7); }
+        .hero-share-btn:active { transform:scale(0.94); }
+        .hero-share-btn.copied { background:rgba(34,197,94,0.2); color:var(--win); border-color:rgba(34,197,94,0.5); }
         @media (min-width:768px) {
             .hero-inner { padding:20px 24px 22px; gap:8px; }
             .hero-matchup { font-size:var(--fs-2xl); }
@@ -482,6 +486,7 @@
 </div></div>
 
 <div class="hero-nextgame" id="hero-nextgame"><div class="hero-inner">
+    <button class="hero-share-btn" onclick="shareSchedule(this)" aria-label="Share roll call"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>
     <div class="hero-label">⚾ Next Game</div>
     <div class="hero-matchup" id="hero-matchup"></div>
     <div class="hero-meta" id="hero-meta"></div>
@@ -801,9 +806,8 @@ function renderSchedule(schedule){
             const resultBadge=(isDrive&&hasScore&&!ppd)?`<span class="sched-result ${driveWon?'sched-result-win':'sched-result-loss'}">${driveWon?'W':'L'}</span>`:'';
             // Share button for the next upcoming Drive game (roll call target)
             const gKey=(g.weekDate||'')+'|'+g.time+'|'+g.home+'|'+g.away;
-            const shareBtn=(nextDriveKey&&gKey===nextDriveKey)?`<button class="sched-share-btn" onclick="shareSchedule(this);event.stopPropagation();" aria-label="Share roll call"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></button>`:'';
             html+=`<article class="${cardCls.join(' ')}">
-              <div class="sched-card-meta"><span class="sched-card-time">${g.time}</span><span class="sched-card-loc">${g.location}</span>${resultBadge}${shareBtn}</div>
+              <div class="sched-card-meta"><span class="sched-card-time">${g.time}</span><span class="sched-card-loc">${g.location}</span>${resultBadge}</div>
               <div class="sched-card-teams">
                 ${teamHtml(g.home,homeIsDrive,hasScore&&hw)}
                 ${scoreBlock}
