@@ -28,8 +28,8 @@
             --blue:#2563eb; --blue-bright:#3b82f6; --blue-glow:#60a5fa;
             --white:#f1f5f9; --gray:#94a3b8; --gray-dark:#64748b;
             --win:#22c55e; --loss:#ef4444; --gold:#fbbf24;
-            /* Type scale — 1.25 ratio */
-            --fs-xs:11px; --fs-sm:13px; --fs-base:16px; --fs-md:20px; --fs-lg:25px; --fs-xl:32px; --fs-2xl:40px; --fs-3xl:52px;
+            /* Type scale — mobile-first 1.2 ratio, bumps up at ≥768px */
+            --fs-xs:11px; --fs-sm:13px; --fs-base:15px; --fs-md:18px; --fs-lg:20px; --fs-xl:22px; --fs-2xl:26px; --fs-3xl:34px;
             /* Font stacks */
             --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
             --font-num:'JetBrains Mono',ui-monospace,'SF Mono',monospace;
@@ -38,6 +38,12 @@
             --ease-sport:cubic-bezier(0.34,1.56,0.64,1);
             --ease-smooth:cubic-bezier(0.22,1,0.36,1);
             --ease-out:cubic-bezier(0.16,1,0.3,1);
+        }
+        /* Desktop type scale bump (≥768px) */
+        @media (min-width:768px) {
+            :root {
+                --fs-base:16px; --fs-md:20px; --fs-lg:25px; --fs-xl:32px; --fs-2xl:40px; --fs-3xl:52px;
+            }
         }
         * { margin:0; padding:0; box-sizing:border-box; }
         body { background:var(--primary-dark); color:var(--white); font-family:var(--font-sans); font-feature-settings:'cv02','cv03','cv04','cv11','ss01'; min-height:100vh; overflow-x:hidden; font-size:var(--fs-base); line-height:1.6; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
@@ -50,27 +56,39 @@
         .section { display:none; } .section.active { display:block; animation:slideInRight 0.35s var(--ease-sport); }
         .header { background:linear-gradient(135deg,var(--primary) 0%,var(--surface) 50%,var(--primary) 100%); border-bottom:3px solid var(--blue); position:relative; overflow:hidden; }
         .header::before { content:''; position:absolute; top:0;left:0;right:0;bottom:0; background:repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(37,99,235,0.03) 40px,rgba(37,99,235,0.03) 41px); }
-        .header-inner { max-width:1200px; margin:0 auto; padding:20px 20px; display:flex; align-items:center; gap:18px; position:relative; z-index:1; }
-        .team-logo { width:64px; height:64px; border-radius:50%; overflow:hidden; flex-shrink:0; box-shadow:0 4px 20px rgba(37,99,235,0.25); }
+        /* Header — mobile-first: stacked record row, small logo, tight padding */
+        .header-inner { max-width:1200px; margin:0 auto; padding:16px; display:flex; align-items:center; gap:12px 14px; flex-wrap:wrap; position:relative; z-index:1; }
+        .team-logo { width:48px; height:48px; border-radius:50%; overflow:hidden; flex-shrink:0; box-shadow:0 4px 20px rgba(37,99,235,0.25); }
         .team-logo img { width:100%; height:100%; object-fit:cover; }
-        .header-text h1 { font-family:var(--font-sans); font-weight:900; font-size:var(--fs-2xl); letter-spacing:-1.5px; line-height:0.95; background:linear-gradient(180deg,var(--white) 0%,var(--blue-glow) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .header-text { flex:1; min-width:0; }
+        .header-text h1 { font-family:var(--font-sans); font-weight:900; font-size:var(--fs-2xl); letter-spacing:-1px; line-height:1.05; background:linear-gradient(180deg,var(--white) 0%,var(--blue-glow) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
         .header-text .league-name { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-xs); color:var(--blue-bright); text-transform:uppercase; letter-spacing:1.5px; margin-top:8px; opacity:0.85; }
-        .header-right { margin-left:auto; text-align:right; }
-        .header-right .record { font-family:var(--font-num); font-weight:700; font-size:var(--fs-xl); letter-spacing:-1px; line-height:1; color:var(--white); font-variant-numeric:tabular-nums; white-space:nowrap; }
-        .header-right .record-label { font-size:var(--fs-xs); font-weight:600; color:var(--gray-dark); text-transform:uppercase; letter-spacing:2px; margin-top:4px; }
-        .header-right .last-result { font-size:var(--fs-sm); font-weight:500; margin-top:6px; cursor:pointer; opacity:0.9; transition:opacity var(--dur) var(--ease-smooth); white-space:nowrap; }
+        .header-right { margin-left:0; text-align:left; display:flex; align-items:center; gap:12px; flex-basis:100%; padding-top:12px; border-top:1px solid rgba(37,99,235,0.15); }
+        .header-right .record { font-family:var(--font-num); font-weight:700; font-size:var(--fs-lg); letter-spacing:-1px; line-height:1; color:var(--white); font-variant-numeric:tabular-nums; white-space:nowrap; }
+        .header-right .record-label { display:none; font-size:var(--fs-xs); font-weight:600; color:var(--gray-dark); text-transform:uppercase; letter-spacing:2px; margin-top:4px; }
+        .header-right .last-result { margin-left:auto; font-size:var(--fs-sm); font-weight:500; cursor:pointer; opacity:0.9; transition:opacity var(--dur) var(--ease-smooth); white-space:nowrap; }
         .header-right .last-result:hover { opacity:1; }
+        /* Header — desktop (≥768px): horizontal row, larger logo, right-aligned record block */
+        @media (min-width:768px) {
+            .header-inner { padding:20px; gap:18px; flex-wrap:nowrap; }
+            .team-logo { width:64px; height:64px; }
+            .header-text h1 { letter-spacing:-1.5px; line-height:0.95; }
+            .header-right { margin-left:auto; text-align:right; display:block; flex-basis:auto; padding-top:0; border-top:none; }
+            .header-right .record { font-size:var(--fs-xl); }
+            .header-right .record-label { display:block; }
+            .header-right .last-result { margin-left:0; margin-top:6px; }
+        }
         .countdown-bar { background:linear-gradient(90deg,var(--surface) 0%,rgba(37,99,235,0.12) 50%,var(--surface) 100%); border-bottom:1px solid rgba(37,99,235,0.15); padding:14px 20px; display:none; }
-        .countdown-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; }
+        .countdown-inner { max-width:1200px; margin:0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap; }
         .countdown-label { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:2.5px; color:var(--gray-dark); }
         .countdown-matchup { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-base); color:var(--blue-bright); }
         .countdown-timer { font-family:var(--font-num); font-weight:700; font-size:var(--fs-md); color:var(--white); background:rgba(37,99,235,0.15); padding:6px 14px; border-radius:8px; border:1px solid rgba(37,99,235,0.25); letter-spacing:0.5px; font-variant-numeric:tabular-nums; }
         .nav-wrap { background:var(--primary); position:sticky; top:0; z-index:100; }
         .nav-tabs { max-width:1200px; margin:0 auto; display:flex; border-bottom:1px solid rgba(37,99,235,0.15); }
-        .nav-tab { font-family:var(--font-sans); font-weight:700; font-size:var(--fs-sm); text-transform:uppercase; letter-spacing:1.5px; padding:18px 28px; cursor:pointer; color:var(--gray-dark); border:none; border-bottom:3px solid transparent; background:none; transition:color var(--dur) var(--ease-smooth),border-color var(--dur) var(--ease-smooth); white-space:nowrap; flex:1; text-align:center; position:relative; }
+        .nav-tab { font-family:var(--font-sans); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:0.8px; padding:15px 6px; cursor:pointer; color:var(--gray-dark); border:none; border-bottom:3px solid transparent; background:none; transition:color var(--dur) var(--ease-smooth),border-color var(--dur) var(--ease-smooth); white-space:nowrap; flex:1; text-align:center; position:relative; }
         .nav-tab:hover { color:var(--white); } .nav-tab:active { transform:scale(0.96); } .nav-tab.active { color:var(--blue-bright); border-bottom-color:var(--blue); }
         .nav-tab .live-dot { display:inline-block; width:7px; height:7px; background:var(--win); border-radius:50%; margin-left:6px; animation:livePulse 1.5s infinite; vertical-align:middle; }
-        .main { max-width:1200px; margin:0 auto; padding:28px 20px; }
+        .main { max-width:1200px; margin:0 auto; padding:20px 14px; }
         .section-header { display:flex; align-items:center; gap:14px; margin-bottom:24px; padding-bottom:14px; border-bottom:1px solid rgba(37,99,235,0.25); }
         .section-header h2 { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-lg); letter-spacing:-0.5px; }
         .section-header .accent-bar { width:4px; height:28px; background:var(--blue); border-radius:2px; }
@@ -81,19 +99,20 @@
 
         /* STANDINGS TABLE */
         .standings-table { width:100%; border-collapse:collapse; font-size:var(--fs-base); font-variant-numeric:tabular-nums; }
-        .standings-table thead th { font-family:var(--font-sans); font-weight:700; text-transform:uppercase; font-size:var(--fs-xs); letter-spacing:1.5px; color:var(--gray-dark); padding:14px 12px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.08); }
+        .standings-table thead th { font-family:var(--font-sans); font-weight:700; text-transform:uppercase; font-size:var(--fs-xs); letter-spacing:1.5px; color:var(--gray-dark); padding:12px 5px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.08); }
         .standings-table thead th:not(:first-child):not(:nth-child(2)) { text-align:center; }
         .standings-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background var(--dur) var(--ease-smooth); animation:fadeInUp 0.5s var(--ease-sport) both; }
         .standings-table tbody tr:hover { background:rgba(37,99,235,0.08); }
         .standings-table tbody tr.highlight { background:rgba(37,99,235,0.1); border-left:3px solid var(--blue); }
-        .standings-table td { padding:16px 12px; } .standings-table td:not(:first-child):not(:nth-child(2)) { text-align:center; }
+        .standings-table td { padding:14px 5px; } .standings-table td:not(:first-child):not(:nth-child(2)) { text-align:center; }
+        .standings-table .col-t { display:none; }
         .standings-table .rank { font-family:var(--font-num); font-weight:700; font-size:var(--fs-md); color:var(--gray-dark); width:32px; }
         .standings-table .team-name { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-base); letter-spacing:-0.2px; }
         .standings-table .win-pct { font-family:var(--font-num); font-weight:700; font-size:var(--fs-base); color:var(--blue-bright); }
         .gb { color:var(--gray-dark); font-family:var(--font-num); }
 
         /* GAME CARDS */
-        .games-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:16px; }
+        .games-grid { display:grid; grid-template-columns:1fr; gap:16px; }
         .game-card { background:var(--surface); border:1px solid rgba(255,255,255,0.06); border-radius:12px; overflow:hidden; transition:border-color var(--dur) var(--ease-smooth),transform var(--dur) var(--ease-smooth),box-shadow var(--dur) var(--ease-smooth); animation:fadeInUp 0.5s var(--ease-sport) both; }
         .game-card:hover { border-color:rgba(37,99,235,0.5); transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,0.3),0 0 0 1px rgba(37,99,235,0.15); }
         .game-card:active { transform:translateY(-1px) scale(0.99); }
@@ -206,8 +225,8 @@
 
         /* SCHEDULE CARDS — mobile-first */
         #schedule-wrap { display:flex; flex-direction:column; gap:20px; }
-        .sched-week { display:flex; flex-direction:column; gap:10px; scroll-margin-top:60px; }
-        .sched-week-header { display:flex; align-items:center; justify-content:space-between; padding:10px 4px 8px; border-bottom:1px solid rgba(37,99,235,0.2); cursor:default; user-select:none; }
+        .sched-week { display:flex; flex-direction:column; gap:10px; scroll-margin-top:calc(var(--nav-h,48px) + 60px); }
+        .sched-week-header { display:flex; align-items:center; justify-content:space-between; padding:10px 4px 8px; border-bottom:1px solid rgba(37,99,235,0.2); cursor:default; user-select:none; position:sticky; top:calc(var(--nav-h,48px) - 1px); z-index:30; background:var(--primary-dark); }
         .sched-week-label { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-base); letter-spacing:1px; text-transform:uppercase; color:var(--blue-bright); }
         .sched-week-current .sched-week-label { color:var(--gold); }
         .sched-week-current .sched-week-header { border-bottom-color:rgba(251,191,36,0.35); }
@@ -268,22 +287,32 @@
             .sched-week-games { gap:16px; }
         }
 
-        /* STATS TABLE */
-        .stats-table { width:100%; border-collapse:separate; border-spacing:0; font-size:var(--fs-base); font-variant-numeric:tabular-nums; }
-        .stats-table thead th { font-family:var(--font-sans); font-weight:700; text-transform:uppercase; font-size:var(--fs-xs); letter-spacing:1.2px; color:var(--gray-dark); padding:14px 12px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:0; background:var(--primary-dark); z-index:10; }
-        .stats-table thead th:first-child { text-align:left; left:0; z-index:20; width:46px; min-width:46px; max-width:46px; }
-        .stats-table thead th:nth-child(2) { text-align:left; left:46px; z-index:20; min-width:112px; }
+        /* STATS TABLE — mobile-first: dense for comparison, rate stats visible first */
+        .stats-table { width:100%; border-collapse:separate; border-spacing:0; font-size:var(--fs-sm); font-variant-numeric:tabular-nums; }
+        .stats-table thead th { font-family:var(--font-sans); font-weight:700; text-transform:uppercase; font-size:var(--fs-xs); letter-spacing:1px; color:var(--gray-dark); padding:11px 8px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.08); position:sticky; top:0; background:var(--primary-dark); z-index:10; }
+        .stats-table thead th:first-child { text-align:left; left:0; z-index:20; width:28px; min-width:28px; max-width:28px; padding-left:12px; padding-right:6px; }
+        .stats-table thead th:nth-child(2) { text-align:left; left:28px; z-index:20; min-width:88px; padding-left:4px; padding-right:8px; }
         .stats-table tbody tr { transition:background var(--dur) var(--ease-smooth); animation:fadeInUp 0.4s var(--ease-sport) both; }
         .stats-table tbody tr:hover td { background:rgba(37,99,235,0.08); }
-        .stats-table tbody tr:hover td:first-child, .stats-table tbody tr:hover td:nth-child(2) { background:#1a1f33; }
-        .stats-table td { padding:14px 12px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.04); font-family:var(--font-num); font-weight:500; color:var(--gray); }
-        .stats-table td:first-child { text-align:left; font-family:var(--font-num); font-weight:700; font-size:var(--fs-base); color:var(--gray-dark); width:46px; min-width:46px; max-width:46px; position:sticky; left:0; background:var(--primary-dark); z-index:5; }
-        .stats-table td:nth-child(2) { text-align:left; font-family:var(--font-sans); font-weight:600; font-size:var(--fs-base); color:var(--white); min-width:112px; position:sticky; left:46px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,255,255,0.18); box-shadow:10px 0 14px -6px rgba(37,99,235,0.45); letter-spacing:-0.2px; }
-        .stats-table thead th:nth-child(2) { box-shadow:10px 0 14px -6px rgba(37,99,235,0.45); }
+        .stats-table tbody tr:hover td:first-child, .stats-table tbody tr:hover td:nth-child(2) { background:#161b2e; }
+        .stats-table td { padding:10px 8px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.04); font-family:var(--font-num); font-weight:500; color:var(--gray); font-size:var(--fs-sm); }
+        .stats-table td:first-child { text-align:left; font-family:var(--font-num); font-weight:700; font-size:var(--fs-sm); color:var(--gray-dark); width:28px; min-width:28px; max-width:28px; position:sticky; left:0; background:var(--primary-dark); z-index:5; padding-left:12px; padding-right:6px; }
+        .stats-table td:nth-child(2) { text-align:left; font-family:var(--font-sans); font-weight:600; font-size:var(--fs-sm); color:var(--white); min-width:88px; position:sticky; left:28px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(37,99,235,0.15); letter-spacing:-0.2px; padding-left:4px; padding-right:8px; }
         .stat-highlight { color:var(--blue-bright); font-weight:700; } .stats-leader { color:var(--gold); font-weight:700; }
         .stats-table td.stats-leader { color:var(--gold); }
         .stats-table td.stat-highlight { color:var(--blue-bright); }
         .stats-table td.sort-col { background:rgba(37,99,235,0.05); }
+        /* Desktop: bump up, add breathing room */
+        @media (min-width:768px) {
+            .stats-table { font-size:var(--fs-base); }
+            .stats-table thead th { padding:14px 12px; letter-spacing:1.2px; }
+            .stats-table thead th:first-child { width:46px; min-width:46px; max-width:46px; padding-left:14px; }
+            .stats-table thead th:nth-child(2) { left:46px; min-width:112px; padding-left:0; }
+            .stats-table td { padding:14px 12px; font-size:var(--fs-base); }
+            .stats-table td:first-child { width:46px; min-width:46px; max-width:46px; font-size:var(--fs-base); padding-left:14px; }
+            .stats-table td:nth-child(2) { left:46px; min-width:112px; font-size:var(--fs-base); padding-left:0; box-shadow:10px 0 14px -6px rgba(37,99,235,0.4); }
+            .stats-table thead th:nth-child(2) { box-shadow:10px 0 14px -6px rgba(37,99,235,0.4); }
+        }
 
         /* ROSTER */
         .roster-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
@@ -299,7 +328,7 @@
         .rcs-val.gold { color:var(--gold); }
 
         /* ROAST */
-        .roast-card { background:linear-gradient(135deg,var(--surface) 0%,rgba(37,99,235,0.06) 100%); border:1px solid rgba(37,99,235,0.15); border-radius:16px; padding:36px 32px; position:relative; overflow:hidden; animation:fadeInUp 0.6s var(--ease-sport) both; }
+        .roast-card { background:linear-gradient(135deg,var(--surface) 0%,rgba(37,99,235,0.06) 100%); border:1px solid rgba(37,99,235,0.15); border-radius:16px; padding:26px 20px; position:relative; overflow:hidden; animation:fadeInUp 0.6s var(--ease-sport) both; }
         .roast-card::before { content:'"'; position:absolute; top:-32px; left:18px; font-family:var(--font-sans); font-weight:900; font-size:160px; color:rgba(37,99,235,0.08); line-height:1; }
         .roast-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(37,99,235,0.15); padding:7px 16px; border-radius:100px; font-family:var(--font-sans); font-weight:700; font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:1.2px; color:var(--blue-bright); margin-bottom:18px; border:1px solid rgba(37,99,235,0.25); }
         .roast-badge .dot { width:6px; height:6px; background:var(--blue-bright); border-radius:50%; animation:pulse 2s infinite; }
@@ -371,7 +400,7 @@
         .chat-send:active { transform:scale(0.94); }
         .chat-send:active { background:var(--blue-bright); transform:scale(0.92); }
         body.chat-open { overflow:hidden; }
-        @media (max-width:768px) {
+        @media (max-width:767px) {
             body.chat-open #site-content,
             body.chat-open .chat-overlay,
             body.chat-open .footer { display:none; }
@@ -392,37 +421,16 @@
             .chat-chip { font-size:12px; padding:9px 16px; }
         }
         .footer { max-width:1200px; margin:36px auto 0; padding:20px; border-top:1px solid rgba(255,255,255,0.06); text-align:center; font-size:13px; color:var(--gray-dark); letter-spacing:1px; line-height:1.6; }
-        @media (max-width:768px) {
-            :root { --fs-2xl:30px; --fs-xl:24px; --fs-lg:22px; --fs-md:18px; --fs-base:15px; --fs-sm:13px; --fs-xs:11px; }
-            .header-inner { flex-wrap:wrap; gap:12px 14px; padding:16px; align-items:center; }
-            .team-logo { width:48px; height:48px; }
-            .header-text { flex:1; min-width:0; }
-            .header-text h1 { letter-spacing:-1px; line-height:1.05; }
-            .header-right { margin-left:0; text-align:left; display:flex; align-items:center; gap:12px; flex-basis:100%; padding-top:12px; border-top:1px solid rgba(37,99,235,0.15); }
-            .header-right .record { font-size:var(--fs-lg); }
-            .header-right .record-label { display:none; }
-            .header-right .last-result { margin-top:0; margin-left:auto; font-size:var(--fs-sm); }
-            .nav-tab { padding:16px 8px; }
-            .main { padding:20px 14px; }
-            .countdown-inner { flex-direction:column; gap:6px; }
-            .standings-table td { padding:14px 8px; }
-            .standings-table thead th { padding:12px 8px; }
-            .stats-table td, .stats-table th { padding:13px 8px; }
-            .stats-table td:nth-child(2) { white-space:nowrap; left:46px; }
-            .schedule-table td { padding:13px 10px; white-space:nowrap; }
-            .games-grid { grid-template-columns:1fr; }
-            .roast-card { padding:26px 20px; }
-        }
-        @media (max-width:420px) {
-            :root { --fs-2xl:26px; --fs-xl:22px; --fs-lg:20px; }
-            .header-text h1 { letter-spacing:-1.2px; }
-            .nav-tab { padding:15px 6px; font-size:12px; letter-spacing:0.8px; }
-            .stats-table thead th:first-child, .stats-table td:first-child { width:38px; min-width:38px; max-width:38px; }
-            .stats-table thead th:nth-child(2), .stats-table td:nth-child(2) { left:38px; min-width:92px; }
-            .standings-table .col-t { display:none; }
-            .standings-table td { padding:14px 5px; }
-            .standings-table thead th { padding:12px 5px; }
-            .schedule-table .wh-sub { display:none; }
+        /* Desktop layout promotes (≥768px): horizontal countdown, larger paddings, multi-column grids, T column visible, larger sticky cells */
+        @media (min-width:768px) {
+            .nav-tab { padding:18px 28px; font-size:var(--fs-sm); letter-spacing:1.5px; }
+            .main { padding:28px 20px; }
+            .countdown-inner { flex-direction:row; gap:14px; }
+            .standings-table thead th { padding:14px 12px; }
+            .standings-table td { padding:16px 12px; }
+            .standings-table .col-t { display:table-cell; }
+            .games-grid { grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); }
+            .roast-card { padding:36px 32px; }
         }
         ::-webkit-scrollbar{display:none} *{scrollbar-width:none;-ms-overflow-style:none}
         @media (prefers-reduced-motion: reduce) {
@@ -481,8 +489,8 @@
 
     <div class="section" id="players">
         <div class="sub-tabs"><button class="sub-tab active" data-sub="stats-view">Season</button><button class="sub-tab" data-sub="career-view">Career</button><button class="sub-tab" data-sub="roster-view">Roster</button></div>
-        <div class="sub-content active" id="stats-view"><div class="table-scroll" role="region" aria-label="Season batting statistics, scroll horizontally for more columns" tabindex="0"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="stats-body"></tbody></table></div></div>
-        <div class="sub-content" id="career-view"><div class="table-scroll" role="region" aria-label="Career batting statistics, scroll horizontally for more columns" tabindex="0"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>SZN</th><th>GP</th><th>PA</th><th>AB</th><th>H</th><th>1B</th><th>2B</th><th>3B</th><th>HR</th><th>BB</th><th>RBI</th><th>R</th><th>TB</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th></tr></thead><tbody id="career-body"></tbody></table></div></div>
+        <div class="sub-content active" id="stats-view"><div class="table-scroll" role="region" aria-label="Season batting statistics, scroll horizontally for more columns" tabindex="0"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th><th>H</th><th>HR</th><th>RBI</th><th>R</th><th>TB</th><th>GP</th><th>PA</th><th>AB</th><th>1B</th><th>2B</th><th>3B</th><th>BB</th></tr></thead><tbody id="stats-body"></tbody></table></div></div>
+        <div class="sub-content" id="career-view"><div class="table-scroll" role="region" aria-label="Career batting statistics, scroll horizontally for more columns" tabindex="0"><table class="stats-table"><thead><tr><th>#</th><th>Player</th><th>SZN</th><th>AVG</th><th>OBP</th><th>SLG</th><th>OPS</th><th>H</th><th>HR</th><th>RBI</th><th>R</th><th>TB</th><th>GP</th><th>PA</th><th>AB</th><th>1B</th><th>2B</th><th>3B</th><th>BB</th></tr></thead><tbody id="career-body"></tbody></table></div></div>
         <div class="sub-content" id="roster-view"><div class="roster-grid"><div class="empty-state">Roster coming soon</div></div></div>
     </div>
 
@@ -789,7 +797,7 @@ function renderSchedule(schedule){
 
 // RENDER STATS (season)
 // SORTABLE SEASON STATS
-const STATS_KEYS=['rank','player','gp','pa','ab','h','1b','2b','3b','hr','bb','rbi','r','tb','avg','obp','slg','ops'];
+const STATS_KEYS=['rank','player','avg','obp','slg','ops','h','hr','rbi','r','tb','gp','pa','ab','1b','2b','3b','bb'];
 const STATS_LEADER_KEYS=['gp','pa','ab','h','1b','2b','3b','hr','bb','rbi','r','tb','avg','obp','slg','ops'];
 let SEASON_STATS=[];
 let SEASON_LEADERS={};
@@ -825,7 +833,7 @@ function leadCls(key,p){return isLeader(SEASON_LEADERS,key,p.player)?'stats-lead
 function rateCls(key,p){return isLeader(SEASON_LEADERS,key,p.player)?'stats-leader':'stat-highlight';}
 
 function statsRowsHTML(data){
-    return data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td class="${leadCls('gp',p)}">${p.gp}</td><td class="${leadCls('pa',p)}">${p.pa}</td><td class="${leadCls('ab',p)}">${p.ab}</td><td class="${leadCls('h',p)}">${p.h}</td><td class="${leadCls('1b',p)}">${p['1b']}</td><td class="${leadCls('2b',p)}">${p['2b']}</td><td class="${leadCls('3b',p)}">${p['3b']}</td><td class="${leadCls('hr',p)}">${p.hr}</td><td class="${leadCls('bb',p)}">${p.bb}</td><td class="${leadCls('rbi',p)}">${p.rbi}</td><td class="${leadCls('r',p)}">${p.r}</td><td class="${leadCls('tb',p)}">${p.tb}</td><td class="${rateCls('avg',p)}">${p.avg}</td><td class="${rateCls('obp',p)}">${p.obp}</td><td class="${rateCls('slg',p)}">${p.slg}</td><td class="${rateCls('ops',p)}">${p.ops}</td></tr>`).join('');
+    return data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td class="${rateCls('avg',p)}">${p.avg}</td><td class="${rateCls('obp',p)}">${p.obp}</td><td class="${rateCls('slg',p)}">${p.slg}</td><td class="${rateCls('ops',p)}">${p.ops}</td><td class="${leadCls('h',p)}">${p.h}</td><td class="${leadCls('hr',p)}">${p.hr}</td><td class="${leadCls('rbi',p)}">${p.rbi}</td><td class="${leadCls('r',p)}">${p.r}</td><td class="${leadCls('tb',p)}">${p.tb}</td><td class="${leadCls('gp',p)}">${p.gp}</td><td class="${leadCls('pa',p)}">${p.pa}</td><td class="${leadCls('ab',p)}">${p.ab}</td><td class="${leadCls('1b',p)}">${p['1b']}</td><td class="${leadCls('2b',p)}">${p['2b']}</td><td class="${leadCls('3b',p)}">${p['3b']}</td><td class="${leadCls('bb',p)}">${p.bb}</td></tr>`).join('');
 }
 
 function updateStatsSortIndicators(){
@@ -969,7 +977,7 @@ function renderRoster(stats){
 }
 
 // SORTABLE CAREER STATS
-const CAREER_KEYS=['rank','player','seasons','gp','pa','ab','h','1b','2b','3b','hr','bb','rbi','r','tb','avg','obp','slg','ops'];
+const CAREER_KEYS=['rank','player','seasons','avg','obp','slg','ops','h','hr','rbi','r','tb','gp','pa','ab','1b','2b','3b','bb'];
 const CAREER_LEADER_KEYS=['seasons','gp','pa','ab','h','1b','2b','3b','hr','bb','rbi','r','tb','avg','obp','slg','ops'];
 let CAREER_STATS=[];
 let CAREER_LEADERS={};
@@ -992,7 +1000,7 @@ function cLeadCls(key,p){return isLeader(CAREER_LEADERS,key,p.player)?'stats-lea
 function cRateCls(key,p){return isLeader(CAREER_LEADERS,key,p.player)?'stats-leader':'stat-highlight';}
 
 function careerRowsHTML(data){
-    return data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td class="${cLeadCls('seasons',p)}">${p.seasons||1}</td><td class="${cLeadCls('gp',p)}">${p.gp}</td><td class="${cLeadCls('pa',p)}">${p.pa}</td><td class="${cLeadCls('ab',p)}">${p.ab}</td><td class="${cLeadCls('h',p)}">${p.h}</td><td class="${cLeadCls('1b',p)}">${p['1b']}</td><td class="${cLeadCls('2b',p)}">${p['2b']}</td><td class="${cLeadCls('3b',p)}">${p['3b']}</td><td class="${cLeadCls('hr',p)}">${p.hr}</td><td class="${cLeadCls('bb',p)}">${p.bb}</td><td class="${cLeadCls('rbi',p)}">${p.rbi}</td><td class="${cLeadCls('r',p)}">${p.r}</td><td class="${cLeadCls('tb',p)}">${p.tb}</td><td class="${cRateCls('avg',p)}">${p.avg}</td><td class="${cRateCls('obp',p)}">${p.obp}</td><td class="${cRateCls('slg',p)}">${p.slg}</td><td class="${cRateCls('ops',p)}">${p.ops}</td></tr>`).join('');
+    return data.map((p,i)=>`<tr style="animation-delay:${i*0.04}s"><td>${i+1}</td><td>${p.player}</td><td class="${cLeadCls('seasons',p)}">${p.seasons||1}</td><td class="${cRateCls('avg',p)}">${p.avg}</td><td class="${cRateCls('obp',p)}">${p.obp}</td><td class="${cRateCls('slg',p)}">${p.slg}</td><td class="${cRateCls('ops',p)}">${p.ops}</td><td class="${cLeadCls('h',p)}">${p.h}</td><td class="${cLeadCls('hr',p)}">${p.hr}</td><td class="${cLeadCls('rbi',p)}">${p.rbi}</td><td class="${cLeadCls('r',p)}">${p.r}</td><td class="${cLeadCls('tb',p)}">${p.tb}</td><td class="${cLeadCls('gp',p)}">${p.gp}</td><td class="${cLeadCls('pa',p)}">${p.pa}</td><td class="${cLeadCls('ab',p)}">${p.ab}</td><td class="${cLeadCls('1b',p)}">${p['1b']}</td><td class="${cLeadCls('2b',p)}">${p['2b']}</td><td class="${cLeadCls('3b',p)}">${p['3b']}</td><td class="${cLeadCls('bb',p)}">${p.bb}</td></tr>`).join('');
 }
 
 function updateCareerSortIndicators(){
