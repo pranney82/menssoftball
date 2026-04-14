@@ -227,7 +227,9 @@
         #schedule-wrap { display:flex; flex-direction:column; gap:20px; }
         .sched-week { display:flex; flex-direction:column; gap:10px; scroll-margin-top:calc(var(--nav-h,48px) + 60px); }
         .sched-week-header { display:flex; align-items:center; justify-content:space-between; padding:10px 4px 8px; border-bottom:1px solid rgba(37,99,235,0.2); cursor:default; user-select:none; position:sticky; top:calc(var(--nav-h,48px) - 1px); z-index:30; background:var(--primary-dark); }
-        .sched-week-label { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-base); letter-spacing:1px; text-transform:uppercase; color:var(--blue-bright); }
+        .sched-week-label { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-base); letter-spacing:1px; text-transform:uppercase; color:var(--blue-bright); display:inline-flex; align-items:baseline; gap:12px; }
+        .sched-week-date { font-family:var(--font-sans); font-weight:600; font-size:var(--fs-xs); letter-spacing:1.2px; color:var(--gray-dark); text-transform:uppercase; }
+        .sched-week-current .sched-week-date { color:var(--gold); opacity:0.75; }
         .sched-week-current .sched-week-label { color:var(--gold); }
         .sched-week-current .sched-week-header { border-bottom-color:rgba(251,191,36,0.35); }
         .sched-week-playoff .sched-week-label { color:var(--gold); }
@@ -748,8 +750,9 @@ function renderSchedule(schedule){
         if(grp.isPlayoff)weekCls.push('sched-week-playoff');
         if(collapsible)weekCls.push('sched-week-collapsible');
         html+=`<section class="${weekCls.join(' ')}" data-week="${grp.weekDate||''}">`;
+        const firstGameDate=grp.games.find(g=>g.date)?.date||'';
         const headerLabel=grp.isPlayoff?`🏆 ${grp.week}`:grp.week;
-        html+=`<header class="sched-week-header"><span class="sched-week-label">${headerLabel}</span>${collapsible?'<span class="sched-week-chevron"></span>':''}</header>`;
+        html+=`<header class="sched-week-header"><span class="sched-week-label">${headerLabel}${firstGameDate?`<span class="sched-week-date">${firstGameDate}</span>`:''}</span>${collapsible?'<span class="sched-week-chevron"></span>':''}</header>`;
         html+='<div class="sched-week-games">';
         grp.games.forEach(g=>{
             if(g.home==='Spring Break'||g.home==='Rain Out')return;
