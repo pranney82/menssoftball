@@ -62,15 +62,19 @@
         .topbar-logo img { width:100%; height:100%; object-fit:cover; }
         .topbar-text { flex:1; min-width:0; display:flex; flex-direction:column; gap:1px; }
         .topbar-name { font-family:var(--font-sans); font-weight:800; font-size:var(--fs-base); letter-spacing:-0.3px; line-height:1.1; color:var(--white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .topbar-meta { font-family:var(--font-sans); font-weight:500; font-size:10px; color:var(--gray-dark); letter-spacing:0.3px; line-height:1.2; display:flex; gap:4px; flex-wrap:wrap; }
+        .topbar-meta { font-family:var(--font-sans); font-weight:500; font-size:11px; color:var(--gray-dark); letter-spacing:0.2px; line-height:1.3; display:flex; flex-direction:column; gap:2px; }
+        .topbar-stats { display:flex; gap:8px; align-items:center; }
+        .topbar-sep { display:none; }
         .topbar-record { font-family:var(--font-num); font-weight:700; color:var(--white); font-variant-numeric:tabular-nums; }
         .topbar-last { cursor:pointer; font-weight:600; }
         .topbar-last:empty { display:none; }
+        .topbar-last:empty + * { display:none; }
         @media (min-width:768px) {
             .topbar-inner { padding:14px 20px; gap:14px; }
             .topbar-logo { width:48px; height:48px; }
             .topbar-name { font-size:var(--fs-lg); letter-spacing:-0.5px; }
-            .topbar-meta { font-size:var(--fs-xs); }
+            .topbar-meta { font-size:var(--fs-xs); flex-direction:row; gap:8px; align-items:center; flex-wrap:wrap; }
+            .topbar-sep { display:inline; }
         }
 
         /* HERO NEXT-GAME CARD — the landing focal point */
@@ -473,7 +477,7 @@
     <div class="topbar-logo"><img src="logo.png" alt="Drive"></div>
     <div class="topbar-text">
         <div class="topbar-name">Drive Auto Repair</div>
-        <div class="topbar-meta"><span id="topbar-league">Hobgood Intermediate</span> · <span id="topbar-record" class="topbar-record">0-0</span> · <span id="topbar-last" class="topbar-last" onclick="goToScores()"></span></div>
+        <div class="topbar-meta"><span id="topbar-league">Hobgood Intermediate</span><span class="topbar-stats"><span class="topbar-sep">·</span><span id="topbar-record" class="topbar-record">0-0</span><span>·</span><span id="topbar-last" class="topbar-last" onclick="goToScores()"></span></span></div>
     </div>
 </div></div>
 
