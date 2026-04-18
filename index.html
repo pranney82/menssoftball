@@ -1639,18 +1639,13 @@ function shareSchedule(btn){
     if(!target){target=driveGames[driveGames.length-1];}
     if(!target){return;}
     const opponent=target.home.toLowerCase().includes('drive')?target.away:target.home;
-    // Format: Roll Call as the header, essential info only
-    const lines=[];
-    lines.push('⚾ Roll Call:');
-    lines.push('Drive vs '+opponent);
-    lines.push(target.date+' · '+target.time);
+    const rollText='⚾ Roll Call: Drive vs '+opponent+' · '+target.date+' · '+target.time;
     const url='https://pranney82.github.io/menssoftball/';
-    const text=lines.join('\n');
-    const title='Drive Softball — Roll Call';
-    if(navigator.share){navigator.share({title:title,text:text,url:url}).catch(()=>{});}
+    // Native share: use title + url only (no text) so the OG preview card renders
+    if(navigator.share){navigator.share({title:rollText,url:url}).catch(()=>{});}
     else{
         const orig=btn.innerHTML;
-        navigator.clipboard.writeText(text+'\n'+url).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=orig;},2000);}).catch(()=>{});
+        navigator.clipboard.writeText(rollText+'\n'+url).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=orig;},2000);}).catch(()=>{});
     }
 }
 
@@ -1661,7 +1656,7 @@ function shareRoast(btn){
     if(teaser.length>140){teaser=teaser.substring(0,140).replace(/\s\S*$/,'')+'…';}
     const url='https://pranney82.github.io/menssoftball/#roast';
     const title='Drive Auto Repair — '+week;
-    if(navigator.share){navigator.share({title:title,text:'⚾ '+teaser,url:url}).catch(()=>{});}
+    if(navigator.share){navigator.share({title:'⚾ '+teaser,url:url}).catch(()=>{});}
     else{navigator.clipboard.writeText('⚾ '+teaser+'\n\n'+url).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='🔗 Share Roast';},2000);}).catch(()=>{});}
 }
 
