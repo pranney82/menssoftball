@@ -1644,19 +1644,25 @@ function shareSchedule(btn){
     lines.push('⚾ Roll Call:');
     lines.push('Drive vs '+opponent);
     lines.push(target.date+' · '+target.time);
+    const url='https://pranney82.github.io/menssoftball/';
     const text=lines.join('\n');
     const title='Drive Softball — Roll Call';
-    if(navigator.share){navigator.share({title:title,text:text}).catch(()=>{});}
+    if(navigator.share){navigator.share({title:title,text:text,url:url}).catch(()=>{});}
     else{
         const orig=btn.innerHTML;
-        navigator.clipboard.writeText(text).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=orig;},2000);}).catch(()=>{});
+        navigator.clipboard.writeText(text+'\n'+url).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=orig;},2000);}).catch(()=>{});
     }
 }
 
 function shareRoast(btn){
-    const card=btn.closest('.roast-card');const text=card.querySelector('.roast-text').innerText;const week=card.querySelector('.roast-badge')?.innerText?.trim()||'Weekly Roast';
-    if(navigator.share){navigator.share({title:'Drive Auto Repair — '+week,text:text,url:'https://pranney82.github.io/menssoftball/'}).catch(()=>{});}
-    else{navigator.clipboard.writeText(text+'\n\nhttps://pranney82.github.io/menssoftball/').then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='🔗 Share Roast';},2000);}).catch(()=>{});}
+    const card=btn.closest('.roast-card');const fullText=card.querySelector('.roast-text').innerText;const week=card.querySelector('.roast-badge')?.innerText?.trim()||'Weekly Roast';
+    // Build a short teaser: first ~140 chars ending at a word boundary
+    let teaser=fullText.replace(/\s+/g,' ').trim();
+    if(teaser.length>140){teaser=teaser.substring(0,140).replace(/\s\S*$/,'')+'…';}
+    const url='https://pranney82.github.io/menssoftball/#roast';
+    const title='Drive Auto Repair — '+week;
+    if(navigator.share){navigator.share({title:title,text:'⚾ '+teaser,url:url}).catch(()=>{});}
+    else{navigator.clipboard.writeText('⚾ '+teaser+'\n\n'+url).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='🔗 Share Roast';},2000);}).catch(()=>{});}
 }
 
 // INIT
@@ -1683,6 +1689,9 @@ async function init(){
     buildChatContext({standings,schedule,stats,career,roasts,rules});
 
     checkGameDay();
+    // Hash routing: #roast, #standings, #games, #players
+    const hash=window.location.hash.replace('#','');
+    if(hash){const tab=document.querySelector(`.nav-tab[data-tab="${hash}"]`);if(tab){tab.click();}}
 }
 init();
 </script>
