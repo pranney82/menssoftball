@@ -1062,7 +1062,9 @@
     "time": "7:00 PM",
     "home": "Dirt Dawgs",
     "away": "Motiv8",
-    "location": "HP2"
+    "location": "HP2",
+    "homeScore": 14,
+    "awayScore": 10
   },
   {
     "week": "Week 8",
@@ -1071,7 +1073,9 @@
     "time": "8:00 PM",
     "home": "HS Legends/MOST",
     "away": "Rocket Power",
-    "location": "HP2"
+    "location": "HP2",
+    "homeScore": 17,
+    "awayScore": 26
   },
   {
     "week": "Week 8",
