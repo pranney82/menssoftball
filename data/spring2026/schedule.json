@@ -1106,7 +1106,7 @@
         "player": "Jackson",
         "byInning": [],
         "totals": {
-          "1b": 3,
+          "1b": 2,
           "2b": 0,
           "3b": 0,
           "hr": 0,
@@ -1114,8 +1114,8 @@
           "sac": 0,
           "fc": 0,
           "e": 0,
-          "out": 1,
-          "r": 3,
+          "out": 2,
+          "r": 1,
           "rbi": 1
         }
       },
@@ -1123,42 +1123,8 @@
         "player": "Peter",
         "byInning": [],
         "totals": {
-          "1b": 1,
+          "1b": 0,
           "2b": 1,
-          "3b": 1,
-          "hr": 1,
-          "bb": 0,
-          "sac": 0,
-          "fc": 0,
-          "e": 0,
-          "out": 0,
-          "r": 4,
-          "rbi": 5
-        }
-      },
-      {
-        "player": "Doug",
-        "byInning": [],
-        "totals": {
-          "1b": 1,
-          "2b": 1,
-          "3b": 0,
-          "hr": 0,
-          "bb": 0,
-          "sac": 1,
-          "fc": 0,
-          "e": 0,
-          "out": 1,
-          "r": 2,
-          "rbi": 3
-        }
-      },
-      {
-        "player": "Austin W",
-        "byInning": [],
-        "totals": {
-          "1b": 1,
-          "2b": 0,
           "3b": 0,
           "hr": 1,
           "bb": 0,
@@ -1166,49 +1132,49 @@
           "fc": 0,
           "e": 0,
           "out": 2,
-          "r": 1,
-          "rbi": 2
-        }
-      },
-      {
-        "player": "Max",
-        "byInning": [],
-        "totals": {
-          "1b": 2,
-          "2b": 0,
-          "3b": 1,
-          "hr": 0,
-          "bb": 0,
-          "sac": 0,
-          "fc": 0,
-          "e": 0,
-          "out": 1,
-          "r": 1,
-          "rbi": 2
+          "r": 3,
+          "rbi": 1
         }
       },
       {
         "player": "Smitty",
         "byInning": [],
         "totals": {
-          "1b": 1,
+          "1b": 2,
           "2b": 0,
-          "3b": 1,
+          "3b": 0,
           "hr": 0,
+          "bb": 1,
+          "sac": 1,
+          "fc": 0,
+          "e": 0,
+          "out": 0,
+          "r": 1,
+          "rbi": 2
+        }
+      },
+      {
+        "player": "Austin W",
+        "byInning": [],
+        "totals": {
+          "1b": 2,
+          "2b": 0,
+          "3b": 0,
+          "hr": 1,
           "bb": 0,
           "sac": 0,
           "fc": 0,
           "e": 0,
-          "out": 2,
-          "r": 1,
-          "rbi": 1
+          "out": 1,
+          "r": 2,
+          "rbi": 4
         }
       },
       {
-        "player": "Jason",
+        "player": "Max",
         "byInning": [],
         "totals": {
-          "1b": 2,
+          "1b": 3,
           "2b": 1,
           "3b": 0,
           "hr": 0,
@@ -1216,8 +1182,42 @@
           "sac": 0,
           "fc": 0,
           "e": 0,
-          "out": 1,
-          "r": 3,
+          "out": 0,
+          "r": 2,
+          "rbi": 0
+        }
+      },
+      {
+        "player": "Armando",
+        "byInning": [],
+        "totals": {
+          "1b": 1,
+          "2b": 0,
+          "3b": 0,
+          "hr": 0,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 3,
+          "r": 0,
+          "rbi": 0
+        }
+      },
+      {
+        "player": "Jason",
+        "byInning": [],
+        "totals": {
+          "1b": 1,
+          "2b": 0,
+          "3b": 0,
+          "hr": 0,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 3,
+          "r": 1,
           "rbi": 2
         }
       },
@@ -1225,7 +1225,24 @@
         "player": "Ryan",
         "byInning": [],
         "totals": {
-          "1b": 2,
+          "1b": 0,
+          "2b": 0,
+          "3b": 0,
+          "hr": 0,
+          "bb": 2,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 2,
+          "r": 1,
+          "rbi": 1
+        }
+      },
+      {
+        "player": "Brad",
+        "byInning": [],
+        "totals": {
+          "1b": 0,
           "2b": 1,
           "3b": 0,
           "hr": 0,
@@ -1233,13 +1250,30 @@
           "sac": 0,
           "fc": 0,
           "e": 0,
-          "out": 0,
-          "r": 2,
-          "rbi": 1
+          "out": 3,
+          "r": 1,
+          "rbi": 0
         }
       },
       {
-        "player": "Mitch",
+        "player": "Luc",
+        "byInning": [],
+        "totals": {
+          "1b": 0,
+          "2b": 1,
+          "3b": 0,
+          "hr": 2,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 0,
+          "r": 3,
+          "rbi": 5
+        }
+      },
+      {
+        "player": "Doug",
         "byInning": [],
         "totals": {
           "1b": 2,
@@ -1251,25 +1285,8 @@
           "fc": 0,
           "e": 0,
           "out": 1,
-          "r": 2,
-          "rbi": 1
-        }
-      },
-      {
-        "player": "Matthew",
-        "byInning": [],
-        "totals": {
-          "1b": 1,
-          "2b": 1,
-          "3b": 0,
-          "hr": 0,
-          "bb": 0,
-          "sac": 0,
-          "fc": 0,
-          "e": 0,
-          "out": 1,
-          "r": 2,
-          "rbi": 3
+          "r": 1,
+          "rbi": 0
         }
       }
     ]

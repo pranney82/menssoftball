@@ -1,8 +1,8 @@
 [
-  { "rank": 1, "team": "Rocket Power", "w": 6, "l": 0, "t": 0, "gb": "--", "gp": 6, "pct": "1.000", "streak": "W6", "coach": "Landry" },
-  { "rank": 2, "team": "Drive", "w": 4, "l": 2, "t": 0, "gb": "2", "gp": 6, "pct": ".667", "streak": "L1", "coach": "Ranney" },
-  { "rank": 3, "team": "Flamingos", "w": 3, "l": 3, "t": 0, "gb": "3", "gp": 6, "pct": ".500", "streak": "W2", "coach": "Herron" },
-  { "rank": 4, "team": "Dirt Dawgs", "w": 3, "l": 3, "t": 0, "gb": "3", "gp": 6, "pct": ".500", "streak": "W1", "coach": "Stubblefield" },
-  { "rank": 5, "team": "HS Legends/MOST", "w": 1, "l": 5, "t": 0, "gb": "5", "gp": 6, "pct": ".167", "streak": "L5", "coach": "Stewart" },
-  { "rank": 6, "team": "Motiv8", "w": 1, "l": 5, "t": 0, "gb": "5", "gp": 6, "pct": ".167", "streak": "L2", "coach": "Harrison" }
+  { "rank": 1, "team": "Rocket Power", "w": 7, "l": 0, "t": 0, "gb": "--", "gp": 7, "pct": "1.000", "streak": "W7", "coach": "Landry" },
+  { "rank": 2, "team": "Dirt Dawgs", "w": 4, "l": 3, "t": 0, "gb": "3", "gp": 7, "pct": ".571", "streak": "W2", "coach": "Stubblefield" },
+  { "rank": 3, "team": "Drive", "w": 4, "l": 3, "t": 0, "gb": "3", "gp": 7, "pct": ".571", "streak": "L2", "coach": "Ranney" },
+  { "rank": 4, "team": "Flamingos", "w": 3, "l": 4, "t": 0, "gb": "4", "gp": 7, "pct": ".429", "streak": "L1", "coach": "Herron" },
+  { "rank": 5, "team": "HS Legends/MOST", "w": 2, "l": 5, "t": 0, "gb": "5", "gp": 7, "pct": ".286", "streak": "W1", "coach": "Stewart" },
+  { "rank": 6, "team": "Motiv8", "w": 1, "l": 6, "t": 0, "gb": "6", "gp": 7, "pct": ".143", "streak": "L3", "coach": "Harrison" }
 ]
