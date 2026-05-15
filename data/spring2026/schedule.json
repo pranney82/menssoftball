@@ -1499,7 +1499,9 @@
     "time": "7:00 PM",
     "home": "Rocket Power",
     "away": "Flamingos",
-    "location": "HP2"
+    "location": "HP2",
+    "homeScore": 2,
+    "awayScore": 0
   },
   {
     "week": "Week 10",
@@ -1508,7 +1510,171 @@
     "time": "8:00 PM",
     "home": "Dirt Dawgs",
     "away": "Drive",
-    "location": "HP2"
+    "location": "HP2",
+    "homeScore": 5,
+    "awayScore": 18,
+    "boxScore": [
+      {
+        "player": "Jackson",
+        "totals": {
+          "1b": 1,
+          "2b": 0,
+          "3b": 0,
+          "hr": 0,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 3,
+          "r": 1,
+          "rbi": 1
+        }
+      },
+      {
+        "player": "Max",
+        "totals": {
+          "1b": 3,
+          "2b": 0,
+          "3b": 1,
+          "hr": 0,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 0,
+          "r": 4,
+          "rbi": 1
+        }
+      },
+      {
+        "player": "Mitch",
+        "totals": {
+          "1b": 2,
+          "2b": 0,
+          "3b": 0,
+          "hr": 1,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 1,
+          "r": 4,
+          "rbi": 4
+        }
+      },
+      {
+        "player": "Austin W",
+        "totals": {
+          "1b": 2,
+          "2b": 0,
+          "3b": 0,
+          "hr": 1,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 1,
+          "r": 3,
+          "rbi": 4
+        }
+      },
+      {
+        "player": "Smitty",
+        "totals": {
+          "1b": 1,
+          "2b": 0,
+          "3b": 0,
+          "hr": 0,
+          "bb": 1,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 2,
+          "r": 1,
+          "rbi": 0
+        }
+      },
+      {
+        "player": "Doug",
+        "totals": {
+          "1b": 4,
+          "2b": 0,
+          "3b": 0,
+          "hr": 0,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 0,
+          "r": 1,
+          "rbi": 1
+        }
+      },
+      {
+        "player": "Luc",
+        "totals": {
+          "1b": 1,
+          "2b": 1,
+          "3b": 0,
+          "hr": 0,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 2,
+          "r": 2,
+          "rbi": 5
+        }
+      },
+      {
+        "player": "Ryan",
+        "totals": {
+          "1b": 2,
+          "2b": 0,
+          "3b": 0,
+          "hr": 0,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 2,
+          "r": 0,
+          "rbi": 1
+        }
+      },
+      {
+        "player": "Jason",
+        "totals": {
+          "1b": 2,
+          "2b": 1,
+          "3b": 0,
+          "hr": 0,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 1,
+          "r": 1,
+          "rbi": 1
+        }
+      },
+      {
+        "player": "Brad",
+        "totals": {
+          "1b": 3,
+          "2b": 0,
+          "3b": 0,
+          "hr": 0,
+          "bb": 0,
+          "sac": 0,
+          "fc": 0,
+          "e": 0,
+          "out": 1,
+          "r": 1,
+          "rbi": 0
+        }
+      }
+    ]
   },
   {
     "week": "Week 10",
@@ -1517,7 +1683,9 @@
     "time": "9:00 PM",
     "home": "HS Legends/MOST",
     "away": "Motiv8",
-    "location": "HP2"
+    "location": "HP2",
+    "homeScore": 16,
+    "awayScore": 14
   },
   {
     "week": "Playoff Round 1",
