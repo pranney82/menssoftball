@@ -1692,38 +1692,44 @@
     "date": "Mon 5/11",
     "weekDate": "2026-05-11",
     "time": "7:00 PM",
-    "home": "4th Seed",
-    "away": "5th Seed",
+    "home": "HS Legends/MOST",
+    "away": "Flamingos",
     "location": "HP2",
-    "playoff": true
+    "playoff": true,
+    "homeScore": 12,
+    "awayScore": 11
   },
   {
     "week": "Playoff Round 1",
     "date": "Mon 5/11",
     "weekDate": "2026-05-11",
     "time": "8:00 PM",
-    "home": "3rd Seed",
-    "away": "6th Seed",
+    "home": "Dirt Dawgs",
+    "away": "Motiv8",
     "location": "HP2",
-    "playoff": true
+    "playoff": true,
+    "homeScore": 6,
+    "awayScore": 20
   },
   {
     "week": "Playoff Round 2",
     "date": "Mon 5/11",
     "weekDate": "2026-05-11",
     "time": "9:00 PM",
-    "home": "1st Seed",
-    "away": "G1 Winner",
+    "home": "Rocket Power",
+    "away": "HS Legends/MOST",
     "location": "HP2",
-    "playoff": true
+    "playoff": true,
+    "homeScore": 14,
+    "awayScore": 7
   },
   {
     "week": "Playoff Round 2",
     "date": "Mon 5/18",
     "weekDate": "2026-05-18",
     "time": "7:00 PM",
-    "home": "2nd Seed",
-    "away": "G2 Winner",
+    "home": "Drive",
+    "away": "Motiv8",
     "location": "HP2",
     "playoff": true
   },
@@ -1732,7 +1738,7 @@
     "date": "Mon 5/18",
     "weekDate": "2026-05-18",
     "time": "8:15 PM",
-    "home": "G3 Winner",
+    "home": "Rocket Power",
     "away": "G4 Winner",
     "location": "HP2",
     "playoff": true
