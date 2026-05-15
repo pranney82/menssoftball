@@ -1088,7 +1088,7 @@ function renderRoasts(data){
 // HERO NEXT-GAME CARD + COUNTDOWN
 function initCountdown(schedule){
     const now=new Date();
-    const driveGames=schedule.filter(g=>(g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive'))&&g.homeScore===undefined&&!g.playoff&&!g.note);
+    const driveGames=schedule.filter(g=>(g.home.toLowerCase().includes('drive')||g.away.toLowerCase().includes('drive'))&&g.homeScore===undefined&&!g.note);
     for(const g of driveGames){
         if(!g.weekDate)continue;
         const[h,m]=g.time.replace(/ [AP]M/,'').split(':');let hr=parseInt(h);if(g.time.includes('PM')&&hr!==12)hr+=12;
