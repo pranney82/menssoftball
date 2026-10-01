@@ -23,8 +23,8 @@
     <link rel="manifest" href="manifest.webmanifest">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="SOARD">
-    <meta name="application-name" content="SOARD">
+    <meta name="apple-mobile-web-app-title" content="Softball">
+    <meta name="application-name" content="Softball">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -313,6 +313,14 @@
 
         .footer{border-top:1px solid var(--line);padding:24px var(--gutter) calc(100px + env(safe-area-inset-bottom,0px));text-align:center;font-size:var(--fs-sm);color:var(--text-3)}
         .footer .mom{color:var(--sun);font-weight:700;letter-spacing:.5px}
+        .sponsor{display:flex;gap:14px;align-items:flex-start;max-width:560px;margin:0 auto 22px;padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);text-align:left;color:var(--text-2);text-decoration:none;transition:border-color var(--dur) var(--ease)}
+        .sponsor:hover{border-color:var(--line-2)}
+        .sponsor:active{transform:scale(.99)}
+        .sponsor img{flex-shrink:0;border-radius:50%}
+        .sponsor-text{display:flex;flex-direction:column;gap:3px;font-size:var(--fs-sm);line-height:1.45}
+        .sponsor-kicker{font-size:var(--fs-xs);color:var(--text-3)}
+        .sponsor b{font-family:var(--font-display);font-size:var(--fs-md);color:var(--text)}
+        .sponsor-link{margin-top:6px;color:var(--sun);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 
         /* ===== Chat (layout retained, restyled) ===== */
         .chat-bubble{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));width:58px;height:58px;background:var(--sun);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:1000;box-shadow:0 10px 30px rgba(0,0,0,.45);transition:transform var(--dur) var(--ease),opacity var(--dur) var(--ease)}
@@ -453,7 +461,13 @@
     </section>
 </main>
 
-<footer class="footer">Sunshine on a Ranney Day, men's slow pitch<br><span class="mom">POWERED BY YOUR MOM</span></footer>
+<footer class="footer">
+    <a class="sponsor" href="https://sunshineonaranneyday.com/" target="_blank" rel="noopener">
+        <img src="logo.png" alt="" width="52" height="52">
+        <span class="sponsor-text"><span class="sponsor-kicker">Our sponsor</span><b>Sunshine on a Ranney Day</b><span>A nonprofit that builds free home makeovers for kids with special needs: dream bedrooms, accessible bathrooms and therapy rooms.</span><span class="sponsor-link">Learn about Sunshine</span></span>
+    </a>
+    <div class="footer-line">Sunshine on a Ranney Day, men's slow pitch<br><span class="mom">POWERED BY YOUR MOM</span></div>
+</footer>
 </div><!-- /site-content -->
 
 <!-- FLOATING CHAT -->
