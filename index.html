@@ -130,8 +130,23 @@
         .nav-tab[aria-selected="true"]{color:var(--text)}
         .tab-ink{position:absolute;bottom:-1px;left:0;height:3px;border-radius:3px 3px 0 0;background:var(--sun);width:0;transition:transform var(--dur-slow) var(--ease-out),width var(--dur-slow) var(--ease-out)}
         .nav-tab .live-dot{display:inline-block;width:7px;height:7px;background:var(--win);border-radius:50%;margin-left:6px;vertical-align:middle;animation:livePulse 1.6s infinite}
+        @media (max-width:767px){.main{padding-bottom:40px}}
         @media (min-width:768px){.nav-tabs{max-width:960px;margin:0 auto;padding:0 var(--gutter)}.nav-tab{flex:0 0 auto;padding:0 18px}.nav-tab:first-child{padding-left:0}}
 
+        .tab-ic,.nav-ask{display:none}
+        @media (max-width:767px){
+            .nav-wrap{position:fixed;top:auto;bottom:0;left:0;right:0;display:flex;border-bottom:0;border-top:1px solid var(--line);background:rgba(26,27,31,.94);padding-bottom:env(safe-area-inset-bottom,0px)}
+            .nav-tabs{flex:4}
+            .nav-tab,.nav-ask{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:58px;font-size:11px;font-weight:600;color:var(--text-3)}
+            .tab-ic{display:block;width:23px;height:23px}
+            .nav-tab[aria-selected="true"]{color:var(--sun)}
+            .nav-ask{color:var(--text-2)}
+            .nav-ask:active,.nav-tab:active{transform:scale(.94)}
+            .tab-ink{top:0;bottom:auto;height:2px;border-radius:0 0 2px 2px}
+            .nav-tab .live-dot{position:absolute;top:9px;margin-left:16px;width:7px;height:7px}
+            .chat-bubble{display:none!important}
+            .footer{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+        }
         .main{padding-top:20px;padding-bottom:120px}
         .section{display:none}
         .section.active{display:block;animation:fadeIn var(--dur) var(--ease) both}
@@ -398,12 +413,12 @@
 </section>
 
 <nav class="nav-wrap" aria-label="Sections"><div class="nav-tabs" role="tablist" id="main-tabs">
-    <button class="nav-tab active" role="tab" id="tab-standings" aria-selected="true" aria-controls="standings" data-tab="standings">Standings</button>
-    <button class="nav-tab" role="tab" id="games-tab" aria-selected="false" aria-controls="games" data-tab="games" tabindex="-1">Games</button>
-    <button class="nav-tab" role="tab" id="tab-players" aria-selected="false" aria-controls="players" data-tab="players" tabindex="-1">Players</button>
-    <button class="nav-tab" role="tab" id="tab-roast" aria-selected="false" aria-controls="roast" data-tab="roast" tabindex="-1">Roast</button>
+    <button class="nav-tab active" role="tab" id="tab-standings" aria-selected="true" aria-controls="standings" data-tab="standings"><svg class="tab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Standings</button>
+    <button class="nav-tab" role="tab" id="games-tab" aria-selected="false" aria-controls="games" data-tab="games" tabindex="-1"><svg class="tab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Games</button>
+    <button class="nav-tab" role="tab" id="tab-players" aria-selected="false" aria-controls="players" data-tab="players" tabindex="-1"><svg class="tab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.8c1.6.8 2.7 2.5 3 5.2"/></svg>Players</button>
+    <button class="nav-tab" role="tab" id="tab-roast" aria-selected="false" aria-controls="roast" data-tab="roast" tabindex="-1"><svg class="tab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22c4.4 0 7-3 7-7 0-4.5-3.5-6.5-4.5-10.5C13 6 12 8 12 10c-1.5-1-2.5-2.5-2.5-4.5C7 7.5 5 10.5 5 15c0 4 2.6 7 7 7z"/></svg>Roast</button>
     <span class="tab-ink" aria-hidden="true"></span>
-</div></nav>
+</div><button class="nav-ask" onclick="openChat()" aria-label="Ask the team assistant"><svg class="tab-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5z"/></svg><span class="tl">Ask</span></button></nav>
 
 <main class="wrap main">
     <section class="section active" id="standings" role="tabpanel" aria-labelledby="tab-standings">
@@ -513,12 +528,12 @@ function selectTab(tab,{focus=false,scroll=true}={}){
     if(isMain){
         // keep the sub-tab indicator correct in the newly shown section
         const sec=document.getElementById(tab.dataset.tab);sec&&sec.querySelectorAll('.sub-tabs').forEach(placeInk);
-        if(scroll){const nav=document.querySelector('.nav-wrap');const navTop=nav.getBoundingClientRect().top+window.scrollY;if(window.scrollY>navTop)window.scrollTo({top:navTop,behavior:reduceMotion()?'auto':'smooth'});}
+        if(scroll){const mob=window.matchMedia('(max-width:767px)').matches;const anchor=mob?document.querySelector('.main'):document.querySelector('.nav-wrap');const top=anchor.getBoundingClientRect().top+window.scrollY-(mob?8:0);if(window.scrollY>top)window.scrollTo({top,behavior:reduceMotion()?'auto':'smooth'});}
         if(history.replaceState)history.replaceState(null,'','#'+tab.dataset.tab);
     }
 }
 document.querySelectorAll('[role="tablist"]').forEach(list=>{
-    list.querySelectorAll('.nav-tab').forEach(t=>{t.innerHTML='<span class="tl">'+t.innerHTML+'</span>';});
+    list.querySelectorAll('.nav-tab').forEach(t=>{const svg=t.querySelector('svg');const txt=t.textContent.trim();t.innerHTML=(svg?svg.outerHTML:'')+'<span class="tl">'+txt+'</span>';});
     const tabs=[...list.querySelectorAll('[role="tab"]')];
     tabs.forEach((t,i)=>{
         t.addEventListener('click',()=>selectTab(t));
