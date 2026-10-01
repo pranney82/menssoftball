@@ -320,7 +320,8 @@
         .sponsor-text{display:flex;flex-direction:column;gap:3px;font-size:var(--fs-sm);line-height:1.45}
         .sponsor-kicker{font-size:var(--fs-xs);color:var(--text-3)}
         .sponsor b{font-family:var(--font-display);font-size:var(--fs-md);color:var(--text)}
-        .sponsor-link{margin-top:6px;color:var(--sun);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+        .sponsor-link{margin-top:4px;color:var(--text-3);font-weight:500;font-size:var(--fs-xs);text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:3px}
+        .sponsor:hover .sponsor-link{color:var(--text-2)}
 
         /* ===== Chat (layout retained, restyled) ===== */
         .chat-bubble{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));width:58px;height:58px;background:var(--sun);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:1000;box-shadow:0 10px 30px rgba(0,0,0,.45);transition:transform var(--dur) var(--ease),opacity var(--dur) var(--ease)}
@@ -464,7 +465,7 @@
 <footer class="footer">
     <a class="sponsor" href="https://sunshineonaranneyday.com/" target="_blank" rel="noopener">
         <img src="logo.png" alt="" width="52" height="52">
-        <span class="sponsor-text"><span class="sponsor-kicker">Our sponsor</span><b>Sunshine on a Ranney Day</b><span>A nonprofit that builds free home makeovers for kids with special needs: dream bedrooms, accessible bathrooms and therapy rooms.</span><span class="sponsor-link">Learn about Sunshine</span></span>
+        <span class="sponsor-text"><span class="sponsor-kicker">Our sponsor</span><b>Sunshine on a Ranney Day</b><span>A nonprofit that builds free home makeovers for kids with special needs: dream bedrooms, accessible bathrooms and therapy rooms.</span><span class="sponsor-link">sunshineonaranneyday.com</span></span>
     </a>
     <div class="footer-line">Sunshine on a Ranney Day, men's slow pitch<br><span class="mom">POWERED BY YOUR MOM</span></div>
 </footer>
