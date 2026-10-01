@@ -24,7 +24,10 @@
       "folder": "fall2026",
       "teamName": "Sunshine on a Ranney Day",
       "league": "Cherokee Rec Wednesday Men's Slow Pitch",
-      "leagueName": "Driven"
+      "leagueName": "Driven",
+      "standingsNote": "Top 4 get a bye to playoff round 2. Everyone else plays round 1 on Oct 14.",
+      "byeCut": 4,
+      "leagueShort": "Wednesday men's league"
     }
   ],
   "team": "Sunshine on a Ranney Day",
