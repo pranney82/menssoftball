@@ -1,1 +1,75 @@
-[]
+[
+  {
+    "number": 1,
+    "name": "Jackson Smith",
+    "statsName": "Jackson",
+    "jerseySize": "L"
+  },
+  {
+    "number": 4,
+    "name": "Luc Voorhees",
+    "statsName": "Luc",
+    "jerseySize": "L"
+  },
+  {
+    "number": 5,
+    "name": "Doug Smith",
+    "statsName": "Doug",
+    "jerseySize": "XL"
+  },
+  {
+    "number": 7,
+    "name": "Ryan Harrison",
+    "statsName": "Ryan",
+    "jerseySize": "S"
+  },
+  {
+    "number": 8,
+    "name": "Max Wilson",
+    "statsName": "Max",
+    "jerseySize": "L"
+  },
+  {
+    "number": 11,
+    "name": "Mitchell Taylor",
+    "statsName": "Mitchell",
+    "jerseySize": "2XL"
+  },
+  {
+    "number": 21,
+    "name": "Peter Ranney",
+    "statsName": "Peter",
+    "jerseySize": "XL",
+    "role": "Coach"
+  },
+  {
+    "number": 23,
+    "name": "Austin Cunningham",
+    "statsName": "Austin C",
+    "jerseySize": "L"
+  },
+  {
+    "number": 33,
+    "name": "Christian Garguilo",
+    "statsName": "Christian",
+    "jerseySize": "XL"
+  },
+  {
+    "number": 34,
+    "name": "Spartacus",
+    "statsName": "Spartacus",
+    "jerseySize": "L"
+  },
+  {
+    "number": 35,
+    "name": "Woody",
+    "statsName": "Woody",
+    "jerseySize": "XL"
+  },
+  {
+    "number": 55,
+    "name": "Zach McGhee",
+    "statsName": "Zach",
+    "jerseySize": "3XL"
+  }
+]

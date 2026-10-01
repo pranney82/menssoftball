@@ -1,13 +1,36 @@
 {
   "activeSeason": "fall2026",
   "seasons": [
-    { "id": "spring2026", "label": "Spring 2026", "folder": "spring2026", "teamName": "Drive Auto Repair" },
-    { "id": "summer2026", "label": "Summer 2026", "folder": "summer2026", "teamName": "Sunshine on a Ranney Day", "format": "One Pitch", "noStats": true, "champion": true, "championNote": "One Pitch Champions" },
-    { "id": "fall2026", "label": "Fall 2026", "folder": "fall2026", "teamName": "Sunshine on a Ranney Day" }
+    {
+      "id": "spring2026",
+      "label": "Spring 2026",
+      "folder": "spring2026",
+      "teamName": "Drive Auto Repair"
+    },
+    {
+      "id": "summer2026",
+      "label": "Summer 2026",
+      "folder": "summer2026",
+      "teamName": "Sunshine on a Ranney Day",
+      "format": "One Pitch",
+      "noStats": true,
+      "champion": true,
+      "championNote": "One Pitch Champions"
+    },
+    {
+      "id": "fall2026",
+      "label": "Fall 2026",
+      "folder": "fall2026",
+      "teamName": "Sunshine on a Ranney Day"
+    }
   ],
   "team": "Sunshine on a Ranney Day",
-  "teamShort": "Sunshine",
+  "teamShort": "SOARD",
   "teamFull": "Sunshine on a Ranney Day",
-  "teamAliases": ["sunshine", "drive"],
+  "teamAliases": [
+    "soard",
+    "sunshine",
+    "drive"
+  ],
   "league": "Hobgood Intermediate Softball"
 }

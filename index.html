@@ -611,8 +611,8 @@
 </div>
 
 <script>
-let TEAM='Sunshine';
-let TEAM_ALIASES=['sunshine','drive'];
+let TEAM='SOARD';
+let TEAM_ALIASES=['soard','sunshine','drive'];
 function isUs(name){const n=(name||'').toLowerCase();return TEAM_ALIASES.some(a=>n.includes(a));}
 let DATA={};
 window.DATA=DATA;
@@ -1039,7 +1039,7 @@ function renderRoster(stats,roster){
         const tile=(label,key,p)=>`<div><div class="rcs-label">${label}</div><div class="rcs-val ${isLeader(leaders,key,p.player)?'gold':''}">${p[key]}</div></div>`;
         const list=[...roster].sort((a,b)=>(a.number??999)-(b.number??999));
         grid.innerHTML=list.map((r,i)=>{const p=find(r);const line=[r.position,r.role].filter(Boolean).join(' · ')+(p?` · ${p.gp} GP · ${p.h}-for-${p.ab}`:'');
-            return`<div class="roster-card" style="animation-delay:${i*0.04}s"><div class="roster-card-name">${r.number!=null?`<span class="roster-num">#${r.number}</span>`:''}${r.name}</div><div class="roster-card-line">${line||'&nbsp;'}</div>${p?`<div class="roster-card-stats">${tile('AVG','avg',p)}${tile('OBP','obp',p)}${tile('SLG','slg',p)}${tile('OPS','ops',p)}${tile('H','h',p)}${tile('HR','hr',p)}${tile('R','r',p)}${tile('RBI','rbi',p)}</div>`:''}</div>`;}).join('');
+            return`<div class="roster-card" style="animation-delay:${i*0.04}s"><div class="roster-card-name">${r.number!=null?`<span class="roster-num">#${r.number}</span>`:''}${r.name}</div>${line?`<div class="roster-card-line">${line}</div>`:''}${p?`<div class="roster-card-stats">${tile('AVG','avg',p)}${tile('OBP','obp',p)}${tile('SLG','slg',p)}${tile('OPS','ops',p)}${tile('H','h',p)}${tile('HR','hr',p)}${tile('R','r',p)}${tile('RBI','rbi',p)}</div>`:''}</div>`;}).join('');
         return;
     }
     if(!stats||!stats.length){grid.innerHTML='<div class="empty-state">Roster will populate as stats are entered</div>';return;}
@@ -1661,7 +1661,7 @@ function buildChatContext(data){
 
     // Roast instructions
     ctx+='ROAST MODE INSTRUCTIONS:\n';
-    ctx+='If someone asks you to "roast" a player, the team, Coach Ranney, or anyone on our team (Sunshine on a Ranney Day, formerly Drive Auto Repair) GO OFF. ';
+    ctx+='If someone asks you to "roast" a player, the team, Coach Ranney, or anyone on our team (SOARD / Sunshine on a Ranney Day, formerly Drive Auto Repair) GO OFF. ';
     ctx+='Be absolutely ruthless and hilarious. Savage, personal, locker-room trash talk. ';
     ctx+='Use their ACTUAL stats and game-by-game at-bats to destroy them. ';
     ctx+='If a guy went 0-for, had multiple outs, or struck out — obliterate him. ';
