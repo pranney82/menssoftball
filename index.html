@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
     <meta name="theme-color" content="#1A1B1F">
-    <title>Sunshine on a Ranney Day | Hobgood Intermediate Softball</title>
+    <title>Sunshine on a Ranney Day | Men's Slow Pitch Softball</title>
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://pranney82.github.io/menssoftball/">
     <meta property="og:title" content="Sunshine on a Ranney Day Softball">
-    <meta property="og:description" content="Hobgood Intermediate Softball · Fall 2026 · Standings, Scores, Schedule & AI Roasts">
+    <meta property="og:description" content="Wednesday Men's Slow Pitch · Fall 2026 · Standings, Scores, Schedule & AI Roasts">
     <meta property="og:image" content="https://pranney82.github.io/menssoftball/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Sunshine on a Ranney Day Softball">
-    <meta name="twitter:description" content="Hobgood Intermediate Softball · Fall 2026 · Standings, Scores, Schedule & AI Roasts">
+    <meta name="twitter:description" content="Wednesday Men's Slow Pitch · Fall 2026 · Standings, Scores, Schedule & AI Roasts">
     <meta name="twitter:image" content="https://pranney82.github.io/menssoftball/og-image.png">
-    <meta name="description" content="Sunshine on a Ranney Day - Hobgood Intermediate Softball League. Fall 2026 standings, scores, schedule, and weekly AI roasts.">
+    <meta name="description" content="Sunshine on a Ranney Day (SOARD) men's slow pitch softball. Fall 2026 standings, scores, schedule, and weekly AI roasts.">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -565,7 +565,7 @@
     </div>
 </div>
 
-<div class="footer">SUNSHINE ON A RANNEY DAY · HOBGOOD INTERMEDIATE LEAGUE<br><span style="color:var(--blue);">POWERED BY YOUR MOM</span> · UPDATED WEEKLY</div>
+<div class="footer">SUNSHINE ON A RANNEY DAY · MEN'S SLOW PITCH<br><span style="color:var(--blue);">POWERED BY YOUR MOM</span> · UPDATED WEEKLY</div>
 </div><!-- /site-content -->
 
 <!-- FLOATING CHAT -->
@@ -613,6 +613,8 @@
 <script>
 let TEAM='SOARD';
 let TEAM_ALIASES=['soard','sunshine','drive'];
+function isBreak(g){return /break$/i.test(g.home||'');}
+let GAME_DAY=3;
 function isUs(name){const n=(name||'').toLowerCase();return TEAM_ALIASES.some(a=>n.includes(a));}
 let DATA={};
 window.DATA=DATA;
@@ -711,7 +713,7 @@ function countUpStandings(){
 function abClass(v){if(!v||v==='-')return'ab-out';const u=v.toUpperCase();if(u==='HR')return'ab-hr';if(['1B','2B','3B'].includes(u))return'ab-hit';if(u==='BB')return'ab-bb';if(u==='E')return'ab-err';if(u==='SAC')return'ab-sac';if(u==='FC')return'ab-fc';return'ab-out';}
 function renderScores(schedule){
     const grid=document.getElementById('scores-grid');
-    const played=schedule.filter(g=>g.homeScore!==undefined&&g.homeScore!==null&&g.home!=='Spring Break'&&(isUs(g.home)||isUs(g.away)));
+    const played=schedule.filter(g=>g.homeScore!==undefined&&g.homeScore!==null&&!isBreak(g)&&(isUs(g.home)||isUs(g.away)));
     if(!played.length){grid.innerHTML='<div class="empty-state">No scores yet</div>';return;}
     grid.innerHTML=played.map((g,i)=>{
         const hw=g.homeScore>g.awayScore;const isDrive=isUs(g.home)||isUs(g.away);
@@ -760,7 +762,7 @@ function getNextDriveGame(schedule){
     if(!schedule||!schedule.length)return null;
     const todayKey=new Date().toISOString().slice(0,10);
     const driveGames=schedule
-        .filter(g=>g.weekDate&&g.home!=='Spring Break'&&g.home!=='Rain Out'&&(isUs(g.home)||isUs(g.away))&&(g.homeScore===undefined||g.homeScore===null))
+        .filter(g=>g.weekDate&&!isBreak(g)&&g.home!=='Rain Out'&&(isUs(g.home)||isUs(g.away))&&(g.homeScore===undefined||g.homeScore===null))
         .sort((a,b)=>a.weekDate.localeCompare(b.weekDate));
     return driveGames.find(g=>g.weekDate>=todayKey)||null;
 }
@@ -774,7 +776,7 @@ function renderSchedule(schedule){
     // Group by week
     const groups=[];let current=null;
     schedule.forEach(g=>{
-        if(!current||current.week!==g.week){current={week:g.week,weekDate:g.weekDate,games:[],isPlayoff:g.playoff,isSB:g.home==='Spring Break',isRainOut:g.home==='Rain Out'};groups.push(current);}
+        if(!current||current.week!==g.week){current={week:g.week,weekDate:g.weekDate,games:[],isPlayoff:g.playoff,isSB:isBreak(g),isRainOut:g.home==='Rain Out'};groups.push(current);}
         current.games.push(g);
     });
     let html='';
@@ -789,7 +791,7 @@ function renderSchedule(schedule){
         const collapsible=isPast&&hasScores&&!grp.isPlayoff;
         // Special weeks (banners)
         if(grp.isSB){
-            html+=`<section class="sched-week sched-week-banner"><div class="sched-banner"><span class="sched-banner-title">${grp.week} · Spring Break</span><span class="sched-banner-sub">No games this week</span></div></section>`;
+            html+=`<section class="sched-week sched-week-banner"><div class="sched-banner"><span class="sched-banner-title">${grp.week} · ${grp.games[0].home}</span><span class="sched-banner-sub">No games this week</span></div></section>`;
             return;
         }
         if(grp.isRainOut){
@@ -807,7 +809,7 @@ function renderSchedule(schedule){
         html+=`<header class="sched-week-header"><span class="sched-week-label">${headerLabel}${firstGameDate?`<span class="sched-week-date">${firstGameDate}</span>`:''}</span>${collapsible?'<span class="sched-week-chevron"></span>':''}</header>`;
         html+='<div class="sched-week-games">';
         grp.games.forEach(g=>{
-            if(g.home==='Spring Break'||g.home==='Rain Out')return;
+            if(isBreak(g)||g.home==='Rain Out')return;
             const homeIsDrive=isUs(g.home);
             const awayIsDrive=isUs(g.away);
             const isDrive=homeIsDrive||awayIsDrive;
@@ -1159,7 +1161,7 @@ function initCountdown(schedule){
     }
 }
 
-function checkGameDay(){if(new Date().getDay()===1){const t=document.getElementById('games-tab');if(t&&!t.querySelector('.live-dot'))t.innerHTML+='<span class="live-dot"></span>';}}
+function checkGameDay(){if(new Date().getDay()===GAME_DAY){const t=document.getElementById('games-tab');if(t&&!t.querySelector('.live-dot'))t.innerHTML+='<span class="live-dot"></span>';}}
 
 // Measure nav height so sticky table headers pin beneath it
 function updateNavH(){
@@ -1190,7 +1192,7 @@ const CHIP_POOL=[
     'When do rosters lock?','Our record','Who leads in HRs?',
     'Top hitter?','Schedule this week','Uniform rules',
     'Pickup player rules','What time do games start?',
-    'How many can bat?','Who coaches Rocket Power?',
+    'How many can bat?','Who do we play next?',
     'Roast the whole team','Roast Coach Ranney',
     'Who had the worst game?','Roast our worst hitter'
 ];
@@ -1558,6 +1560,10 @@ function retryChat(){
 function buildChatContext(data){
     let ctx='';
 
+    if(data.config){
+        ctx+='OUR TEAM: Sunshine on a Ranney Day, shown as SOARD on this site (the league website lists us as "'+((data.config.seasons.find(x=>x.id===data.config.activeSeason)||{}).leagueName||'SOARD')+'"). Coach: Ranney. Formerly Drive Auto Repair.\n';
+        ctx+='LEAGUE: '+data.config.league+'\n\n';
+    }
     // Standings
     if(data.standings&&data.standings.length){
         ctx+='CURRENT STANDINGS:\n';
@@ -1569,7 +1575,7 @@ function buildChatContext(data){
 
     // Completed games
     if(data.schedule&&data.schedule.length){
-        const played=data.schedule.filter(g=>g.homeScore!==undefined&&g.home!=='Spring Break');
+        const played=data.schedule.filter(g=>g.homeScore!==undefined&&!isBreak(g));
         if(played.length){
             ctx+='COMPLETED GAMES:\n';
             ctx+=played.map(g=>
@@ -1609,7 +1615,7 @@ function buildChatContext(data){
         }
 
         // Upcoming regular season
-        const upcoming=data.schedule.filter(g=>g.homeScore===undefined&&g.home!=='Spring Break'&&!g.playoff);
+        const upcoming=data.schedule.filter(g=>g.homeScore===undefined&&!isBreak(g)&&!g.playoff);
         if(upcoming.length){
             ctx+='UPCOMING GAMES:\n';
             ctx+=upcoming.map(g=>
@@ -1686,7 +1692,7 @@ function shareSchedule(btn){
     const now=new Date();
     const todayKey=now.toISOString().slice(0,10);
     const driveGames=schedule
-        .filter(g=>g.weekDate&&g.home!=='Spring Break'&&g.home!=='Rain Out'&&(isUs(g.home)||isUs(g.away)))
+        .filter(g=>g.weekDate&&!isBreak(g)&&g.home!=='Rain Out'&&(isUs(g.home)||isUs(g.away)))
         .sort((a,b)=>a.weekDate.localeCompare(b.weekDate));
     let target=driveGames.find(g=>g.weekDate>=todayKey);
     if(!target){target=driveGames[driveGames.length-1];}
@@ -1718,6 +1724,7 @@ async function init(){
     const config=await loadJSON('data/config.json');
     if(!config)return;
     if(config.teamShort)TEAM=config.teamShort;
+    if(typeof config.gameDay==='number')GAME_DAY=config.gameDay;
     if(config.teamAliases&&config.teamAliases.length)TEAM_ALIASES=config.teamAliases.map(a=>a.toLowerCase());
     renderTrophies(config.seasons);
     const season=config.activeSeason;const base='data/'+config.seasons.find(s=>s.id===season).folder+'/';
@@ -1738,7 +1745,7 @@ async function init(){
 
     // Build chat context from ALL loaded data
     const rules=await loadJSON('data/rules.json');
-    buildChatContext({standings,schedule,stats,career,roasts,rules,champs:config.seasons.filter(x=>x.champion)});
+    buildChatContext({standings,schedule,stats,career,roasts,rules,config,champs:config.seasons.filter(x=>x.champion)});
 
     checkGameDay();
     // Hash routing: #roast, #standings, #games, #players

@@ -5,7 +5,8 @@
       "id": "spring2026",
       "label": "Spring 2026",
       "folder": "spring2026",
-      "teamName": "Drive Auto Repair"
+      "teamName": "Drive Auto Repair",
+      "league": "Hobgood Intermediate Softball"
     },
     {
       "id": "summer2026",
@@ -21,7 +22,9 @@
       "id": "fall2026",
       "label": "Fall 2026",
       "folder": "fall2026",
-      "teamName": "Sunshine on a Ranney Day"
+      "teamName": "Sunshine on a Ranney Day",
+      "league": "Cherokee Rec Wednesday Men's Slow Pitch",
+      "leagueName": "Driven"
     }
   ],
   "team": "Sunshine on a Ranney Day",
@@ -32,5 +35,6 @@
     "sunshine",
     "drive"
   ],
-  "league": "Hobgood Intermediate Softball"
+  "league": "Cherokee Rec Wednesday Men's Slow Pitch",
+  "gameDay": 3
 }
