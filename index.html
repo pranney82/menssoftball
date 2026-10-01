@@ -1474,26 +1474,16 @@ function buildChatContext(data){
 }
 
 function shareSchedule(btn){
-    const schedule=(window.DATA&&window.DATA.schedule)||[];
-    if(!schedule.length){return;}
-    // Find Drive's next game: earliest upcoming Drive game (includes today)
-    const now=new Date();
-    const todayKey=now.toISOString().slice(0,10);
-    const driveGames=schedule
-        .filter(g=>g.weekDate&&!isBreak(g)&&g.home!=='Rain Out'&&(isUs(g.home)||isUs(g.away)))
-        .sort((a,b)=>a.weekDate.localeCompare(b.weekDate));
-    let target=driveGames.find(g=>g.weekDate>=todayKey);
-    if(!target){target=driveGames[driveGames.length-1];}
-    if(!target){return;}
-    const opponent=isUs(target.home)?target.away:target.home;
-    const rollText='⚾ Roll Call:\n'+TEAM+' vs '+opponent+'\n'+target.date+' · '+target.time;
+    // Roll call for the next game: opponent, day, time and field
+    const nx=nextGame((window.DATA&&window.DATA.schedule)||[]);
+    if(!nx)return;
+    const g=nx.g,v=ourView(g);
+    const day=g.weekDate===todayKey()?'Tonight':fmtDate(g.weekDate);
+    const rollText='⚾ Roll call: '+TEAM+' '+(v.home?'vs':'at')+' '+v.opp+'\n'+day+', '+g.time+(g.location?'\nField '+g.location:'')+'\nYou in? 👍 or 👎';
     const url='https://pranney82.github.io/menssoftball/';
-    // Native share: include text + url so recipient sees the formatted message and the link preview
-    if(navigator.share){navigator.share({text:rollText,url:url}).catch(()=>{});}
-    else{
-        const orig=btn.innerHTML;
-        navigator.clipboard.writeText(rollText+'\n'+url).then(()=>{btn.classList.add('copied');btn.innerHTML='✅ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=orig;},2000);}).catch(()=>{});
-    }
+    if(navigator.share){navigator.share({text:rollText,url:url}).catch(()=>{});return;}
+    const orig=btn.innerHTML;
+    navigator.clipboard.writeText(rollText+'\n'+url).then(()=>{btn.classList.add('copied');btn.setAttribute('aria-label','Roll call copied');btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';setTimeout(()=>{btn.classList.remove('copied');btn.setAttribute('aria-label','Share roll call for the next game');btn.innerHTML=orig;},2000);}).catch(()=>{});
 }
 
 function shareRoast(btn){
