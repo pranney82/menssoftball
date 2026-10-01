@@ -68,7 +68,7 @@
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
         @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
         @keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.55)}50%{box-shadow:0 0 0 6px rgba(74,222,128,0)}}
-        @keyframes ballIn{from{opacity:0;transform:translateX(-40px) rotate(-140deg)}to{opacity:.16;transform:none}}
+        
 
         /* ===== Header ===== */
         .topbar{border-bottom:1px solid var(--line)}
@@ -82,8 +82,7 @@
         .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
         .hero-top{display:grid;grid-template-columns:1fr auto;align-items:end;gap:16px;padding-top:22px;padding-bottom:18px;position:relative}
         .season{position:relative;min-width:0}
-        .ball{position:absolute;left:-44px;top:50%;width:214px;height:214px;margin-top:-108px;pointer-events:none;color:var(--sun);opacity:.16;animation:ballIn 1.1s var(--ease-out) both}
-        .ball svg{width:100%;height:100%;display:block;overflow:visible}
+        
         .record{position:relative;font-weight:800;font-size:76px;line-height:.9;letter-spacing:-3px;color:var(--sun)}
         .record-label{position:relative;font-size:var(--fs-sm);color:var(--text-2);margin-top:8px}
         .trophy-line{position:relative;display:inline-flex;align-items:center;gap:8px;margin-top:12px;min-height:44px;padding:0 14px 0 10px;border-radius:999px;border:1px solid var(--line-2);font-size:var(--fs-sm);font-weight:600;color:var(--text);transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease);animation:rise .5s var(--ease-out) .55s both}
@@ -98,7 +97,6 @@
         @media (min-width:768px){
             .hero-top{padding-top:34px;padding-bottom:26px}
             .record{font-size:120px;letter-spacing:-5px}
-            .ball{width:330px;height:330px;margin-top:-165px;left:-70px}
             .season-stats{grid-template-columns:repeat(3,auto);gap:36px;align-self:center}
             .season-stats dd{font-size:var(--fs-xl)}
         }
@@ -379,7 +377,6 @@
 <section class="hero" id="hero" aria-label="Season summary">
     <div class="wrap hero-top">
         <div class="season">
-            <div class="ball" aria-hidden="true"><svg viewBox="-100 -100 200 200" fill="none" stroke="currentColor" stroke-linecap="round"><circle r="92" stroke-width="3"/><path id="seam-l" d="M-52,-76 C-88,-30 -88,30 -52,76" stroke-width="2.5"/><path id="seam-r" d="M52,-76 C88,-30 88,30 52,76" stroke-width="2.5"/><g id="stitches" stroke-width="2.2"></g></svg></div>
             <div class="record" id="record" aria-describedby="record-label">0-0</div>
             <div class="record-label" id="record-label">Season record</div>
             <button class="trophy-line" id="trophy-line" hidden onclick="goToTrophies()"></button>
@@ -541,11 +538,6 @@ function goToTrophies(){
 }
 
 /* ===== Hero: season scoreboard ===== */
-(function drawStitches(){const g=document.getElementById('stitches');if(!g)return;let html='';
-    const bez=(p,t)=>{const u=1-t;return[u*u*u*p[0][0]+3*u*u*t*p[1][0]+3*u*t*t*p[2][0]+t*t*t*p[3][0],u*u*u*p[0][1]+3*u*u*t*p[1][1]+3*u*t*t*p[2][1]+t*t*t*p[3][1]];};
-    [[[-52,-76],[-88,-30],[-88,30],[-52,76]],[[52,-76],[88,-30],[88,30],[52,76]]].forEach(p=>{for(let i=1;i<12;i++){const t=i/12;const[a,b]=bez(p,t),[c,d]=bez(p,t+0.01);let nx=-(d-b),ny=c-a;const L=Math.hypot(nx,ny);nx/=L;ny/=L;const tx=(c-a)/0.01,ty=(d-b)/0.01,TL=Math.hypot(tx,ty);const k=3.2,w=7;
-        html+=`<path d="M${(a+nx*w-tx/TL*k).toFixed(1)},${(b+ny*w-ty/TL*k).toFixed(1)} L${a.toFixed(1)},${b.toFixed(1)} L${(a-nx*w-tx/TL*k).toFixed(1)},${(b-ny*w-ty/TL*k).toFixed(1)}"/>`;}});
-    g.innerHTML=html;})();
 
 function countTo(el,w,l){
     if(reduceMotion()){el.textContent=w+'-'+l;return;}
