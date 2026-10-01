@@ -20,6 +20,12 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="SOARD">
+    <meta name="application-name" content="SOARD">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -71,7 +77,7 @@
         
 
         /* ===== Header ===== */
-        .topbar{border-bottom:1px solid var(--line)}
+        .topbar{border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
         .topbar-inner{display:flex;align-items:center;gap:12px;padding-top:14px;padding-bottom:14px}
         .topbar-logo{width:40px;height:40px;flex-shrink:0;border-radius:50%}
         .brand-name{font-family:var(--font-display);font-weight:700;font-size:18px;line-height:1.15;letter-spacing:-0.2px}
