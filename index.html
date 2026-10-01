@@ -317,7 +317,7 @@
         .stats-table td:nth-child(2) { text-align:left; font-family:var(--font-sans); font-weight:600; font-size:var(--fs-sm); color:var(--white); min-width:88px; position:sticky; left:28px; background:var(--primary-dark); z-index:5; border-right:1px solid rgba(255,218,36,0.15); letter-spacing:-0.2px; padding-left:4px; padding-right:8px; }
         .stat-highlight { color:var(--cream); font-weight:700; } .stats-leader { color:var(--gold); font-weight:700; }
         .stats-table td.stats-leader { color:var(--gold); }
-        .stats-table td.stat-highlight { color:var(--blue-bright); }
+        .stats-table td.stat-highlight { color:var(--white); }
         .stats-table td.sort-col { background:rgba(255,218,36,0.05); }
         /* Desktop: bump up, add breathing room */
         @media (min-width:768px) {
@@ -341,7 +341,7 @@
         .roster-card-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px 8px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.06); }
         .roster-card-stats > div { text-align:center; }
         .rcs-label { font-family:var(--font-sans); font-weight:700; font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:0.8px; color:var(--gray-dark); }
-        .rcs-val { font-family:var(--font-num); font-weight:700; font-size:var(--fs-md); color:var(--blue-bright); margin-top:4px; letter-spacing:-0.5px; }
+        .rcs-val { font-family:var(--font-num); font-weight:700; font-size:var(--fs-md); color:var(--white); margin-top:4px; letter-spacing:-0.5px; }
         .rcs-val.gold { color:var(--gold); }
 
         /* ROAST */
@@ -873,8 +873,10 @@ function computeLeaders(data,keys){
     keys.forEach(k=>{
         let max=-Infinity;
         data.forEach(p=>{const v=parseFloat(p[k])||0;if(v>max)max=v;});
-        if(max>0){
-            leaders[k]=new Set(data.filter(p=>(parseFloat(p[k])||0)===max).map(p=>p.player));
+        const top=data.filter(p=>(parseFloat(p[k])||0)===max);
+        // Only mark a leader when someone actually stands out (skip when everyone is tied)
+        if(max>0&&(top.length<data.length||data.length===1)){
+            leaders[k]=new Set(top.map(p=>p.player));
         }
     });
     return leaders;
