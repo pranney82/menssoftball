@@ -77,5 +77,15 @@
     "statsName": "Jim",
     "jerseySize": "",
     "role": "Sub"
+  },
+  {
+    "name": "Luke",
+    "statsName": "Luke",
+    "jerseySize": ""
+  },
+  {
+    "name": "Paul",
+    "statsName": "Paul",
+    "jerseySize": ""
   }
 ]
