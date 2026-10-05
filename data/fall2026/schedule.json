@@ -890,7 +890,9 @@
   "time": "6:30 PM",
   "home": "Runs N' Roses",
   "away": "Hit List",
-  "location": "HP3"
+  "location": "HP3",
+  "homeScore": 0,
+  "awayScore": 2
  },
  {
   "week": "Week 8",
@@ -899,7 +901,9 @@
   "time": "7:30 PM",
   "home": "Runs N' Roses",
   "away": "COE",
-  "location": "HP3"
+  "location": "HP3",
+  "homeScore": 6,
+  "awayScore": 16
  },
  {
   "week": "Week 8",
@@ -908,7 +912,9 @@
   "time": "7:30 PM",
   "home": "Threat Level Midnight",
   "away": "Master Batters",
-  "location": "HP2"
+  "location": "HP2",
+  "homeScore": 0,
+  "awayScore": 15
  },
  {
   "week": "Week 8",
@@ -917,7 +923,9 @@
   "time": "8:30 PM",
   "home": "Base Invaders",
   "away": "Parks Johnson Insurance",
-  "location": "HP3"
+  "location": "HP3",
+  "homeScore": 7,
+  "awayScore": 13
  },
  {
   "week": "Week 8",
@@ -926,7 +934,9 @@
   "time": "8:30 PM",
   "home": "PSI",
   "away": "The Sandlot Benchwarmers",
-  "location": "HP2"
+  "location": "HP2",
+  "homeScore": 0,
+  "awayScore": 2
  },
  {
   "week": "Week 8",
@@ -935,7 +945,9 @@
   "time": "9:30 PM",
   "home": "Mob Squad",
   "away": "SOARD",
-  "location": "HP3"
+  "location": "HP3",
+  "homeScore": 14,
+  "awayScore": 16
  },
  {
   "week": "Week 8",
@@ -944,7 +956,9 @@
   "time": "9:30 PM",
   "home": "Dirt Dawgs",
   "away": "Hit List",
-  "location": "HP2"
+  "location": "HP2",
+  "homeScore": 17,
+  "awayScore": 14
  },
  {
   "week": "Week 9",
