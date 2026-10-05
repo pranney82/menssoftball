@@ -496,7 +496,169 @@
   "away": "COE",
   "location": "HP2",
   "homeScore": 18,
-  "awayScore": 9
+  "awayScore": 9,
+  "boxScore": [
+   {
+    "player": "Austin C",
+    "totals": {
+     "1b": 3,
+     "2b": 0,
+     "3b": 0,
+     "hr": 0,
+     "bb": 0,
+     "sac": 0,
+     "fc": 0,
+     "e": 0,
+     "out": 0,
+     "r": 3,
+     "rbi": 2
+    }
+   },
+   {
+    "player": "Peter",
+    "totals": {
+     "1b": 1,
+     "2b": 2,
+     "3b": 0,
+     "hr": 0,
+     "bb": 0,
+     "sac": 1,
+     "fc": 0,
+     "e": 0,
+     "out": 0,
+     "r": 1,
+     "rbi": 5
+    }
+   },
+   {
+    "player": "Ryan",
+    "totals": {
+     "1b": 1,
+     "2b": 0,
+     "3b": 0,
+     "hr": 0,
+     "bb": 0,
+     "sac": 1,
+     "fc": 0,
+     "e": 0,
+     "out": 2,
+     "r": 1,
+     "rbi": 1
+    }
+   },
+   {
+    "player": "Mitchell",
+    "totals": {
+     "1b": 0,
+     "2b": 0,
+     "3b": 1,
+     "hr": 1,
+     "bb": 0,
+     "sac": 0,
+     "fc": 0,
+     "e": 0,
+     "out": 2,
+     "r": 2,
+     "rbi": 5
+    }
+   },
+   {
+    "player": "Doug",
+    "totals": {
+     "1b": 1,
+     "2b": 0,
+     "3b": 0,
+     "hr": 0,
+     "bb": 1,
+     "sac": 0,
+     "fc": 0,
+     "e": 0,
+     "out": 2,
+     "r": 1,
+     "rbi": 0
+    }
+   },
+   {
+    "player": "Spartacus",
+    "totals": {
+     "1b": 3,
+     "2b": 1,
+     "3b": 0,
+     "hr": 0,
+     "bb": 0,
+     "sac": 0,
+     "fc": 0,
+     "e": 0,
+     "out": 0,
+     "r": 3,
+     "rbi": 0
+    }
+   },
+   {
+    "player": "Christian",
+    "totals": {
+     "1b": 1,
+     "2b": 0,
+     "3b": 0,
+     "hr": 1,
+     "bb": 0,
+     "sac": 1,
+     "fc": 0,
+     "e": 0,
+     "out": 1,
+     "r": 2,
+     "rbi": 4
+    }
+   },
+   {
+    "player": "Max",
+    "totals": {
+     "1b": 0,
+     "2b": 0,
+     "3b": 0,
+     "hr": 0,
+     "bb": 2,
+     "sac": 0,
+     "fc": 0,
+     "e": 0,
+     "out": 2,
+     "r": 1,
+     "rbi": 0
+    }
+   },
+   {
+    "player": "Paul",
+    "totals": {
+     "1b": 2,
+     "2b": 0,
+     "3b": 0,
+     "hr": 0,
+     "bb": 0,
+     "sac": 1,
+     "fc": 0,
+     "e": 0,
+     "out": 1,
+     "r": 2,
+     "rbi": 1
+    }
+   },
+   {
+    "player": "Zach",
+    "totals": {
+     "1b": 0,
+     "2b": 0,
+     "3b": 0,
+     "hr": 0,
+     "bb": 2,
+     "sac": 0,
+     "fc": 0,
+     "e": 0,
+     "out": 1,
+     "r": 2,
+     "rbi": 0
+    }
+   }
+  ]
  },
  {
   "week": "Week 3",
