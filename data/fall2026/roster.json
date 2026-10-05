@@ -63,7 +63,7 @@
   {
     "number": 35,
     "name": "Woody",
-    "statsName": "Woody",
+    "statsName": "Austin W",
     "jerseySize": "XL"
   },
   {
@@ -71,5 +71,11 @@
     "name": "Zach McGhee",
     "statsName": "Zach",
     "jerseySize": "3XL"
+  },
+  {
+    "name": "Jim",
+    "statsName": "Jim",
+    "jerseySize": "",
+    "role": "Sub"
   }
 ]
