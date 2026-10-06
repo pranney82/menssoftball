@@ -220,9 +220,9 @@
         .box-score-wrap{overflow-x:auto;padding:0 16px 14px}
         .box-score-table{min-width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
         .box-score-table th{font-size:var(--fs-xs);font-weight:600;color:var(--text-3);padding:8px 6px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
-        .box-score-table th:first-child,.box-score-table td:first-child{text-align:left;padding-left:0}
+        .box-score-table th:first-child,.box-score-table td:first-child{text-align:left;padding-left:0}.box-score-table th:nth-child(2),.box-score-table td:nth-child(2){text-align:left}
         .box-score-table td{padding:8px 6px;text-align:center;color:var(--text-2);white-space:nowrap;border-bottom:1px solid var(--line)}
-        .box-score-table td:first-child{color:var(--text);font-weight:600}
+        .box-score-table td:nth-child(2){color:var(--text);font-weight:600}.box-score-table td.bs-spot{color:var(--text-3);font-weight:500;width:1%;padding-right:4px}
         .box-score-table td.bs-hit{color:var(--win);font-weight:700}
         .box-score-table td.bs-hr{color:var(--sun);font-weight:700}
         .box-score-table tr.totals-row td{font-weight:700;color:var(--text);border-bottom:0}
@@ -709,9 +709,9 @@ function renderScores(schedule){
         const id='bx'+i;let box='';
         if(g.boxScore&&g.boxScore.length){
             const fmtAvg=x=>{const s=x.toFixed(3);return s.startsWith('0.')?s.slice(1):s;};
-            const rows=g.boxScore.map(p=>{const t=p.totals||{};const b1=t['1b']||0,b2=t['2b']||0,b3=t['3b']||0,hr=t.hr||0,bb=t.bb||0,out=t.out||0,fc=t.fc||0,e=t.e||0;const h=b1+b2+b3+hr,ab=h+out+fc+e;return{name:p.player,ab,r:t.r||0,h,b2,b3,hr,rbi:t.rbi||0,bb,avg:ab?fmtAvg(h/ab):'.000'};});
+            const rows=g.boxScore.map((p,bi)=>{const t=p.totals||{};const b1=t['1b']||0,b2=t['2b']||0,b3=t['3b']||0,hr=t.hr||0,bb=t.bb||0,out=t.out||0,fc=t.fc||0,e=t.e||0;const h=b1+b2+b3+hr,ab=h+out+fc+e;return{spot:bi+1,name:p.player,ab,r:t.r||0,h,b2,b3,hr,rbi:t.rbi||0,bb,avg:ab?fmtAvg(h/ab):'.000'};});
             const tot=rows.reduce((a,r)=>({ab:a.ab+r.ab,r:a.r+r.r,h:a.h+r.h,b2:a.b2+r.b2,b3:a.b3+r.b3,hr:a.hr+r.hr,rbi:a.rbi+r.rbi,bb:a.bb+r.bb}),{ab:0,r:0,h:0,b2:0,b3:0,hr:0,rbi:0,bb:0});
-            box=`<button class="expand-hint" aria-expanded="false" aria-controls="${id}" onclick="toggleExpand(this)">Box score <span class="chev" aria-hidden="true"></span></button><div class="collapse" id="${id}"><div><div class="box-score-wrap"><table class="box-score-table"><thead><tr><th>Player</th><th>AB</th><th>R</th><th>H</th><th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>BB</th><th>AVG</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.name)}</td><td>${r.ab}</td><td>${r.r}</td><td class="${r.h?'bs-hit':''}">${r.h}</td><td>${r.b2||''}</td><td>${r.b3||''}</td><td class="${r.hr?'bs-hr':''}">${r.hr||''}</td><td>${r.rbi||''}</td><td>${r.bb||''}</td><td>${r.avg}</td></tr>`).join('')}<tr class="totals-row"><td>Team</td><td>${tot.ab}</td><td>${tot.r}</td><td>${tot.h}</td><td>${tot.b2}</td><td>${tot.b3}</td><td>${tot.hr}</td><td>${tot.rbi}</td><td>${tot.bb}</td><td>${tot.ab?fmtAvg(tot.h/tot.ab):'.000'}</td></tr></tbody></table></div></div></div>`;
+            box=`<button class="expand-hint" aria-expanded="false" aria-controls="${id}" onclick="toggleExpand(this)">Box score <span class="chev" aria-hidden="true"></span></button><div class="collapse" id="${id}"><div><div class="box-score-wrap"><table class="box-score-table"><thead><tr><th>#</th><th>Player</th><th>AB</th><th>R</th><th>H</th><th>2B</th><th>3B</th><th>HR</th><th>RBI</th><th>BB</th><th>AVG</th></tr></thead><tbody>${rows.map(r=>`<tr><td class="bs-spot">${r.spot}</td><td>${esc(r.name)}</td><td>${r.ab}</td><td>${r.r}</td><td class="${r.h?'bs-hit':''}">${r.h}</td><td>${r.b2||''}</td><td>${r.b3||''}</td><td class="${r.hr?'bs-hr':''}">${r.hr||''}</td><td>${r.rbi||''}</td><td>${r.bb||''}</td><td>${r.avg}</td></tr>`).join('')}<tr class="totals-row"><td></td><td>Team</td><td>${tot.ab}</td><td>${tot.r}</td><td>${tot.h}</td><td>${tot.b2}</td><td>${tot.b3}</td><td>${tot.hr}</td><td>${tot.rbi}</td><td>${tot.bb}</td><td>${tot.ab?fmtAvg(tot.h/tot.ab):'.000'}</td></tr></tbody></table></div></div></div>`;
         }
         return`<article class="game-card" aria-label="${v.won?'Win':'Loss'} ${v.usScore} to ${v.oppScore} ${v.home?'versus':'at'} ${esc(v.opp)}"><div class="game-card-head"><span>${esc(g.week)}, ${fmtDate(g.weekDate,false)}</span><span class="margin-tag ${v.won?'w':'l'}">${v.won?'W':'L'} by ${m}</span></div><div class="game-rows">${teamRow(g.away,g.awayScore,awayWon)}${teamRow(g.home,g.homeScore,!awayWon)}</div>${box}</article>`;
     }).join('');
@@ -1316,19 +1316,19 @@ function buildChatContext(data){
         // Box scores from Drive games
         const driveGames=played.filter(g=>(isUs(g.home)||isUs(g.away))&&g.boxScore&&g.boxScore.length);
         if(driveGames.length){
-            ctx+='OUR GAME BOX SCORES (per-player per-game):\n';
+            ctx+='OUR GAME BOX SCORES (players are listed in the actual batting order for that game; the number is the lineup spot):\n';
             driveGames.forEach(g=>{
                 const opp=isUs(g.home)?g.away:g.home;
                 const driveScore=isUs(g.home)?g.homeScore:g.awayScore;
                 const oppScore=isUs(g.home)?g.awayScore:g.homeScore;
                 const won=driveScore>oppScore;
                 ctx+=g.week+' vs '+opp+' ('+(won?'W':'L')+' '+driveScore+'-'+oppScore+'):\n';
-                g.boxScore.forEach(p=>{
+                g.boxScore.forEach((p,bi)=>{
                     const t=p.totals||{};
                     const h=(t['1b']||0)+(t['2b']||0)+(t['3b']||0)+(t.hr||0);
                     const ab=h+(t.out||0)+(t.fc||0);
                     const line=(p.byInning||[]).join(', ');
-                    ctx+='  '+p.player+': '+h+'-for-'+ab;
+                    ctx+='  '+(bi+1)+'. '+p.player+': '+h+'-for-'+ab;
                     if(t.hr)ctx+=' '+t.hr+'HR';
                     if(t['2b'])ctx+=' '+t['2b']+'2B';
                     if(t['3b'])ctx+=' '+t['3b']+'3B';
