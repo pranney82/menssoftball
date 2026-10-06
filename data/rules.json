@@ -1,59 +1,80 @@
 {
-  "title": "Hobgood Intermediate Softball League Rules",
-  "lastUpdated": "Spring 2026",
+  "title": "CRPA Adult Slow-Pitch Softball Rules (Cherokee Recreation & Parks)",
+  "lastUpdated": "Fall 2026",
   "sections": [
     {
       "heading": "General",
       "rules": [
-        "ASA/USA slow pitch rules govern league play except when superseded by league-specific rules.",
-        "Adult Softball consists of a Spring and Fall League. Summer is One-Pitch.",
-        "Rosters must be turned in on the team's first game. Rosters lock after Week 4.",
-        "After rosters lock, players cannot be added. Removals for injury require League Coordinator approval.",
-        "Players must check in with IDs before every game for Weeks 1-5 (9-game season) or Weeks 1-4 (8-game season).",
-        "IDs will be checked against rosters before each playoff game. No ID = no play."
+        "ASA/USA slow pitch rules govern league play except where the CRPA rules below supersede them.",
+        "Cherokee Recreation & Parks (CRPA) is the governing body and has final say on anything not covered.",
+        "The listed team manager has sole authority on team decisions, above sponsors and players.",
+        "Divisions: Men's, COED, Church, Women's. Play levels may include Beginner, Intermediate, or Open (Combined). Small divisions may be combined, with possible run handicaps, split playoff brackets or different HR limits.",
+        "Adult softball runs Spring and Fall leagues. Summer is One-Pitch. Spring and Fall have an 8 to 9 game regular season.",
+        "The manager's meeting is the official start of the season. No refunds after that date."
+      ]
+    },
+    {
+      "heading": "Eligibility & Rosters",
+      "rules": [
+        "Each team must turn in a roster and code of conduct before its first game.",
+        "A player may be on only one roster per division per league/location.",
+        "Players not on the roster are ineligible. A free agent list is available from the league on request.",
+        "Rosters are limited to 20 players.",
+        "Teams may adjust rosters through their 4th game, then rosters lock. After the lock, replacements for injury or extenuating circumstances need League Coordinator approval.",
+        "A manager may drop a player at any time, coordinated with the league coordinator at least 24 hours before a game.",
+        "IDs are checked against rosters weeks 1-4 of an 8-game season and weeks 1-5 of a 9-game season. No check-in or no ID means no play. Players must sign the roster if they have not already.",
+        "Playoffs: IDs are checked before every game. Players not on the roster cannot play, even if they played in the regular season.",
+        "Teams playing twice in one night only check in at their first game, but anyone not at the first game must check in before being added to the second game's lineup."
       ]
     },
     {
       "heading": "Game Day",
       "rules": [
-        "Minimum 2 umpires per game. Game will be played with 1 umpire if needed.",
-        "1-hour time limit per game. No new inning begins after 58 minutes (2 minutes remaining on clock).",
-        "4 completed innings or 35 minutes passed = official game in case of rainout (3.5 innings if home team is ahead).",
+        "The home team is the first team listed on the schedule.",
+        "Games begin at 6:30 PM unless otherwise indicated. Teams may not swap game times or days without league director approval.",
+        "Minimum 2 umpires assigned. A game will still be played with 1 umpire.",
+        "1-hour time limit. No new inning starts after 58 minutes (2 minutes left on the clock).",
+        "Rainouts: 4 completed innings or 35 minutes is an official game (3.5 innings if the home team is ahead). Otherwise CRPA reschedules it as a brand new game.",
         "Each team can bat up to 12 players.",
-        "Minimum 8 players to start or continue a game. Below 8 = automatic forfeit.",
-        "Teams may pick up player(s) to get to 8 to prevent forfeit. Pickup must be approved by supervisor and opposing captain.",
-        "Pickup players are only eligible until rostered players arrive. Once team has 8 rostered players, pickups must leave.",
-        "Late players: If team starts with less than 10, can only add up to 10 throughout the game. Late players must be rostered and written as subs on lineup before game starts.",
-        "Extra players (over 12-player limit) must be written as subs on lineup before game starts. Cannot be added once game starts.",
-        "Pitcher and Catcher positions must be occupied when fielding.",
-        "Injured player removed from game: no out charged for their turn at bat, but they cannot re-enter.",
-        "Player removed for unsportsmanlike conduct: out IS charged for their at-bat turn.",
-        "10-minute grace period only for 6:30 PM games. Grace period counts as game time. Game starts immediately once 8 players present."
+        "Minimum 8 players to start or continue a game. Falling below 8 at any point is a forfeit.",
+        "Pickup players (anyone not on your roster) can be used to reach 8 to avoid a forfeit. They must be approved by the on-site supervisor and the opposing captain before game time, and must leave once rostered players arrive and the team has 8 rostered players.",
+        "Late players: if a team starts with fewer than 10, it can only add players up to 10. Late players must be rostered and written on the lineup as subs before the game starts.",
+        "Extra players (rostered players over the 12-man lineup limit) must be written in as subs before the game starts, or they cannot be added.",
+        "Pitcher and catcher must be occupied when fielding.",
+        "A player removed for injury is not charged an out for his turn at bat and cannot re-enter. A player removed for unsportsmanlike or rowdy conduct IS charged an out."
+      ]
+    },
+    {
+      "heading": "Forfeits & Grace Period",
+      "rules": [
+        "A 10-minute grace period applies only to 6:30 PM games and counts as game time. If a team has 8 players the game starts immediately. Games scheduled after 6:30 PM have no grace period.",
+        "If games run behind, the next game starts as soon as possible.",
+        "A forfeit is recorded as a 2-0 win for the team not at fault. (The rulebook text says 'seven to zero (2-0)'; the league scores forfeits 2-0.)",
+        "Captains should notify CRPA staff by 4:00 PM if their team cannot make a game. A call by 4:00 PM does not count against the forfeit limit.",
+        "More than 2 no-call/no-show forfeits in a season can get a team removed from the league with no refund."
       ]
     },
     {
       "heading": "Pitching",
       "rules": [
-        "Pitching arc is 4-10 feet from the ground.",
-        "Pitcher may deliver from between the second line and the pitching plate, with one foot between the line and plate after coming to a pause.",
-        "Pitcher may NOT fake a pitch, pitch behind their back, or between their legs. Repeated offense = automatic base for batter + pitcher removed from defense (can still bat).",
-        "Count starts 0-0. Umpires use 3-ball, 2-strike method. Batters get 1 extra foul.",
-        "Pitching screens MUST be used in all adult leagues, no exceptions.",
-        "Screen must cover at least half the pitching plate, placed 2-4 feet in front of plate.",
-        "Screen can only be adjusted for left/right-handed pitcher.",
-        "1st contact per batter with screen = dead ball/foul. 2nd contact per batter with screen = dead ball/out.",
-        "If batter has no fouls left and contacts screen = out.",
-        "No runners may advance on batted ball hitting screen. Thrown ball hitting screen is live unless umpire already signaled dead ball."
+        "Pitching arc is 4 to 10 feet from the ground.",
+        "The pitcher may deliver from between the second line and the pitching plate, with one foot between them, after coming to a pause.",
+        "No fake pitches, behind-the-back, or between-the-legs pitches. Repeated offenses: batter gets a base and the pitcher is removed from defense (can still bat).",
+        "Count starts 0-0. Umpires use 3 balls and 2 strikes. Batters get 1 extra foul.",
+        "Pitching screens are required in all adult leagues, no exceptions. The screen must cover at least half the pitching plate, placed about 2 to 4 feet in front of it, and can only be adjusted for a lefty or righty pitcher.",
+        "1st batted-ball contact with the screen per at-bat is a dead ball/foul. 2nd contact is a dead ball/out. A batter with no fouls left who hits the screen is out. Contact counts whether in the air or off the ground.",
+        "Runners may not advance on a batted ball that hits the screen. A thrown ball that hits the screen is live unless the umpire already called dead ball."
       ]
     },
     {
       "heading": "Home Runs",
       "rules": [
-        "Over-the-fence home runs are permitted in all divisions.",
-        "Intermediate League: Each team allowed 2 over-the-fence HRs, then 1-up rule applies, max 6 total HRs per team.",
-        "Any HR hit over the limit or violating 1-up rule = OUT. All runners return to last legal base. Excess HR out can end the inning.",
-        "In the last playable inning (bottom 7th) and extra innings: home team may NOT use 1-up HR rule.",
-        "Timing protection: If home team legally hits a 1-up HR before the 7th that puts them ahead, it counts even if clock falls below 2 minutes during that half-inning."
+        "Over-the-fence home runs are allowed, subject to limits.",
+        "Intermediate and COED leagues: 2 over-the-fence HRs per team, then the 1-up rule applies, to a max of 6 HRs per team.",
+        "Beginner leagues: 1 over-the-fence HR, then 1-up, to a max of 4.",
+        "A home run over the limit or in violation of the 1-up rule is an OUT, and all runners return to their last legal base. That out can end the inning.",
+        "In the last playable inning (bottom of the 7th, or the inning in progress or last inning allowed to start when time expires) and in extra innings, the home team may not use the 1-up home run rule.",
+        "Timing protection: if the home team legally hits a 1-up HR before the 7th that puts them ahead, it counts even if the clock drops under 2 minutes during that half-inning."
       ]
     },
     {
@@ -67,37 +88,68 @@
     {
       "heading": "Extra Innings",
       "rules": [
-        "If tied after 1-hour time limit or 7 completed innings, extra innings use 1-pitch format with International Tiebreaker (last batted out starts on 2nd base).",
-        "Defense pitches to offense. Each batter gets 1 pitch. Strike or foul = out. Ball = walk."
+        "If tied after the 1-hour limit or 7 completed innings, extra innings use a one-pitch format with the International Tiebreaker (the last batted out starts on 2nd base).",
+        "The defense pitches to the offense. Each batter gets one pitch: a strike or foul is an out, a ball is a walk."
       ]
     },
     {
-      "heading": "Base Running",
+      "heading": "Base Running & Courtesy Runners",
       "rules": [
-        "Stealing bases is NOT allowed.",
-        "Leading off / leaving base before ball is hit is NOT allowed.",
-        "1 courtesy runner allowed per inning. Can be anyone in the lineup.",
-        "First person to step on base as courtesy runner = legal runner.",
-        "If courtesy runner is due up next and is on base = automatic out for their at-bat."
+        "No stealing. No leading off or leaving the base before the ball is hit.",
+        "One courtesy runner per inning. It can be anyone in the lineup, and the first person to step on the base as the courtesy runner is the legal runner.",
+        "If the courtesy runner is due up next while still on base, that is an automatic out for his at-bat."
       ]
     },
     {
-      "heading": "Equipment",
+      "heading": "Bats & Equipment",
       "rules": [
-        "Only ASA/USA approved bats allowed. Must have ASA/USA stamp. Non-approved bat = batter OUT, ejected, runners return.",
-        "Approved softballs: .44 Core, compression rating no greater than 375.",
-        "Men's league: 12-inch softballs only.",
-        "Each team must provide league-approved game balls to umpire before each game.",
-        "Additional balls: $8 per ball."
+        "USA/ASA bats are legal if they carry the 2000, 2004 or 2013 certification mark and are not on the USA Softball Non-Approved Bat List.",
+        "USSSA bats are legal only with the 2020 USSSA certification mark and from an approved USSSA manufacturer. The older 2014 USSSA mark is not legal.",
+        "Any bat on the USA Softball Non-Approved Bat List is illegal, even with a USSSA mark. Senior bats of any kind are not allowed.",
+        "Using an illegal or non-approved bat: batter is OUT, runners return to their last base, and the batter is ejected. If that drops the team below 8 players it is a forfeit.",
+        "Approved balls: .44 core, compression 375 or less. Men's leagues use 12-inch balls.",
+        "Teams get game balls once rosters are turned in, must give league-approved balls to the umpire before each game, and can buy extras for $8 each."
       ]
     },
     {
       "heading": "Uniforms",
       "rules": [
-        "Alike-colored shirts/jerseys with number on front or back required by Week 2.",
-        "Week 3 onward: uniform rules enforced. Out-of-uniform players cannot play.",
-        "Jersey numbers must be unique per team.",
-        "Athletic shoes required. Steel cleats NOT allowed."
+        "Teams have through the 2nd week to get like-colored jerseys with a number on the front or back. Numbers must be unique on a team.",
+        "Starting the 3rd week, uniform rules are enforced. Players out of uniform cannot play.",
+        "Numbers must be permanently attached (iron-on, marker or ink is fine, no tape) or the player can be removed from the game.",
+        "Uniforms and team names must be in good taste. CRPA can require changes.",
+        "Athletic shoes required. No steel cleats."
+      ]
+    },
+    {
+      "heading": "Conduct",
+      "rules": [
+        "Teams are responsible for the conduct of their players, coaches and spectators. Penalties range from reprimand to expulsion.",
+        "An ejected player must leave the ballpark immediately, cannot play any other games that night, and is out at least one calendar week for every team he is on. There is no appeal on ejections and suspensions.",
+        "A second ejection in a season means removal from all leagues for the rest of the season.",
+        "Fighting before, during or after a game on CRPA property means suspension for at least one calendar year.",
+        "Touching or threatening an umpire or league official results in expulsion.",
+        "Only the manager may discuss rule interpretations with the umpire.",
+        "No alcohol anywhere in county parks, including parking lots. Alcohol found with a team gets the player and head coach ejected with a 2-game suspension.",
+        "No smoking or vaping within 25 feet of fields, playgrounds, pavilions and spectator areas."
+      ]
+    },
+    {
+      "heading": "Protests",
+      "rules": [
+        "Protests are handled on site by the CRPA supervisor before the game ends, with a $100 cash fee. Only rule interpretations and player eligibility can be protested, never judgment calls.",
+        "Slow pitch roster protests must be made before the end of the 4th inning or before 35 minutes remain on the clock. No roster protests on nights when IDs are checked before the game.",
+        "The fee is returned if the protest is overturned, and kept if it is upheld.",
+        "Video is never accepted for protests or reviews."
+      ]
+    },
+    {
+      "heading": "Playoffs, Tiebreakers & Awards",
+      "rules": [
+        "All teams make the postseason tournament (weather permitting). The format is up to the league director.",
+        "Standings ties are broken by: 1) head-to-head record, 2) run differential, 3) net points in all league games, 4) coin toss.",
+        "For 3-way or larger ties, the tiebreakers seed the top team, then the process restarts from the first tiebreaker for the rest.",
+        "Division champions may receive team jerseys, up to $200 in credit, or trophies/plaques/shirts. Runners-up receive $75 league credit. Tournament champions receive $75 to $100 credit and/or shirts, rings, plaques or medals."
       ]
     }
   ]

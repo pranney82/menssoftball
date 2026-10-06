@@ -1405,6 +1405,12 @@ function buildChatContext(data){
     ctx+='If asked to roast the whole team, go player by player with a line each. ';
     ctx+='If there are no stats yet for a player, roast them for being invisible.\n\n';
 
+    // League rulebook (data/rules.json is the source of truth for rules questions)
+    if(data.rules&&data.rules.sections&&data.rules.sections.length){
+        ctx+='LEAGUE RULES ('+(data.rules.title||'League rules')+', '+(data.rules.lastUpdated||'current')+'). These replace any older rules you know:\n';
+        data.rules.sections.forEach(sec=>{ctx+=sec.heading+':\n'+(sec.rules||[]).map(r=>'- '+r).join('\n')+'\n';});
+        ctx+='\n';
+    }
     CHAT_CONTEXT=ctx;
 }
 
