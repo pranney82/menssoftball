@@ -306,7 +306,7 @@
         .pl-sub{font-size:11px;color:var(--text-3)}
         .board td{padding:0 10px;text-align:right;font-size:var(--fs-base);color:var(--text-2);border-bottom:1px solid var(--line);white-space:nowrap}
         .board td.sorted{color:var(--text);font-weight:700}
-        .board td.lead{color:var(--sun);font-weight:800}
+        .board td.lead{color:var(--sun);font-weight:800}.pgrid .lead dd{color:var(--sun);font-weight:800}.pgrid .lead dt{color:var(--sun)}
         .board tbody tr{cursor:pointer}
         .board tbody tr:hover td,.board tbody tr:hover th{background:var(--panel)}
         .board tbody tr:last-child td,.board tbody tr:last-child th{border-bottom:0}
@@ -868,7 +868,7 @@ window.addEventListener('resize',()=>{if(isDesk()!==lastDesk){lastDesk=isDesk();
 
 /* Player sheet */
 let sheetReturn=null;
-function statGrid(p,cols){return`<dl class="pgrid">${cols.map(c=>`<div><dt>${STAT_LABEL[c]}</dt><dd>${p[c]??'-'}</dd></div>`).join('')}</dl>`;}
+function statGrid(p,cols,lead){const isL=c=>lead&&lead[c]&&lead[c].has(p.player);return`<dl class="pgrid">${cols.map(c=>`<div${isL(c)?' class="lead"':''}><dt>${STAT_LABEL[c]}</dt><dd>${p[c]??'-'}</dd></div>`).join('')}</dl>`;}
 function openPlayer(boardId,name){
     const season=(BOARDS['season-board']||{data:[]}).data.find(p=>p.player===name);
     const career=(BOARDS['career-board']||{data:[]}).data.find(p=>p.player===name);
@@ -876,8 +876,8 @@ function openPlayer(boardId,name){
     const sheet=document.getElementById('player-sheet');
     const cols=['avg','obp','slg','ops','h','hr','rbi','r','bb','2b','3b','tb','gp','pa','ab','1b'];
     sheet.querySelector('.ps-body').innerHTML=`<div class="ps-head">${r&&r.number!=null?`<span class="ps-num">${r.number}</span>`:''}<div><h2 class="ps-name" id="ps-title">${esc(r?r.name:name)}</h2><div class="ps-sub">${r&&r.role?esc(r.role)+', ':''}${career?career.seasons+' season'+(career.seasons>1?'s':'')+' with the team':'New this season'}</div></div></div>
-        <h3 class="ps-h">This season</h3>${season?statGrid(season,cols):'<p class="ps-none">No at-bats recorded yet this season.</p>'}
-        <h3 class="ps-h">Career</h3>${career?statGrid(career,cols):'<p class="ps-none">No career stats yet.</p>'}`;
+        <h3 class="ps-h">This season</h3>${season?statGrid(season,cols,BOARDS['season-board']&&boardLeaders(BOARDS['season-board'])):'<p class="ps-none">No at-bats recorded yet this season.</p>'}
+        <h3 class="ps-h">Career</h3>${career?statGrid(career,cols,BOARDS['career-board']&&boardLeaders(BOARDS['career-board'])):'<p class="ps-none">No career stats yet.</p>'}`;
     sheetReturn=document.activeElement;
     document.getElementById('ps-overlay').classList.add('open');sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');
     document.body.classList.add('sheet-open');
