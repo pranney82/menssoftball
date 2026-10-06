@@ -1409,12 +1409,25 @@ function buildChatContext(data){
 }
 
 function shareSchedule(btn){
-    // Roll call for the next game: opponent, day, time and field
+    // Roll call for the next game: matchup with records, day, time, field, streak, ask
     const nx=nextGame((window.DATA&&window.DATA.schedule)||[]);
     if(!nx)return;
     const g=nx.g,v=ourView(g);
-    const day=g.weekDate===todayKey()?'Tonight':fmtDate(g.weekDate);
-    const rollText='⚾ Roll call: '+TEAM+' '+(v.home?'vs':'at')+' '+v.opp+'\n'+day+', '+g.time+(g.location?'\nField '+g.location:'')+'\nYou in? 👍 or 👎';
+    const st=(window.DATA&&window.DATA.standings)||[];
+    const rec=name=>{const r=st.find(x=>name===TEAM?isUs(x.team):x.team===name);if(!r)return'';return' ('+r.w+'-'+r.l+(r.t?'-'+r.t:'')+(r.rank?', '+ordinal(r.rank):'')+')';};
+    const tk=todayKey(),tm=new Date(tk+'T12:00:00');tm.setDate(tm.getDate()+1);
+    const tmKey=tm.getFullYear()+'-'+String(tm.getMonth()+1).padStart(2,'0')+'-'+String(tm.getDate()).padStart(2,'0');
+    const day=g.weekDate===tk?'Tonight':g.weekDate===tmKey?'Tomorrow, '+fmtDate(g.weekDate,false):fmtDate(g.weekDate);
+    const fm=(g.location||'').match(/^HP\s*(\d+)$/i);
+    const field=fm?'Hobgood Park, Field '+fm[1]:(g.location||'');
+    const us=st.find(x=>isUs(x.team));const sm=us&&String(us.streak||'').match(/^W(\d+)/);
+    const lines=[(g.playoff?'🏆 PLAYOFF ROLL CALL 🏆':'⚾ ROLL CALL ⚾'),
+        TEAM+rec(TEAM)+' '+(v.home?'vs':'at')+' '+v.opp+rec(v.opp),
+        '🗓 '+day+' · '+g.time];
+    if(field)lines.push('📍 '+field);
+    if(sm&&+sm[1]>=3)lines.push('🔥 '+sm[1]+' straight wins. Keep it rolling.');
+    lines.push('','Need 8 to play. Reply 👍 in or 👎 out.');
+    const rollText=lines.join('\n');
     const url='https://pranney82.github.io/menssoftball/';
     if(navigator.share){navigator.share({text:rollText+'\n\n'+url}).catch(()=>{});return;}
     const orig=btn.innerHTML;
