@@ -77,7 +77,7 @@
         
 
         /* ===== Header ===== */
-        .topbar{border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+        .topbar{border-bottom:1px solid var(--line);padding-top:calc(env(safe-area-inset-top,0px) + 10px)}@media (display-mode:standalone){.topbar{padding-top:calc(env(safe-area-inset-top,0px) + 16px)}}
         .topbar-inner{display:flex;align-items:center;gap:12px;padding-top:14px;padding-bottom:14px}
         .topbar-logo{width:40px;height:40px;flex-shrink:0;border-radius:50%}
         .brand-name{font-family:var(--font-display);font-weight:800;font-size:19px;line-height:1.15;letter-spacing:-0.4px}
