@@ -886,6 +886,26 @@ function openPlayer(boardId,name){
 }
 function closePlayer(){const sheet=document.getElementById('player-sheet');sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');document.getElementById('ps-overlay').classList.remove('open');document.body.classList.remove('sheet-open');if(sheetReturn&&sheetReturn.focus)sheetReturn.focus();}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('player-sheet').classList.contains('open'))closePlayer();});
+// Swipe down to dismiss the player sheet (phone). Drags from anywhere once the sheet is scrolled to the top.
+(function(){
+    const sheet=document.getElementById('player-sheet');if(!sheet)return;
+    let startY=0,lastY=0,startT=0,dragging=false,tracking=false;
+    sheet.addEventListener('touchstart',e=>{if(window.innerWidth>767||!sheet.classList.contains('open'))return;tracking=true;dragging=false;startY=lastY=e.touches[0].clientY;startT=Date.now();},{passive:true});
+    sheet.addEventListener('touchmove',e=>{
+        if(!tracking)return;const y=e.touches[0].clientY;lastY=y;const dy=y-startY;
+        if(!dragging){if(dy>6&&sheet.scrollTop<=0){dragging=true;sheet.style.transition='none';startY=y;}else if(dy<-6||sheet.scrollTop>0){tracking=false;}return;}
+        const d=y-startY;sheet.style.transform='translateY('+Math.max(0,d)+'px)';
+        const ov=document.getElementById('ps-overlay');if(ov)ov.style.opacity=String(Math.max(0,1-d/400));
+        if(e.cancelable)e.preventDefault();
+    },{passive:false});
+    const end=()=>{
+        if(!tracking)return;tracking=false;if(!dragging)return;dragging=false;
+        const d=lastY-startY,v=d/Math.max(1,Date.now()-startT);
+        sheet.style.transition='';const ov=document.getElementById('ps-overlay');if(ov)ov.style.opacity='';
+        if(d>110||(v>0.5&&d>40)){sheet.style.transform='';closePlayer();haptic(10);}else{sheet.style.transform='';}
+    };
+    sheet.addEventListener('touchend',end);sheet.addEventListener('touchcancel',end);
+})();
 
 // Measure nav height so sticky table headers pin beneath it
 function updateNavH(){
