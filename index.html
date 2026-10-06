@@ -1316,6 +1316,12 @@ function buildChatContext(data){
         // Box scores from Drive games
         const driveGames=played.filter(g=>(isUs(g.home)||isUs(g.away))&&g.boxScore&&g.boxScore.length);
         if(driveGames.length){
+            // Batting order history, pre-tallied so the model doesn't have to count
+            const spots={};
+            driveGames.forEach(g=>g.boxScore.forEach((p,bi)=>{(spots[p.player]=spots[p.player]||[]).push({wk:g.week.replace('Week ','W'),n:bi+1});}));
+            ctx+='BATTING ORDER HISTORY (lineup spot each game, out of '+driveGames.length+' games with box scores):\n';
+            Object.entries(spots).forEach(([name,arr])=>{const c={};arr.forEach(x=>c[x.n]=(c[x.n]||0)+1);const most=Object.entries(c).sort((x,y)=>y[1]-x[1])[0];ctx+='  '+name+': '+arr.map(x=>x.wk+' #'+x.n).join(', ')+'. Most often #'+most[0]+' ('+most[1]+' of '+arr.length+' games played)\n';});
+            ctx+='LEADOFF (#1) BY GAME: '+driveGames.map(g=>g.week.replace('Week ','W')+' '+g.boxScore[0].player).join(', ')+'\n\n';
             ctx+='OUR GAME BOX SCORES (players are listed in the actual batting order for that game; the number is the lineup spot):\n';
             driveGames.forEach(g=>{
                 const opp=isUs(g.home)?g.away:g.home;
@@ -1432,7 +1438,7 @@ function shareSchedule(btn){
         '🗓 '+day+' · '+g.time];
     if(field)lines.push('📍 '+field);
     if(sm&&+sm[1]>=3)lines.push('🔥 '+sm[1]+' straight wins. Keep it rolling.');
-    lines.push('','Need 8 to play. Reply 👍 in or 👎 out.');
+    lines.push('','You in? Reply 👍 or 👎');
     const rollText=lines.join('\n');
     const url='https://pranney82.github.io/menssoftball/?game='+g.weekDate;
     if(navigator.share){navigator.share({text:rollText+'\n\n'+url}).catch(()=>{});return;}
