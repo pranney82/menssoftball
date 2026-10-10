@@ -424,7 +424,7 @@
         .chat-input-wrap{display:flex;align-items:flex-end;gap:8px;padding:10px 12px calc(12px + env(safe-area-inset-bottom,0px));flex-shrink:0;border-top:1px solid var(--line)}
         .chat-input-inner{flex:1;display:flex;background:var(--panel);border:1px solid var(--line-2);border-radius:22px;transition:border-color var(--dur) var(--ease)}
         .chat-input-inner:focus-within{border-color:rgba(255,218,36,.55)}
-        .chat-input{flex:1;padding:12px 4px 12px 18px;background:transparent;border:0;color:var(--text);font-size:16px;font-family:inherit;outline:none;resize:none;line-height:1.4;max-height:120px;min-height:22px}
+        .chat-input{field-sizing:content;flex:1;padding:12px 4px 12px 18px;background:transparent;border:0;color:var(--text);font-size:16px;font-family:inherit;outline:none;resize:none;line-height:1.4;max-height:120px;min-height:22px}
         .chat-input::placeholder{color:var(--text-3)}
         .chat-send{background:var(--sun);color:var(--on-sun);width:44px;height:44px;min-width:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform var(--dur-fast) var(--ease),opacity var(--dur) var(--ease)}
         .chat-send:active{transform:scale(.92)}
@@ -432,10 +432,15 @@
         .chat-send svg{width:18px;height:18px}
         body.chat-open{overflow:hidden}
         @media (max-width:767px){
-            html.chat-open,body.chat-open{overflow:hidden;height:100%}
+            html.chat-open,body.chat-open{overflow:hidden;height:100%;overscroll-behavior:none}
+            body.chat-open{position:fixed;left:0;right:0;width:100%}
+            .chat-overlay{touch-action:none}
+            .chat-messages{scroll-behavior:auto}
             body.chat-open #site-content,body.chat-open .footer{visibility:hidden}
             body.chat-open .chat-bubble{transform:scale(.4);opacity:0;pointer-events:none}
-            .chat-panel{top:auto;right:0;left:0;bottom:var(--kb,0px);width:100%;height:calc(92dvh - var(--kb,0px));max-height:calc(92dvh - var(--kb,0px));border-radius:22px 22px 0 0;border:0;border-top:1px solid var(--line-2);transform:translateY(100%);transition:transform var(--dur-slow) var(--ease-out),height .25s ease,bottom .25s ease}
+            .chat-panel{top:var(--sheet-top,8dvh);bottom:auto;right:0;left:0;width:100%;height:var(--sheet-h,92dvh);max-height:none;border-radius:22px 22px 0 0;border:0;border-top:1px solid var(--line-2);transform:translateY(100%);transition:transform var(--dur-slow) var(--ease-out)}
+            .chat-panel.kb-open{border-radius:0}
+            .chat-panel.kb-open .chat-handle{display:none}
             .chat-panel.open{transform:none}
             .chat-panel.dragging{transition:none}
             .chat-handle{display:flex;justify-content:center;padding:10px 0 4px;flex-shrink:0;touch-action:none}
@@ -945,20 +950,35 @@ const INITIAL_CHIPS=['Next game?','Suggest a lineup','Mercy rule','Bat rules'];
 function haptic(ms){try{navigator.vibrate&&navigator.vibrate(ms||8);}catch(e){}}
 
 // ---------- Visual viewport / keyboard handling ----------
+// Pins the mobile sheet to the *visible* area (above the keyboard) with no animation,
+// so iOS never draws the caret at a stale position.
 (function(){
     const vv=window.visualViewport;
-    if(!vv)return;
+    const panel=document.getElementById('chat-panel');
+    const input=document.getElementById('chat-input');
+    if(!panel)return;
     let raf=null;
     function apply(){
         raf=null;
-        // Lock the panel to the visible area: offset from window top, height = vv.height
-        // Panel uses bottom:0 normally — when keyboard opens, we set bottom = (window.innerHeight - vv.height - vv.offsetTop)
-        const kb=Math.max(0,window.innerHeight-vv.height-vv.offsetTop);
-        document.documentElement.style.setProperty('--kb',kb+'px');
+        const vh=vv?vv.height:window.innerHeight;
+        const vt=vv?vv.offsetTop:0;
+        const kbOpen=isMobile()&&document.activeElement===input;
+        const h=kbOpen?Math.round(vh):Math.round(vh*0.92);
+        const msgs=document.getElementById('chat-messages');
+        const pinned=msgs&&isNearBottom(msgs,80);
+        const root=document.documentElement.style;
+        root.setProperty('--sheet-h',h+'px');
+        root.setProperty('--sheet-top',Math.round(vt+vh-h)+'px');
+        panel.classList.toggle('kb-open',kbOpen);
+        if(pinned)msgs.scrollTop=msgs.scrollHeight;
     }
-    function schedule(){if(raf==null)raf=requestAnimationFrame(apply);}
-    vv.addEventListener('resize',schedule);
-    vv.addEventListener('scroll',schedule);
+    window.scheduleSheetLayout=function(){if(raf==null)raf=requestAnimationFrame(apply);};
+    if(vv){vv.addEventListener('resize',scheduleSheetLayout);vv.addEventListener('scroll',scheduleSheetLayout);}
+    window.addEventListener('resize',scheduleSheetLayout);
+    if(input){
+        input.addEventListener('focus',()=>{scheduleSheetLayout();setTimeout(scheduleSheetLayout,350);});
+        input.addEventListener('blur',()=>{scheduleSheetLayout();setTimeout(scheduleSheetLayout,350);});
+    }
     apply();
 })();
 
@@ -1105,8 +1125,12 @@ function askChip(text){
 // ---------- Textarea auto-grow + send state ----------
 function autoGrowInput(){
     const ta=document.getElementById('chat-input');
+    if(window.CSS&&CSS.supports&&CSS.supports('field-sizing','content'))return;
+    const prev=ta.style.height;
     ta.style.height='auto';
-    ta.style.height=Math.min(120,ta.scrollHeight)+'px';
+    const next=Math.min(120,ta.scrollHeight)+'px';
+    ta.style.height=next;
+    if(prev!==next&&typeof scheduleSheetLayout==='function')scheduleSheetLayout();
 }
 function updateSendBtn(){
     const ta=document.getElementById('chat-input');
@@ -1152,7 +1176,9 @@ function revealText(node,fullText,onDone){
     const chunk=Math.max(2,Math.round(total/120)); // ~120 frames = ~2s at 60fps, capped by chunk size
     function step(){
         i=Math.min(total,i+chunk);
-        node.innerHTML=formatReply(fullText.slice(0,i));
+        let part=fullText.slice(0,i);
+        if(i<total){const sp=part.lastIndexOf(' ');if(sp>0)part=part.slice(0,sp);if((part.match(/\*\*/g)||[]).length%2)part=part.slice(0,part.lastIndexOf('**'));}
+        node.innerHTML=formatReply(part);
         // sticky autoscroll while streaming
         const msgs=document.getElementById('chat-messages');
         if(msgs&&isNearBottom(msgs,120))msgs.scrollTop=msgs.scrollHeight;
