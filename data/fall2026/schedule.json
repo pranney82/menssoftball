@@ -1660,7 +1660,9 @@
   "time": "8:30 PM",
   "home": "Master Batters",
   "away": "Runs N' Roses",
-  "location": "HP2"
+  "location": "HP2",
+  "homeScore": 2,
+  "awayScore": 0
  },
  {
   "week": "Week 9",
@@ -1826,7 +1828,9 @@
   "time": "9:30 PM",
   "home": "Parks Johnson Insurance",
   "away": "PSI",
-  "location": "HP2"
+  "location": "HP2",
+  "homeScore": 2,
+  "awayScore": 0
  },
  {
   "week": "Playoff Round 1",

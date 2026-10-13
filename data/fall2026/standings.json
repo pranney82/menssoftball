@@ -49,6 +49,18 @@
  },
  {
   "rank": 5,
+  "team": "Master Batters",
+  "w": 5,
+  "l": 3,
+  "t": 0,
+  "gb": "2",
+  "gp": 8,
+  "pct": ".625",
+  "streak": "W2",
+  "coach": "Sabula"
+ },
+ {
+  "rank": 6,
   "team": "Hit List",
   "w": 5,
   "l": 3,
@@ -60,40 +72,28 @@
   "coach": "Little"
  },
  {
-  "rank": 6,
-  "team": "Master Batters",
-  "w": 4,
-  "l": 3,
-  "t": 0,
-  "gb": "2.5",
-  "gp": 7,
-  "pct": ".571",
-  "streak": "L1",
-  "coach": "Sabula"
- },
- {
   "rank": 7,
-  "team": "Runs N' Roses",
-  "w": 3,
-  "l": 3,
+  "team": "Parks Johnson Insurance",
+  "w": 4,
+  "l": 4,
   "t": 0,
   "gb": "3",
-  "gp": 6,
+  "gp": 8,
   "pct": ".500",
-  "streak": "L2",
-  "coach": "Woodward"
+  "streak": "W2",
+  "coach": "Marotte"
  },
  {
   "rank": 8,
-  "team": "Parks Johnson Insurance",
+  "team": "Runs N' Roses",
   "w": 3,
   "l": 4,
   "t": 0,
   "gb": "3.5",
   "gp": 7,
   "pct": ".429",
-  "streak": "W1",
-  "coach": "Marotte"
+  "streak": "L3",
+  "coach": "Woodward"
  },
  {
   "rank": 9,
@@ -123,12 +123,12 @@
   "rank": 11,
   "team": "PSI",
   "w": 1,
-  "l": 6,
+  "l": 7,
   "t": 0,
-  "gb": "5.5",
-  "gp": 7,
-  "pct": ".143",
-  "streak": "L4",
+  "gb": "6",
+  "gp": 8,
+  "pct": ".125",
+  "streak": "L5",
   "coach": "Squiers"
  },
  {
