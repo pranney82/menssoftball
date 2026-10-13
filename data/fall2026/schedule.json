@@ -1345,7 +1345,9 @@
   "time": "8:00 PM",
   "home": "Threat Level Midnight",
   "away": "Runs N' Roses",
-  "location": "HP3"
+  "location": "HP3",
+  "homeScore": 2,
+  "awayScore": 16
  },
  {
   "week": "Week 6",
@@ -1365,7 +1367,9 @@
   "time": "9:00 PM",
   "home": "Dirt Dawgs",
   "away": "Mob Squad",
-  "location": "HP3"
+  "location": "HP3",
+  "homeScore": 19,
+  "awayScore": 6
  },
  {
   "week": "Week 6",
@@ -1633,7 +1637,9 @@
   "time": "7:00 PM",
   "home": "Mob Squad",
   "away": "Threat Level Midnight",
-  "location": "HP3"
+  "location": "HP3",
+  "homeScore": 20,
+  "awayScore": 8
  },
  {
   "week": "Week 9",
@@ -1642,7 +1648,9 @@
   "time": "7:30 PM",
   "home": "COE",
   "away": "Base Invaders",
-  "location": "HP2"
+  "location": "HP2",
+  "homeScore": 19,
+  "awayScore": 4
  },
  {
   "week": "Week 9",
@@ -1651,7 +1659,9 @@
   "time": "8:00 PM",
   "home": "The Sandlot Benchwarmers",
   "away": "Dirt Dawgs",
-  "location": "HP3"
+  "location": "HP3",
+  "homeScore": 2,
+  "awayScore": 23
  },
  {
   "week": "Week 9",
@@ -1837,8 +1847,8 @@
   "date": "Wed 10/14",
   "weekDate": "2026-10-14",
   "time": "6:30 PM",
-  "home": "8th Place",
-  "away": "9th Place",
+  "home": "Parks Johnson Insurance",
+  "away": "The Sandlot Benchwarmers",
   "location": "HP3",
   "playoff": true
  },
@@ -1847,8 +1857,8 @@
   "date": "Wed 10/14",
   "weekDate": "2026-10-14",
   "time": "6:30 PM",
-  "home": "5th Place",
-  "away": "12th Place",
+  "home": "Master Batters",
+  "away": "Threat Level Midnight",
   "location": "HP2",
   "playoff": true
  },
@@ -1857,8 +1867,8 @@
   "date": "Wed 10/14",
   "weekDate": "2026-10-14",
   "time": "7:30 PM",
-  "home": "7th Place",
-  "away": "10th Place",
+  "home": "Runs N' Roses",
+  "away": "Base Invaders",
   "location": "HP3",
   "playoff": true
  },
@@ -1867,8 +1877,8 @@
   "date": "Wed 10/14",
   "weekDate": "2026-10-14",
   "time": "7:30 PM",
-  "home": "6th Place",
-  "away": "11th Place",
+  "home": "Hit List",
+  "away": "PSI",
   "location": "HP2",
   "playoff": true
  },
@@ -1877,7 +1887,7 @@
   "date": "Wed 10/14",
   "weekDate": "2026-10-14",
   "time": "8:30 PM",
-  "home": "1st Place",
+  "home": "Dirt Dawgs",
   "away": "G1 Winner",
   "location": "HP3",
   "playoff": true
@@ -1887,7 +1897,7 @@
   "date": "Wed 10/14",
   "weekDate": "2026-10-14",
   "time": "8:30 PM",
-  "home": "4th Place",
+  "home": "Mob Squad",
   "away": "G2 Winner",
   "location": "HP2",
   "playoff": true
@@ -1897,7 +1907,7 @@
   "date": "Wed 10/14",
   "weekDate": "2026-10-14",
   "time": "9:30 PM",
-  "home": "2nd Place",
+  "home": "SOARD",
   "away": "G3 Winner",
   "location": "HP3",
   "playoff": true
@@ -1907,7 +1917,7 @@
   "date": "Wed 10/14",
   "weekDate": "2026-10-14",
   "time": "9:30 PM",
-  "home": "3rd Place",
+  "home": "COE",
   "away": "G4 Winner",
   "location": "HP2",
   "playoff": true

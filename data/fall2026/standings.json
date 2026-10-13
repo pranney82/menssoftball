@@ -1,6 +1,18 @@
 [
  {
   "rank": 1,
+  "team": "Dirt Dawgs",
+  "w": 7,
+  "l": 1,
+  "t": 0,
+  "gb": "--",
+  "gp": 8,
+  "pct": ".875",
+  "streak": "W6",
+  "coach": "Stubblefield"
+ },
+ {
+  "rank": 2,
   "team": "SOARD",
   "w": 7,
   "l": 1,
@@ -12,40 +24,28 @@
   "coach": "Ranney"
  },
  {
-  "rank": 2,
-  "team": "Dirt Dawgs",
-  "w": 5,
-  "l": 1,
-  "t": 0,
-  "gb": "1",
-  "gp": 6,
-  "pct": ".833",
-  "streak": "W4",
-  "coach": "Stubblefield"
- },
- {
   "rank": 3,
-  "team": "Mob Squad",
-  "w": 5,
-  "l": 1,
+  "team": "COE",
+  "w": 6,
+  "l": 2,
   "t": 0,
   "gb": "1",
-  "gp": 6,
-  "pct": ".833",
-  "streak": "L1",
-  "coach": "Vega"
+  "gp": 8,
+  "pct": ".750",
+  "streak": "W5",
+  "coach": "Stewart"
  },
  {
   "rank": 4,
-  "team": "COE",
-  "w": 5,
+  "team": "Mob Squad",
+  "w": 6,
   "l": 2,
   "t": 0,
-  "gb": "1.5",
-  "gp": 7,
-  "pct": ".714",
-  "streak": "W4",
-  "coach": "Stewart"
+  "gb": "1",
+  "gp": 8,
+  "pct": ".750",
+  "streak": "W1",
+  "coach": "Vega"
  },
  {
   "rank": 5,
@@ -73,6 +73,18 @@
  },
  {
   "rank": 7,
+  "team": "Runs N' Roses",
+  "w": 4,
+  "l": 4,
+  "t": 0,
+  "gb": "3",
+  "gp": 8,
+  "pct": ".500",
+  "streak": "L3",
+  "coach": "Woodward"
+ },
+ {
+  "rank": 8,
   "team": "Parks Johnson Insurance",
   "w": 4,
   "l": 4,
@@ -84,39 +96,27 @@
   "coach": "Marotte"
  },
  {
-  "rank": 8,
-  "team": "Runs N' Roses",
-  "w": 3,
-  "l": 4,
-  "t": 0,
-  "gb": "3.5",
-  "gp": 7,
-  "pct": ".429",
-  "streak": "L3",
-  "coach": "Woodward"
- },
- {
   "rank": 9,
   "team": "The Sandlot Benchwarmers",
   "w": 2,
-  "l": 5,
+  "l": 6,
   "t": 0,
-  "gb": "4.5",
-  "gp": 7,
-  "pct": ".286",
-  "streak": "W2",
+  "gb": "5",
+  "gp": 8,
+  "pct": ".250",
+  "streak": "L1",
   "coach": "Hickey"
  },
  {
   "rank": 10,
   "team": "Base Invaders",
   "w": 1,
-  "l": 6,
+  "l": 7,
   "t": 0,
-  "gb": "5.5",
-  "gp": 7,
-  "pct": ".143",
-  "streak": "L5",
+  "gb": "6",
+  "gp": 8,
+  "pct": ".125",
+  "streak": "L6",
   "coach": "Hodge"
  },
  {
@@ -135,12 +135,12 @@
   "rank": 12,
   "team": "Threat Level Midnight",
   "w": 0,
-  "l": 6,
+  "l": 8,
   "t": 0,
-  "gb": "6",
-  "gp": 6,
+  "gb": "7",
+  "gp": 8,
   "pct": ".000",
-  "streak": "L6",
+  "streak": "L8",
   "coach": "Welty"
  }
 ]
