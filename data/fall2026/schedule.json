@@ -1850,7 +1850,9 @@
   "home": "Parks Johnson Insurance",
   "away": "The Sandlot Benchwarmers",
   "location": "HP3",
-  "playoff": true
+  "playoff": true,
+  "homeScore": 14,
+  "awayScore": 9
  },
  {
   "week": "Playoff Round 1",
@@ -1860,7 +1862,9 @@
   "home": "Master Batters",
   "away": "Threat Level Midnight",
   "location": "HP2",
-  "playoff": true
+  "playoff": true,
+  "homeScore": 2,
+  "awayScore": 0
  },
  {
   "week": "Playoff Round 1",
@@ -1870,7 +1874,9 @@
   "home": "Runs N' Roses",
   "away": "Base Invaders",
   "location": "HP3",
-  "playoff": true
+  "playoff": true,
+  "homeScore": 16,
+  "awayScore": 0
  },
  {
   "week": "Playoff Round 1",
@@ -1880,7 +1886,9 @@
   "home": "Hit List",
   "away": "PSI",
   "location": "HP2",
-  "playoff": true
+  "playoff": true,
+  "homeScore": 20,
+  "awayScore": 5
  },
  {
   "week": "Playoff Round 2",
@@ -1888,9 +1896,11 @@
   "weekDate": "2026-10-14",
   "time": "8:30 PM",
   "home": "Dirt Dawgs",
-  "away": "G1 Winner",
+  "away": "Parks Johnson Insurance",
   "location": "HP3",
-  "playoff": true
+  "playoff": true,
+  "homeScore": 18,
+  "awayScore": 8
  },
  {
   "week": "Playoff Round 2",
@@ -1898,9 +1908,11 @@
   "weekDate": "2026-10-14",
   "time": "8:30 PM",
   "home": "Mob Squad",
-  "away": "G2 Winner",
+  "away": "Master Batters",
   "location": "HP2",
-  "playoff": true
+  "playoff": true,
+  "homeScore": 4,
+  "awayScore": 23
  },
  {
   "week": "Playoff Round 2",
@@ -1908,9 +1920,11 @@
   "weekDate": "2026-10-14",
   "time": "9:30 PM",
   "home": "SOARD",
-  "away": "G3 Winner",
+  "away": "Runs N' Roses",
   "location": "HP3",
-  "playoff": true
+  "playoff": true,
+  "homeScore": 22,
+  "awayScore": 6
  },
  {
   "week": "Playoff Round 2",
@@ -1918,17 +1932,19 @@
   "weekDate": "2026-10-14",
   "time": "9:30 PM",
   "home": "COE",
-  "away": "G4 Winner",
+  "away": "Hit List",
   "location": "HP2",
-  "playoff": true
+  "playoff": true,
+  "homeScore": 18,
+  "awayScore": 10
  },
  {
   "week": "Playoff Round 3",
   "date": "Wed 10/21",
   "weekDate": "2026-10-21",
   "time": "7:00 PM",
-  "home": "G5 Winner",
-  "away": "G6 Winner",
+  "home": "Dirt Dawgs",
+  "away": "Master Batters",
   "location": "HP2",
   "playoff": true
  },
@@ -1937,8 +1953,8 @@
   "date": "Wed 10/21",
   "weekDate": "2026-10-21",
   "time": "8:00 PM",
-  "home": "G7 Winner",
-  "away": "G8 Winner",
+  "home": "SOARD",
+  "away": "COE",
   "location": "HP2",
   "playoff": true
  },
